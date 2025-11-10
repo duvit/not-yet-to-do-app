@@ -1,1 +1,9 @@
-<p>task-card works!</p>
+<article class="task-card">
+  <h4 class="task__title">{{ task().title }}</h4>
+  <span class="task__status">{{ task().status }}</span>
+  <p class="task__description">{{ task().description }}</p>
+  <div class="task__actions">
+    <button>Done</button>
+    <button (click)="deleteTask(taskId)">Delete</button>
+  </div>
+</article>
