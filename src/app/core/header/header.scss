@@ -1,0 +1,124 @@
+.header {
+  width: 100%;
+  height: 7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  &__logo {
+    width: 120px;
+    height: auto;
+  }
+
+  .add-task-btn-wrapper {
+    padding: 1.1rem 0;
+
+    .add-task-btn {
+      width: 100vw;
+      border-radius: 0;
+
+      &__text {
+        line-height: 2rem;
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+
+      &__icon {
+        position: absolute;
+        top: 50%;
+        transform: translate(-2rem, -50%);
+        margin-right: 8px;
+        font-size: 1.5rem;
+        font-weight: 800;
+
+        .material-symbols-outlined {
+          font-weight: 800;
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .header {
+    height: 7rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2.2rem;
+
+    .add-task-btn-wrapper {
+      width: auto;
+      height: auto;
+      padding: 0;
+
+      .add-task-btn {
+        width: 3rem;
+        height: 3rem;
+        position: relative;
+        border-radius: 8px;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        transition: width 0.3s ease;
+
+        &:hover {
+          width: 12rem;
+          justify-content: space-between;
+        }
+
+        .add-task-btn__text {
+          position: absolute;
+          top: 50%;
+          left: calc(3rem + 0.6rem);
+          font-size: 1.2rem;
+          transform: translateX(2rem) translateY(-50%);
+          white-space: nowrap;
+          transition: transform 0.35s ease;
+          pointer-events: none;
+        }
+
+        &:hover .add-task-btn__text {
+          left: 2.4rem;
+          transform: translateX(0) translateY(-50%);
+          pointer-events: auto;
+        }
+
+        .add-task-btn__icon {
+          display: flex;
+          align-items: center;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          margin-right: 0;
+          font-size: 2rem;
+          font-weight: 800;
+          line-height: 1;
+          right: -1rem;
+        }
+
+        &:hover .add-task-btn__icon {
+          left: 0.1rem;
+          transform: translateX(0) translateY(-50%);
+        }
+      }
+    }
+
+    &__logo {
+      width: 240px;
+    }
+  }
+}
+
+.mdc-button__label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+}

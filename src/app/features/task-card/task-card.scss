@@ -1,0 +1,399 @@
+/* ===== TASK CARD ===== */
+.task-card {
+  position: relative;
+  background: radial-gradient(circle at top right, rgba(170, 0, 255, 0.15), transparent 70%),
+    linear-gradient(145deg, #f9f0ff, #fdfbff);
+  border: 1px solid #e1c4ff;
+  border-radius: 14px;
+  padding: 1.2rem 1.35rem;
+  box-shadow: 0 4px 10px rgba(155, 0, 255, 0.12);
+  transition: all 0.25s ease;
+  color: #3b006a;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  max-width: 430px;
+  margin: 1.2rem auto;
+}
+
+.task-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(155, 0, 255, 0.22);
+}
+
+/* HEADER */
+.task-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.task-card__status-badge {
+  background: #f3e6ff;
+  color: #6a0dad;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(106, 13, 173, 0.25);
+}
+
+.priority-wrapper {
+  position: relative; /* ключове */
+  display: inline-block;
+}
+
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #000; /* ← чорний текст */
+  cursor: pointer;
+  position: relative;
+}
+.priority-badge span {
+  font-size: 0.65rem;
+}
+
+.priority-badge--critical {
+  background: #ff3b3b;
+}
+.priority-badge--high {
+  background: #ff9f00;
+}
+.priority-badge--medium {
+  background: #ffd400;
+}
+.priority-badge--low {
+  background: #22c55e;
+}
+.priority-badge--someday {
+  background: #3b82f6;
+}
+
+.priority-dropdown {
+  position: relative; /* dropdown привʼяжеться сюди */
+  display: inline-block;
+}
+
+.priority-dropdown-btn {
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  color: #fff;
+  padding: 0.25rem 0.45rem;
+  font-size: 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.priority-dropdown-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.priority-dropdown-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: transparent;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 0.3rem 0;
+  width: max-content;
+  min-width: 120px;
+  z-index: 1000;
+}
+
+.priority-dropdown-item {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.priority-dropdown-item:hover {
+  background: #f3f3f3;
+}
+
+.task-card__title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* TITLE */
+.task-card__title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.task-card__title,
+.task-card__edit-input {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: #6a0dad;
+  padding-left: 0.4rem;
+  line-height: 1.8rem;
+  height: 1.8rem;
+}
+
+.task-card__edit-input {
+  font-size: 1.22rem;
+  border-radius: 0.5rem;
+  border-bottom: 1px solid #b57ce0;
+  background-color: #b57ce059;
+  outline: none;
+  display: block;
+  width: 70%;
+  letter-spacing: 0.2px;
+}
+
+.task-card__changes-btn {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+
+  .material-symbols-outlined {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: rgb(169, 0, 169);
+    font-weight: 400;
+    line-height: 2.2rem;
+    border: 1px solid rgba(96, 48, 94, 0.25);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.task-card__edit-actions {
+  display: flex;
+  gap: 0.4rem;
+
+  .material-symbols-outlined {
+    font-weight: 800;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    display: inline-block;
+  }
+}
+
+.task-card__btn-save,
+.task-card__btn-cancel {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  padding-left: 0.4rem;
+  border: 1px solid rgba(96, 48, 94, 0.25);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.task-card__btn-save {
+  color: #22c55e;
+}
+
+.task-card__btn-cancel {
+  color: #ef4444;
+}
+
+/* DIVIDER */
+.task-card__divider {
+  height: 1px;
+  background: rgba(106, 13, 173, 0.18);
+  margin: 0.7rem 0 0.9rem;
+  border-radius: 1px;
+}
+
+/* DESCRIPTION */
+.task-card__edit-input-description,
+.task-card__description {
+  display: block;
+  color: #4a0072;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  margin-bottom: 1.2rem;
+  padding-left: 0.2rem;
+  opacity: 0.95;
+  transition: opacity 0.2s ease;
+}
+
+.task-card__edit-input-description {
+  border-radius: 0.5rem;
+  border-bottom: 1px solid #b57ce0;
+  background-color: #b57ce059;
+  outline: none;
+  letter-spacing: 0.5px;
+}
+
+.task-card:hover .task-card__description {
+  opacity: 1;
+}
+
+/* STATUS CONTROL */
+.task-card__status-control {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.task-card__status-btn {
+  background-color: #f3e6ff;
+  color: #6a0dad;
+  border: 1px solid #d1aaff;
+  border-radius: 8px;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 135px;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.task-card__status-btn:hover {
+  background-color: #e9d6ff;
+  transform: translateY(-1px);
+}
+
+.task-card__status-arrow {
+  margin-left: 6px;
+  font-size: 0.8em;
+}
+
+.task-card__status-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #d1aaff;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(155, 0, 255, 0.18);
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem 0;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.task-card__status-item {
+  padding: 0.45rem 0.75rem;
+  color: #5b007f;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.task-card__status-item:hover {
+  background: #f3e6ff;
+}
+
+/* META */
+.task-card__meta {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.78rem;
+  color: rgba(74, 0, 114, 0.55);
+  margin-bottom: 1rem;
+  letter-spacing: -0.2px;
+}
+
+.task-card__meta-item {
+  margin-bottom: 0.2rem;
+}
+
+/* ACTIONS */
+.task-card__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* DELETE BUTTON */
+.task-card__btn {
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.task-card__btn--delete {
+  background: linear-gradient(135deg, #ff5a5a, #d83535);
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 7px rgba(220, 0, 0, 0.25);
+}
+
+.task-card__btn--delete:hover {
+  background: linear-gradient(135deg, #e04444, #b02020);
+  box-shadow: 0 4px 12px rgba(200, 0, 0, 0.35);
+  transform: translateY(-2px);
+}
+
+.task-card__btn--delete:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(200, 0, 0, 0.25);
+}
+
+/* Блокує всю взаємодію */
+.task-card--done {
+  pointer-events: none;
+  opacity: 0.55;
+  filter: grayscale(40%);
+}
+
+/* Але дозволяє кнопці Delete працювати */
+.task-card--done .task-card__btn--delete {
+  pointer-events: auto;
+  opacity: 1;
+  filter: none;
+}
+
+/* Хедер або бейдж можна підсвітити */
+.task-card--done .task-card__status-badge {
+  background: var(--green-strong);
+  color: #695e5e;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (min-width: 768px) {
+  .task-card {
+    max-width: 520px;
+    padding: 1.35rem 1.6rem;
+  }
+
+  .task-card__title {
+    font-size: 1.25rem;
+  }
+  .task-card__description {
+    font-size: 1rem;
+  }
+}

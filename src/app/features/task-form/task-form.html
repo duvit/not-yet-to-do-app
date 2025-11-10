@@ -1,0 +1,38 @@
+<form class="task-form" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <div class="task-form__group">
+    <label class="task-form__label" for="title">Title</label>
+    <input
+      class="task-form__input"
+      id="title"
+      type="text"
+      formControlName="title"
+      placeholder="Enter task title"
+    />
+  </div>
+
+  <div class="task-form__group">
+    <label class="task-form__label" for="description">Description</label>
+    <input
+      class="task-form__input"
+      id="description"
+      type="text"
+      formControlName="description"
+      placeholder="Enter task description"
+    />
+  </div>
+
+  <div class="task-form__group">
+    <label class="task-form__label" for="priority">Priority</label>
+    <mat-form-field appearance="outline" class="task-form__group custom-select">
+      <mat-select name="priority" id="priority" formControlName="priority">
+        @for (priority of priorities; track priority) {
+        <mat-option [value]="priority" class="priority-{{ priority }}">{{
+          priority | titlecase
+        }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <button class="task-form__btn" type="submit" [disabled]="!taskForm.valid">Add Task</button>
+</form>
