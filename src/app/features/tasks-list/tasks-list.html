@@ -1,9 +1,9 @@
+<app-task-form />
 <section class="tasks-board">
-  <button (click)="addTask()">Add task</button>
   <div class="tasks-column">
     <h3>To do</h3>
     <ul class="tasks-list">
-      @for (task of toDoTasks; track task.id) {
+      @for (task of toDoTasks(); track task.id) {
       <li>
         <app-task-card [task]="task" />
       </li>
@@ -13,7 +13,7 @@
   <div class="tasks-column">
     <h3>In progress</h3>
     <ul class="tasks-list">
-      @for (task of inProgreessTasks; track task.id) {
+      @for (task of inProgressTasks(); track task.id) {
       <li>
         <app-task-card [task]="task" />
       </li>
@@ -23,7 +23,7 @@
   <div class="tasks-column">
     <h3>Done</h3>
     <ul class="tasks-list">
-      @for (task of doneTasks; track task.id) {
+      @for (task of doneTasks(); track task.id) {
       <li>
         <app-task-card [task]="task" />
       </li>

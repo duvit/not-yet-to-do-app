@@ -1,40 +1,41 @@
-import { Component, inject } from '@angular/core';
-import { Task } from '../../models/task';
+import { Component, inject, signal } from '@angular/core';
+import { Task, TASK_STATUS } from '../../models/task.model';
 import { TaskCard } from '../task-card/task-card';
 import { TasksService } from '../../services/tasks-service';
+import { TaskForm } from '../task-form/task-form';
 
 @Component({
   selector: 'app-tasks-list',
-  imports: [TaskCard],
+  imports: [TaskCard, TaskForm],
   templateUrl: './tasks-list.html',
   styleUrl: './tasks-list.scss',
 })
 export class TasksList {
-  tasksList: Task[] = [
-    {
-      id: crypto.randomUUID(),
-      title: 'Wash dishes',
-      description: '',
-      status: 'to do',
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'Home renovation',
-      description: 'Repair the kitchen',
-      status: 'in progress',
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'Take out the garbage',
-      description: '',
-      status: 'done',
-    },
-  ];
-
-  public toDoTasks: Task[] = this.tasksList.filter((task) => task.status === 'to do');
-  public inProgreessTasks: Task[] = this.tasksList.filter((task) => task.status === 'in progress');
-  public doneTasks: Task[] = this.tasksList.filter((task) => task.status === 'done');
   private tasksService = inject(TasksService);
+
+  public toDoTasks = signal<Task[]>(
+    this.tasksService.tasksList().filter((task) => task.status === TASK_STATUS.TODO)
+  );
+
+  public inProgressTasks = signal<Task[]>(
+    this.tasksService.tasksList().filter((task) => task.status === TASK_STATUS.IN_PROGRESS)
+  );
+
+  public doneTasks = signal<Task[]>(
+    this.tasksService.tasksList().filter((task) => task.status === TASK_STATUS.DONE)
+  );
+
+  // public get toDoTasks(): Task[] {
+  //   return this.tasksService.tasksList().filter((task) => task.status === TASK_STATUS.TODO);
+  // }
+
+  // public get inProgressTasks(): Task[] {
+  //   return this.tasksService.tasksList().filter((task) => task.status === TASK_STATUS.IN_PROGRESS);
+  // }
+
+  // public get doneTasks(): Task[] {
+  //   return this.tasksService.tasksList().filter((task) => task.status === TASK_STATUS.DONE);
+  // }
 
   addTask(task: Task) {
     this.tasksService.addTask(task);
