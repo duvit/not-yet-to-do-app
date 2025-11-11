@@ -14,12 +14,12 @@ export class TasksService {
     return data ? JSON.parse(data) : [];
   }
 
-  public saveTasks(): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.tasksList()));
-  }
-
   public reloadTasks(): void {
     this.tasksList.set(this.loadTasks());
+  }
+
+  public saveTasks(): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.tasksList()));
   }
 
   public addTask(task: Task): void {
@@ -30,6 +30,16 @@ export class TasksService {
   public deleteTask(taskId: string): void {
     this.tasksList.update((list) => list.filter((task) => task.id !== taskId));
     this.saveTasks();
+  }
+
+  public patchTask(taskId: string, taskStatus: TASK_STATUS) {
+    const task: Task = this.getTaskById(taskId);
+    task.status = taskStatus;
+    this.saveTasks();
+  }
+
+  private getTaskById(taskId: string): Task {
+    return this.tasksList().find((task) => task.id === taskId)!;
   }
 
   public taskFromData(taskData: TaskFormModel): Task {

@@ -1,9 +1,17 @@
 <article class="task-card">
   <h4 class="task__title">{{ task().title }}</h4>
-  <span class="task__status">{{ task().status }}</span>
+  <select name="status" id="status" #selectElement (change)="changeStatus($event)">
+    >
+    <option [value]="taskStatus()" disabled selected>{{ taskStatus() }}</option>
+    @for (status of availableStatuses(); track $index) {
+    <option [value]="status">{{ status }}</option>
+    }
+  </select>
+
   <p class="task__description">{{ task().description }}</p>
   <div class="task__actions">
     <button>Done</button>
-    <button (click)="deleteTask(taskId)">Delete</button>
+    <button (click)="deleteTask()">Delete</button>
+    <button (click)="updateTask()">Update</button>
   </div>
 </article>
