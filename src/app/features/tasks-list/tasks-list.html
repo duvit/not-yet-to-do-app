@@ -1,4 +1,35 @@
 <app-task-form />
+
+<mat-tab-group>
+  <mat-tab label="To do">
+    <ul class="tasks-list">
+      @for (task of toDoTasks; track task.id) {
+      <li>
+        <app-task-card [task]="task" />
+      </li>
+      }
+    </ul>
+  </mat-tab>
+  <mat-tab label="In progress">
+    <ul class="tasks-list">
+      @for (task of inProgressTasks; track task.id) {
+      <li>
+        <app-task-card [task]="task" />
+      </li>
+      }
+    </ul>
+  </mat-tab>
+  <mat-tab label="Done">
+    <ul class="tasks-list">
+      @for (task of doneTasks; track task.id) {
+      <li>
+        <app-task-card [task]="task" />
+      </li>
+      }
+    </ul>
+  </mat-tab>
+</mat-tab-group>
+
 <section class="tasks-board">
   <div class="tasks-column">
     <h3>To do</h3>
