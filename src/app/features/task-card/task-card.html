@@ -1,17 +1,26 @@
 <article class="task-card">
-  <h4 class="task__title">{{ task().title }}</h4>
-  <span>
-    {{ taskStatus() }}
-  </span>
-  <select name="status" id="status" [(ngModel)]="taskStatus" (change)="changeStatus($event)">
-    > @for (status of availableStatuses(); track $index) {
-    <option [value]="status">{{ status }}</option>
-    }
-  </select>
+  <h4 class="task-card__title">{{ task().title }}</h4>
 
-  <p class="task__description">{{ task().description }}</p>
-  <div class="task__actions">
-    <!-- <button (click)="markAsDone()">Done</button> -->
-    <button (click)="deleteTask()">Delete</button>
+  <div class="task-card__status" #statusBlock>
+    <button class="task-card__status-btn" (click)="toggleDropdown()">
+      {{ taskStatus() }}
+      <span class="task-card__status-arrow">▾</span>
+    </button>
+
+    @if (dropdownOpen) {
+      <ul class="task-card__status-list">
+        @for (status of availableStatuses(); track $index) {
+          <li class="task-card__status-item" (click)="changeStatus(status)">
+            {{ status }}
+          </li>
+        }
+      </ul>
+    }
+  </div>
+
+  <p class="task-card__description">{{ task().description }}</p>
+
+  <div class="task-card__actions">
+    <button class="task-card__btn task-card__btn-delete" (click)="deleteTask()">Delete</button>
   </div>
 </article>

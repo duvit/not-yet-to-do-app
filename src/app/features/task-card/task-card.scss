@@ -1,7 +1,154 @@
+/* ===== TASK CARD ===== */
 .task-card {
-  width: 200px;
-  height: 140px;
-  padding: 10px;
-  border: 1px solid black;
+  position: relative;
+  background: linear-gradient(145deg, #f9f0ff, #fdfbff);
+  border: 1px solid #e1c4ff;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 8px rgba(155, 0, 255, 0.1);
+  transition: all 0.2s ease;
+  color: #3b006a;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  max-width: 400px;
+  margin: 1rem auto;
+}
+
+.task-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(155, 0, 255, 0.2);
+}
+
+/* ===== TITLE ===== */
+.task-card__title {
+  color: #6a0dad;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ===== STATUS ===== */
+.task-card__status {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.task-card__status-btn {
+  background-color: #f3e6ff;
+  color: #6a0dad;
+  border: 1px solid #d1aaff;
   border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 130px;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.task-card__status-btn:hover {
+  background-color: #e9d6ff;
+  transform: translateY(-1px);
+}
+
+.task-card__status-arrow {
+  margin-left: 6px;
+  font-size: 0.8em;
+}
+
+/* ===== STATUS DROPDOWN ===== */
+.task-card__status-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #d1aaff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(155, 0, 255, 0.15);
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.task-card__status-item {
+  padding: 0.4rem 0.75rem;
+  color: #5b007f;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.task-card__status-item:hover {
+  background: #f3e6ff;
+}
+
+/* ===== DESCRIPTION ===== */
+.task-card__description {
+  color: #4a0072;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+/* ===== ACTIONS ===== */
+.task-card__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ===== DELETE BUTTON (новий стиль) ===== */
+.task-card__btn-delete {
+  background: linear-gradient(135deg, #d500f9, #aa00ff);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(170, 0, 255, 0.25);
+}
+
+.task-card__btn-delete:hover {
+  background: linear-gradient(135deg, #b000f2, #7b00cc);
+  box-shadow: 0 4px 10px rgba(155, 0, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.task-card__btn-delete:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(155, 0, 255, 0.2);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 768px) {
+  .task-card {
+    padding: 1.25rem 1.5rem;
+    max-width: 500px;
+  }
+
+  .task-card__title {
+    font-size: 1.2rem;
+  }
+
+  .task-card__btn-delete {
+    padding: 0.6rem 1.25rem;
+    font-size: 1rem;
+  }
 }

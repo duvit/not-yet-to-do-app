@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Task, TASK_STATUS } from '../../models/task.model';
 import { TaskCard } from '../task-card/task-card';

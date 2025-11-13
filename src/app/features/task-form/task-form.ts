@@ -28,5 +28,7 @@ export class TaskForm {
 
     const task: Task = this.tasksService.taskFromData(this.taskData);
     this.tasksService.addTask(task);
+
+    this.taskForm.reset();
   }
 }

@@ -1,4 +1,14 @@
-import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  HostListener,
+  inject,
+  input,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Task, TASK_STATUS } from '../../models/task.model';
 import { TasksService } from '../../services/tasks-service';
@@ -15,16 +25,19 @@ export class TaskCard implements OnInit {
   public taskId!: string;
   public taskStatus = signal<TASK_STATUS | null>(null);
   public readonly tasksStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
+  public dropdownOpen: boolean = false;
 
   public availableStatuses = computed(() => {
     return this.tasksStatuses.filter((el) => el !== this.taskStatus());
   });
 
-  public changeStatus(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.taskStatus.set(target.value as TASK_STATUS);
+  public changeStatus(newStatus: string): void {
+    this.taskStatus.set(newStatus as TASK_STATUS);
     this.updateTask();
+    this.dropdownOpen = false;
   }
+
+  constructor(private eRef: ElementRef) {}
 
   ngOnInit() {
     this.taskId = this.task().id;
@@ -42,5 +55,20 @@ export class TaskCard implements OnInit {
 
   updateTask() {
     this.tasksService.patchTask(this.taskId, this.taskStatus() as TASK_STATUS);
+  }
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  @ViewChild('statusBlock') statusBlock!: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const clickedInside = this.statusBlock?.nativeElement.contains(target);
+    if (this.dropdownOpen && !clickedInside) {
+      this.dropdownOpen = false;
+    }
   }
 }
