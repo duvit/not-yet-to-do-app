@@ -21,5 +21,18 @@
     />
   </div>
 
+  <div class="task-form__group">
+    <label class="task-form__label" for="priority">Priority</label>
+    <mat-form-field appearance="outline" class="task-form__group custom-select">
+      <mat-select name="priority">
+        @for (priority of priorities; track priority) {
+        <mat-option [value]="priority" class="priority-{{ priority }}">{{
+          priority | titlecase
+        }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <button class="task-form__btn" type="submit" [disabled]="!taskForm.valid">Add Task</button>
 </form>

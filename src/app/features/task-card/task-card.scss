@@ -152,3 +152,57 @@
     font-size: 1rem;
   }
 }
+
+
+/* ===== TASK CARD BACKGROUND BY PRIORITY ===== */
+.task-card.priority-critical {
+  background: #ffe2e2; /* пастельний червоний */
+}
+
+.task-card.priority-high {
+  background: #fff0d6; /* пастельний помаранчевий */
+}
+
+.task-card.priority-medium {
+  background: #fff8cc; /* пастельний жовтий */
+}
+
+.task-card.priority-low {
+  background: #e3ffe2; /* пастельний зелений */
+}
+
+.task-card.priority-someday {
+  background: #e0f2ff; /* пастельний блакитний */
+}
+
+/* ===== PRIORITY BADGE (ALL PRIORITIES IN FIRM VIOLET) ===== */
+.priority-badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+/* Intensified violet for all badges */
+.priority-badge-critical {
+  background: #b000f2;
+}
+
+.priority-badge-high {
+  background: #9a00d6;
+}
+
+.priority-badge-medium {
+  background: #7b00cc;
+}
+
+.priority-badge-low {
+  background: #5b00b3;
+}
+
+.priority-badge-someday {
+  background: #3b006a;
+}

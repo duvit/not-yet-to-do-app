@@ -4,9 +4,20 @@ export enum TASK_STATUS {
   DONE = 'done',
 }
 
+export enum PRIORITY {
+  SOMEDAY = 'someday',
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+  CRITICAL = 'critical',
+}
+
 export interface Task {
   id: string;
   title: string;
   description?: string;
-  status: TASK_STATUS.TODO | TASK_STATUS.IN_PROGRESS | TASK_STATUS.DONE;
+  status: TASK_STATUS;
+  tags?: string[];
+  priority: PRIORITY;
+  category?: string;
 }

@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Task, TASK_STATUS } from '../models/task.model';
+import { PRIORITY, Task, TASK_STATUS } from '../models/task.model';
 import { TaskFormModel } from '../models/task-form.model';
 
 @Injectable({
@@ -48,6 +48,7 @@ export class TasksService {
       title: taskData.title,
       description: taskData.description,
       status: TASK_STATUS.TODO,
+      priority: taskData.priority,
     };
   }
 }
