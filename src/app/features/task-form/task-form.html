@@ -24,7 +24,7 @@
   <div class="task-form__group">
     <label class="task-form__label" for="priority">Priority</label>
     <mat-form-field appearance="outline" class="task-form__group custom-select">
-      <mat-select name="priority">
+      <mat-select name="priority" id="priority">
         @for (priority of priorities; track priority) {
         <mat-option [value]="priority" class="priority-{{ priority }}">{{
           priority | titlecase
