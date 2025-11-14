@@ -49,6 +49,23 @@ export class TasksService {
       description: taskData.description,
       status: TASK_STATUS.TODO,
       priority: taskData.priority,
+      createdAt: new Date().toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      }),
     };
+  }
+
+  public changeDate(task: Task, action: 'updatedAt' | 'doneAt'): Task {
+    const updatedDate: string = new Date().toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+
+    task[action] = updatedDate;
+    console.log(JSON.stringify(task));
+    return task;
   }
 }

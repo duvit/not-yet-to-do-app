@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Task, TASK_STATUS } from '../../models/task.model';
 import { TaskCard } from '../task-card/task-card';
@@ -18,7 +19,7 @@ import { map } from 'rxjs';
 
 @Component({
   selector: 'app-tasks-list',
-  imports: [TaskCard, MatTabsModule],
+  imports: [TaskCard, MatTabsModule, NgTemplateOutlet],
   templateUrl: './tasks-list.html',
   styleUrl: './tasks-list.scss',
 })

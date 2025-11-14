@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './header.scss',
 })
 export class Header {
- readonly dialog = inject(MatDialog);
+  readonly dialog = inject(MatDialog);
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(DialogAnimationsExampleDialog, {

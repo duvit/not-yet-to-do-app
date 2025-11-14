@@ -1,24 +1,40 @@
-<article class="task-card priority-{{task().priority}}">
+<article class="task-card">
+  <div class="task-card__header">
+    <span class="task-card__icon">🗂️</span>
+    <span class="task-card__badge">{{ taskStatus() }}</span>
+  </div>
+
   <h4 class="task-card__title">{{ task().title }}</h4>
+
+  <div class="task-card__divider"></div>
+
+  <p class="task-card__description">{{ task().description }}</p>
 
   <div class="task-card__status" #statusBlock>
     <button class="task-card__status-btn" (click)="toggleDropdown()">
-      {{ taskStatus() }}
+      Change status
       <span class="task-card__status-arrow">▾</span>
     </button>
 
     @if (dropdownOpen) {
-      <ul class="task-card__status-list">
-        @for (status of availableStatuses(); track $index) {
-          <li class="task-card__status-item" (click)="changeStatus(status)">
-            {{ status }}
-          </li>
-        }
-      </ul>
+    <ul class="task-card__status-list">
+      @for (status of availableStatuses(); track $index) {
+      <li class="task-card__status-item" (click)="changeStatus(status)">
+        {{ status }}
+      </li>
+      }
+    </ul>
     }
   </div>
 
-  <p class="task-card__description">{{ task().description }}</p>
+  <div class="task-card__meta">
+    <span>Created at: {{ task().createdAt }}</span>
+    @if (task().updatedAt) {
+    <span>Updated at: {{ task().updatedAt }}</span>
+    } @if (task().doneAt) {
+    <span>Done at: {{ task().doneAt }}</span>
+    }
+  </div>
 
   <div class="task-card__actions">
     <button class="task-card__btn task-card__btn-delete" (click)="deleteTask()">Delete</button>

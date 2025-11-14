@@ -20,4 +20,7 @@ export interface Task {
   tags?: string[];
   priority: PRIORITY;
   category?: string;
+  createdAt: string;
+  updatedAt?: string;
+  doneAt?: string | null;
 }

@@ -1,5 +1,23 @@
-.tasks-board {
-  display: none;
-  flex-direction: row;
-  justify-content: space-between;
+@media (min-width: 768px) {
+  .tasks-board {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    .tasks-column {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+
+      &__header {
+        align-self: center;
+      }
+    }
+
+    .tasks-column {
+      border-right: 1px solid #b100f254;
+    }
+  }
 }
