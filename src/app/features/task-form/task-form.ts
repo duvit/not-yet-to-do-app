@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskFormModel } from '../../models/task-form.model';
 import { TasksService } from '../../services/tasks-service';
@@ -14,6 +14,7 @@ export class TaskForm {
   private formBuilder = inject(FormBuilder);
   public taskData!: TaskFormModel;
   private tasksService = inject(TasksService);
+  public formSubmit = output<void>();
 
   taskForm = this.formBuilder.group({
     title: ['', Validators.required],
@@ -28,7 +29,7 @@ export class TaskForm {
 
     const task: Task = this.tasksService.taskFromData(this.taskData);
     this.tasksService.addTask(task);
-
     this.taskForm.reset();
+    this.formSubmit.emit(); //
   }
 }

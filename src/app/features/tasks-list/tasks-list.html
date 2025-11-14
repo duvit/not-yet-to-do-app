@@ -1,7 +1,6 @@
-<button matButton="elevated" (click)="openDialog('0ms', '0ms')">Add new task</button>
-
+@if (isMobile()) {
 <mat-tab-group>
-  <mat-tab label="To do">
+  <mat-tab label="To do: {{ toDoTasks.length }}">
     <ul class="tasks-list">
       @for (task of toDoTasks; track task.id) {
       <li>
@@ -10,7 +9,7 @@
       }
     </ul>
   </mat-tab>
-  <mat-tab label="In progress">
+  <mat-tab label="In progress: {{ inProgressTasks.length }}">
     <ul class="tasks-list">
       @for (task of inProgressTasks; track task.id) {
       <li>
@@ -19,7 +18,11 @@
       }
     </ul>
   </mat-tab>
-  <mat-tab label="Done">
+  <mat-tab
+    ><ng-template mat-tab-label>
+      Done
+      <span class="material-symbols-outlined">check</span>
+    </ng-template>
     <ul class="tasks-list">
       @for (task of doneTasks; track task.id) {
       <li>
@@ -29,7 +32,7 @@
     </ul>
   </mat-tab>
 </mat-tab-group>
-
+} @else {
 <section class="tasks-board">
   <div class="tasks-column">
     <h3>To do</h3>
@@ -62,3 +65,4 @@
     </ul>
   </div>
 </section>
+}

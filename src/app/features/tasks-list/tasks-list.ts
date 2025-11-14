@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Task, TASK_STATUS } from '../../models/task.model';
 import { TaskCard } from '../task-card/task-card';
@@ -6,32 +6,31 @@ import { TasksService } from '../../services/tasks-service';
 import { TaskForm } from '../task-form/task-form';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-tasks-list',
-  imports: [TaskCard, MatTabsModule, MatButtonModule],
+  imports: [TaskCard, MatTabsModule],
   templateUrl: './tasks-list.html',
   styleUrl: './tasks-list.scss',
 })
 export class TasksList {
   private tasksService = inject(TasksService);
-
-  readonly dialog = inject(MatDialog);
-
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DialogAnimationsExampleDialog, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
-  }
+  private breakpointObserver = inject(BreakpointObserver);
+  public isMobile = toSignal(
+    this.breakpointObserver.observe('(max-width: 768px)').pipe(map((state) => state.matches)),
+    {
+      initialValue: window.innerWidth < 768,
+    }
+  );
 
   constructor() {
     this.tasksService.reloadTasks();
@@ -56,10 +55,53 @@ export class TasksList {
 
 @Component({
   selector: 'dialog-animations-example-dialog',
-  templateUrl: 'dialog-animations-example-dialog.html',
-  imports: [MatButtonModule, MatDialogClose, MatDialogTitle, MatDialogActions, MatDialogContent, TaskForm],
+  styles: `
+.cancel-btn {
+  width: 100%;
+  padding: 0.55rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #000000ff;
+  background: linear-gradient(135deg, #ff0000cb, #b80606e3);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(170, 0, 255, 0.25);
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #b000f2, #7b00cc);
+  box-shadow: 0 4px 10px rgba(155, 0, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.cancel-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(155, 0, 255, 0.2);
+}
+
+.cancel-btn:disabled {
+  background: #e1c4ff;
+  color: #a17abf;
+  cursor: not-allowed;
+  box-shadow: none;
+}`,
+  templateUrl: 'dialog-content.html',
+  imports: [
+    MatButtonModule,
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogActions,
+    MatDialogContent,
+    TaskForm,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogAnimationsExampleDialog {
   readonly dialogRef = inject(MatDialogRef<DialogAnimationsExampleDialog>);
+
+  onFormSubmit(data: any): void {
+    this.dialogRef.close(data);
+  }
 }
