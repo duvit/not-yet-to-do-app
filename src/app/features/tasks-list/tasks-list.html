@@ -19,17 +19,17 @@
 } @else {
 <section class="tasks-board">
   <div class="tasks-column">
-    <h3 class="tasks-column__header">To do</h3>
+    <h3 class="tasks-column__header">To do: {{ toDoTasks.length }}</h3>
     <ng-container *ngTemplateOutlet="taskList; context: { $implicit: toDoTasks }"></ng-container>
   </div>
   <div class="tasks-column">
-    <h3 class="tasks-column__header">In progress</h3>
+    <h3 class="tasks-column__header">In progress: {{ inProgressTasks.length }}</h3>
     <ng-container
       *ngTemplateOutlet="taskList; context: { $implicit: inProgressTasks }"
     ></ng-container>
   </div>
   <div class="tasks-column">
-    <h3 class="tasks-column__header">Done</h3>
+    <h3 class="tasks-column__header">Done <span class="material-symbols-outlined">check</span></h3>
     <ng-container *ngTemplateOutlet="taskList; context: { $implicit: doneTasks }"></ng-container>
   </div>
 </section>

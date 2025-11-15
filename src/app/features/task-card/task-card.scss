@@ -19,20 +19,16 @@
   box-shadow: 0 6px 16px rgba(155, 0, 255, 0.22);
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 .task-card__header {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.5rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
-.task-card__icon {
-  font-size: 1.2rem;
-  opacity: 0.8;
-}
-
-.task-card__badge {
+.task-card__status-badge {
   background: #f3e6ff;
   color: #6a0dad;
   padding: 0.25rem 0.65rem;
@@ -42,7 +38,32 @@
   box-shadow: 0 1px 3px rgba(106, 13, 173, 0.25);
 }
 
-/* ===== TITLE ===== */
+.priority-badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.priority-badge--critical {
+  background: #ff3b3b;
+}
+.priority-badge--high {
+  background: #ff9f00;
+}
+.priority-badge--medium {
+  background: #ffd400;
+}
+.priority-badge--low {
+  background: #22c55e;
+}
+.priority-badge--someday {
+  background: #3b82f6;
+}
+
+/* TITLE */
 .task-card__title {
   color: #6a0dad;
   font-size: 1.2rem;
@@ -51,7 +72,7 @@
   margin-bottom: 0.7rem;
 }
 
-/* ===== DIVIDER ===== */
+/* DIVIDER */
 .task-card__divider {
   height: 1px;
   background: rgba(106, 13, 173, 0.18);
@@ -59,7 +80,7 @@
   border-radius: 1px;
 }
 
-/* ===== DESCRIPTION ===== */
+/* DESCRIPTION */
 .task-card__description {
   color: #4a0072;
   font-size: 0.95rem;
@@ -73,8 +94,8 @@
   opacity: 1;
 }
 
-/* ===== STATUS BUTTON ===== */
-.task-card__status {
+/* STATUS CONTROL */
+.task-card__status-control {
   position: relative;
   display: inline-block;
   margin-bottom: 1rem;
@@ -105,7 +126,6 @@
   font-size: 0.8em;
 }
 
-/* STATUS DROPDOWN */
 .task-card__status-list {
   position: absolute;
   top: calc(100% + 4px);
@@ -133,7 +153,7 @@
   background: #f3e6ff;
 }
 
-/* ===== META ===== */
+/* META */
 .task-card__meta {
   display: flex;
   flex-direction: column;
@@ -143,33 +163,40 @@
   letter-spacing: -0.2px;
 }
 
-/* ===== ACTIONS ===== */
+.task-card__meta-item {
+  margin-bottom: 0.2rem;
+}
+
+/* ACTIONS */
 .task-card__actions {
   display: flex;
   justify-content: flex-end;
 }
 
 /* DELETE BUTTON */
-.task-card__btn-delete {
-  background: linear-gradient(135deg, #ff5a5a, #d83535);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
+.task-card__btn {
   padding: 0.55rem 1.1rem;
-  cursor: pointer;
+  border-radius: 8px;
   font-weight: 500;
   font-size: 0.9rem;
-  box-shadow: 0 2px 7px rgba(220, 0, 0, 0.25);
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.task-card__btn-delete:hover {
+.task-card__btn--delete {
+  background: linear-gradient(135deg, #ff5a5a, #d83535);
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 7px rgba(220, 0, 0, 0.25);
+}
+
+.task-card__btn--delete:hover {
   background: linear-gradient(135deg, #e04444, #b02020);
   box-shadow: 0 4px 12px rgba(200, 0, 0, 0.35);
   transform: translateY(-2px);
 }
 
-.task-card__btn-delete:active {
+.task-card__btn--delete:active {
   transform: translateY(0);
   box-shadow: 0 2px 6px rgba(200, 0, 0, 0.25);
 }
@@ -196,62 +223,7 @@
   .task-card__title {
     font-size: 1.25rem;
   }
-
   .task-card__description {
     font-size: 1rem;
   }
-}
-
-
-/* ===== TASK CARD BACKGROUND BY PRIORITY ===== */
-.task-card.priority-critical {
-  background: #ffe2e2; /* пастельний червоний */
-}
-
-.task-card.priority-high {
-  background: #fff0d6; /* пастельний помаранчевий */
-}
-
-.task-card.priority-medium {
-  background: #fff8cc; /* пастельний жовтий */
-}
-
-.task-card.priority-low {
-  background: #e3ffe2; /* пастельний зелений */
-}
-
-.task-card.priority-someday {
-  background: #e0f2ff; /* пастельний блакитний */
-}
-
-/* ===== PRIORITY BADGE (ALL PRIORITIES IN FIRM VIOLET) ===== */
-.priority-badge {
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: inline-block;
-  color: #fff;
-  text-transform: uppercase;
-}
-
-/* Intensified violet for all badges */
-.priority-badge-critical {
-  background: #b000f2;
-}
-
-.priority-badge-high {
-  background: #9a00d6;
-}
-
-.priority-badge-medium {
-  background: #7b00cc;
-}
-
-.priority-badge-low {
-  background: #5b00b3;
-}
-
-.priority-badge-someday {
-  background: #3b006a;
 }

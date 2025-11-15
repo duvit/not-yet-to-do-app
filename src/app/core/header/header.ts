@@ -14,9 +14,8 @@ export class Header {
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(DialogAnimationsExampleDialog, {
-      minWidth: '80vw',
+      minWidth: '40vw',
       minHeight: '20vh',
-      position: { top: '50%', bottom: '50%' },
       enterAnimationDuration,
       exitAnimationDuration,
     });

@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   padding-top: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
   &__logo {
     width: 120px;
@@ -40,11 +41,41 @@
 
 @media (min-width: 768px) {
   .header {
-    padding-top: 2.2rem;
+    height: 7rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2.2rem;
+
+    .add-task-btn-wrapper {
+      width: auto;
+      height: auto;
+      padding: 0;
+
+      .add-task-btn {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 8px;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .add-task-btn__text {
+          display: none;
+        }
+
+        .add-task-btn__icon {
+          margin-right: 0;
+          font-size: 2rem;
+          font-weight: 800;
+          line-height: 1;
+        }
+      }
+    }
 
     &__logo {
       width: 240px;
-      height: auto;
     }
   }
 }

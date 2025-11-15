@@ -12,12 +12,17 @@
       justify-content: start;
 
       &__header {
+        height: 1.6rem;
         align-self: center;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
     }
 
     .tasks-column {
       border-right: 1px solid #b100f254;
+      padding: 0 0.6rem 0;
     }
   }
 }

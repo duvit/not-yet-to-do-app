@@ -19,22 +19,31 @@ export class TaskForm {
   public formSubmit = output<void>();
   public priorities: PRIORITY[] = Object.values(PRIORITY);
 
-  taskForm = this.formBuilder.group({
+  taskForm = this.formBuilder.nonNullable.group({
     title: ['', Validators.required],
     description: [''],
     priority: [PRIORITY.MEDIUM, Validators.required],
   });
 
   onSubmit() {
-    this.taskData = {
-      title: this.taskForm.value.title!,
-      description: this.taskForm.value.description || '',
-      priority: this.taskForm.value.priority as PRIORITY,
-    };
+    if (this.taskForm.invalid) return;
 
-    const task: Task = this.tasksService.taskFromData(this.taskData);
+    const { title, description, priority } = this.taskForm.getRawValue();
+
+    const task: Task = this.tasksService.taskFromData({
+      title,
+      description: description || '',
+      priority,
+    });
+
     this.tasksService.addTask(task);
-    this.taskForm.reset();
+
+    this.taskForm.reset({
+      title: '',
+      description: '',
+      priority: PRIORITY.MEDIUM,
+    });
+
     this.formSubmit.emit();
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { PRIORITY, Task, TASK_STATUS } from '../models/task.model';
+import { Task, TASK_STATUS } from '../models/task.model';
 import { TaskFormModel } from '../models/task-form.model';
 
 @Injectable({
@@ -49,23 +49,22 @@ export class TasksService {
       description: taskData.description,
       status: TASK_STATUS.TODO,
       priority: taskData.priority,
-      createdAt: new Date().toLocaleDateString('en-US', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-      }),
+      createdAt: this.formatDate(),
     };
   }
 
   public changeDate(task: Task, action: 'updatedAt' | 'doneAt'): Task {
-    const updatedDate: string = new Date().toLocaleDateString('en-GB', {
+    return {
+      ...task,
+      [action]: this.formatDate(),
+    };
+  }
+
+  private formatDate(): string {
+    return new Date().toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'short',
       year: 'numeric',
     });
-
-    task[action] = updatedDate;
-    console.log(JSON.stringify(task));
-    return task;
   }
 }

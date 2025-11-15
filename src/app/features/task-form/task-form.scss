@@ -91,29 +91,32 @@
   }
 }
 
-.mat-mdc-option.priority-critical {
-  background: #ffe2e2 !important;
+.mat-mdc-option {
+  color: #fff;
 }
-
-.mat-mdc-option.priority-high {
-  background: #fff0d6 !important;
-}
-
-.mat-mdc-option.priority-medium {
-  background: #fff8cc !important;
+.mat-mdc-option.priority-someday {
+  background: #3b82f6;
 }
 
 .mat-mdc-option.priority-low {
-  background: #e3ffe2 !important;
+  background: #22c55e;
 }
 
-.mat-mdc-option.priority-someday {
-  background: #e0f2ff !important;
+.mat-mdc-option.priority-medium {
+  background: #ffd400;
+}
+
+.mat-mdc-option.priority-high {
+  background: #ff9f00;
+}
+
+.mat-mdc-option.priority-critical {
+  background: #ff3b3b;
 }
 
 .custom-select {
   .mat-mdc-form-field-focus-overlay {
-    background: transparent !important;
+    background: transparent;
   }
 
   .mat-mdc-text-field-wrapper {
@@ -131,7 +134,7 @@
   }
 
   .mat-mdc-select-trigger {
-    padding: 0.5rem 0.75rem  !important;
+    padding: 0.5rem 0.75rem !important;
     font-size: 0.95rem;
     border: 1px solid #d1aaff;
     border-radius: 8px;

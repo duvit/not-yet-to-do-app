@@ -54,13 +54,13 @@ export class TaskCard implements OnInit {
   }
 
   updateTask() {
-    if (this.task().status !== TASK_STATUS.DONE) {
-      this.tasksService.changeDate(this.task(), 'updatedAt');
-      this.tasksService.patchTask(this.taskId, this.taskStatus() as TASK_STATUS);
-    } else {
-      this.tasksService.changeDate(this.task(), 'doneAt');
-      this.tasksService.patchTask(this.taskId, this.taskStatus() as TASK_STATUS);
-    }
+    const task = this.task();
+    const status = this.taskStatus();
+
+    const dateField = status === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
+
+    this.tasksService.changeDate(task, dateField);
+    this.tasksService.patchTask(this.taskId, status as TASK_STATUS);
   }
 
   toggleDropdown() {
