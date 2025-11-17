@@ -16,10 +16,12 @@ export class TasksService {
 
   public reloadTasks(): void {
     this.tasksList.set(this.loadTasks());
+    console.log(this.tasksList());
   }
 
   public saveTasks(): void {
     localStorage.setItem(this.storageKey, JSON.stringify(this.tasksList()));
+    this.reloadTasks();
   }
 
   public addTask(task: Task): void {
@@ -32,10 +34,19 @@ export class TasksService {
     this.saveTasks();
   }
 
-  public patchTask(taskId: string, taskStatus: TASK_STATUS) {
-    const task: Task = this.getTaskById(taskId);
-    task.status = taskStatus;
+  public updateTask(taskId: string) {
+    this.tasksList.update((list) =>
+      list.map((task) => {
+        if (task.id === taskId) {
+          return {
+            ...task,
+          };
+        }
+        return task;
+      })
+    );
     this.saveTasks();
+    this.reloadTasks();
   }
 
   private getTaskById(taskId: string): Task {
@@ -53,10 +64,17 @@ export class TasksService {
     };
   }
 
-  public changeDate(task: Task, action: 'updatedAt' | 'doneAt'): Task {
+  public updateStatus(task: Task, status: TASK_STATUS): Task {
     return {
       ...task,
-      [action]: this.formatDate(),
+      status: status,
+    };
+  }
+
+  public updateDate(task: Task, dateField: 'updatedAt' | 'doneAt'): Task {
+    return {
+      ...task,
+      [dateField]: this.formatDate(),
     };
   }
 

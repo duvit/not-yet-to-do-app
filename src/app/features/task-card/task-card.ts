@@ -21,7 +21,8 @@ import { TasksService } from '../../services/tasks-service';
 })
 export class TaskCard implements OnInit {
   private tasksService = inject(TasksService);
-  public task = input.required<Task>();
+  public taskInput = input.required<Task>();
+  public task = computed(() => this.taskInput());
   public taskId!: string;
   public taskStatus = signal<TASK_STATUS | null>(null);
   public readonly tasksStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
@@ -54,13 +55,12 @@ export class TaskCard implements OnInit {
   }
 
   updateTask() {
-    const task = this.task();
     const status = this.taskStatus();
-
     const dateField = status === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
 
-    this.tasksService.changeDate(task, dateField);
-    this.tasksService.patchTask(this.taskId, status as TASK_STATUS);
+    // this.tasksService.updateDate(this.task(), dateField);
+    this.task.update() this.tasksService.updateStatus(this.task(), status as TASK_STATUS, dateField);
+    console.log(this.task());
   }
 
   toggleDropdown() {
