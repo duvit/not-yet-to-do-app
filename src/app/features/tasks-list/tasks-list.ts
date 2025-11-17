@@ -52,6 +52,13 @@ export class TasksList {
   addTask(task: Task) {
     this.tasksService.addTask(task);
   }
+
+  onTaskUpdated(updated: Task) {
+    this.tasksService.tasksList.update((list) =>
+      list.map((task) => (task.id === updated.id ? updated : task))
+    );
+    this.tasksService.saveTasks();
+  }
 }
 
 @Component({

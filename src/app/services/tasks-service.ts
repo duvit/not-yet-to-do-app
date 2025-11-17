@@ -16,7 +16,6 @@ export class TasksService {
 
   public reloadTasks(): void {
     this.tasksList.set(this.loadTasks());
-    console.log(this.tasksList());
   }
 
   public saveTasks(): void {
@@ -64,16 +63,10 @@ export class TasksService {
     };
   }
 
-  public updateStatus(task: Task, status: TASK_STATUS): Task {
+  public updateStatus(task: Task, status: TASK_STATUS, dateField: 'updatedAt' | 'doneAt'): Task {
     return {
       ...task,
       status: status,
-    };
-  }
-
-  public updateDate(task: Task, dateField: 'updatedAt' | 'doneAt'): Task {
-    return {
-      ...task,
       [dateField]: this.formatDate(),
     };
   }

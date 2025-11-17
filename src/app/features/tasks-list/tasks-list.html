@@ -39,7 +39,7 @@
   <ul class="tasks-list">
     @for (task of list; track task.id) {
     <li>
-      <app-task-card [task]="task" />
+      <app-task-card [task]="task" (taskUpdated)="onTaskUpdated($event)" />
     </li>
     }
   </ul>

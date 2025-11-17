@@ -6,6 +6,7 @@ import {
   inject,
   input,
   OnInit,
+  output,
   signal,
   ViewChild,
 } from '@angular/core';
@@ -21,8 +22,8 @@ import { TasksService } from '../../services/tasks-service';
 })
 export class TaskCard implements OnInit {
   private tasksService = inject(TasksService);
-  public taskInput = input.required<Task>();
-  public task = computed(() => this.taskInput());
+  public task = input.required<Task>();
+  public taskUpdated = output<Task>();
   public taskId!: string;
   public taskStatus = signal<TASK_STATUS | null>(null);
   public readonly tasksStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
@@ -55,12 +56,9 @@ export class TaskCard implements OnInit {
   }
 
   updateTask() {
-    const status = this.taskStatus();
-    const dateField = status === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
-
-    // this.tasksService.updateDate(this.task(), dateField);
-    this.task.update() this.tasksService.updateStatus(this.task(), status as TASK_STATUS, dateField);
-    console.log(this.task());
+    const dateField = this.taskStatus() === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
+    const updated = this.tasksService.updateStatus(this.task(), status as TASK_STATUS, dateField);
+    this.taskUpdated.emit(updated);
   }
 
   toggleDropdown() {
