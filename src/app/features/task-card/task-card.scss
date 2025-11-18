@@ -303,3 +303,23 @@
     font-size: 1rem;
   }
 }
+
+/* Блокує всю взаємодію */
+.task-card--done {
+  pointer-events: none;
+  opacity: 0.55;
+  filter: grayscale(40%);
+}
+
+/* Але дозволяє кнопці Delete працювати */
+.task-card--done .task-card__btn--delete {
+  pointer-events: auto;
+  opacity: 1;
+  filter: none;
+}
+
+/* Хедер або бейдж можна підсвітити */
+.task-card--done .task-card__status-badge {
+  background: var(--green-strong);
+  color: #fff;
+}

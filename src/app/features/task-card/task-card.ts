@@ -22,12 +22,13 @@ import { TasksService } from '../../services/tasks-service';
 })
 export class TaskCard implements OnInit {
   private tasksService = inject(TasksService);
+  public readonly tasksStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
   public task = input.required<Task>();
   public taskUpdated = output<Task>();
   public taskId = signal<string>('');
   public taskTitle = signal<string>('');
   public taskStatus = signal<TASK_STATUS | null>(null);
-  public readonly tasksStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
+  public isDone!: boolean;
   public dropdownOpen = signal<boolean>(false);
   public isEditing = signal<boolean>(false);
   public editModel = {
@@ -38,16 +39,17 @@ export class TaskCard implements OnInit {
     return this.tasksStatuses.filter((el) => el !== this.taskStatus());
   });
 
-  public changeStatus(newStatus: string): void {
-    this.taskStatus.set(newStatus as TASK_STATUS);
-    this.updateStatus();
-    this.dropdownOpen.set(false);
-  }
-
   ngOnInit() {
     this.taskId.set(this.task().id);
     this.taskTitle.set(this.task().title);
     this.taskStatus.set(this.task().status);
+    this.isDone = this.task().isDone as boolean;
+  }
+
+  public changeStatus(newStatus: string): void {
+    this.taskStatus.set(newStatus as TASK_STATUS);
+    this.updateStatus();
+    this.dropdownOpen.set(false);
   }
 
   public editTask() {
@@ -68,6 +70,9 @@ export class TaskCard implements OnInit {
 
   public updateStatus() {
     const dateField = this.taskStatus() === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
+    if (dateField === 'doneAt') {
+      this.task();
+    }
     const updated = this.tasksService.updateStatus(
       this.task(),
       this.taskStatus() as TASK_STATUS,

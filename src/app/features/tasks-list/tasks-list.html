@@ -39,7 +39,11 @@
   <ul class="tasks-list">
     @for (task of list; track task.id) {
     <li>
-      <app-task-card [task]="task" (taskUpdated)="onTaskUpdated($event)" />
+      <app-task-card
+        [task]="task"
+        (taskUpdated)="onTaskUpdated($event)"
+        [class.task-card--done]="task.isDone"
+      />
     </li>
     }
   </ul>

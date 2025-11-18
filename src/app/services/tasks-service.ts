@@ -60,6 +60,7 @@ export class TasksService {
       status: TASK_STATUS.TODO,
       priority: taskData.priority,
       createdAt: this.formatDate(),
+      isDone: false,
     };
   }
 
