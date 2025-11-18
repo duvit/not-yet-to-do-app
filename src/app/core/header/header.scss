@@ -65,7 +65,7 @@
         transition: width 0.3s ease;
 
         &:hover {
-          width: 11rem;
+          width: 11.4rem;
           justify-content: space-between;
         }
 
@@ -81,7 +81,7 @@
         }
 
         &:hover .add-task-btn__text {
-          left: 1.35rem;
+          left: 1.8rem;
           transform: translateX(0) translateY(-50%);
           pointer-events: auto;
         }
