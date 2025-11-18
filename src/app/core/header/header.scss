@@ -55,14 +55,36 @@
       .add-task-btn {
         width: 3rem;
         height: 3rem;
+        position: relative;
         border-radius: 8px;
-        padding: 0;
+        padding: 1rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        overflow: hidden;
+        transition: width 0.35s ease;
+
+        &:hover {
+          width: 11rem;
+          justify-content: space-between;
+        }
 
         .add-task-btn__text {
-          display: none;
+          position: absolute;
+          top: 50%;
+          left: calc(3rem + 0.6rem);
+          transform: translateX(2rem) translateY(-50%);
+          opacity: 0;
+          white-space: nowrap;
+          transition: transform 0.35s ease, opacity 0.25s ease;
+          pointer-events: none;
+        }
+
+        &:hover .add-task-btn__text {
+          left: 1.4rem;
+          transform: translateX(0) translateY(-50%);
+          opacity: 1;
+          pointer-events: auto;
         }
 
         .add-task-btn__icon {
