@@ -63,20 +63,81 @@
   background: #3b82f6;
 }
 
+.task-card__title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* TITLE */
-.task-card__title {
-  color: #6a0dad;
+.task-card__title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.task-card__title,
+.task-card__edit-input {
   font-size: 1.2rem;
   font-weight: 600;
   letter-spacing: -0.3px;
-  margin-bottom: 0.7rem;
+  color: #6a0dad;
+  padding-left: 0.4rem;
+  line-height: 1.8rem;
+  height: 1.8rem;
+}
+
+.task-card__edit-input {
+  border-radius: 0.5rem;
+  border-bottom: 1px solid #b57ce0;
+  background-color: #b57ce059;
+  outline: none;
+  display: block;
+  width: 100%;
+  letter-spacing: 0.2px;
+}
+
+.task-card__changes {
+  cursor: pointer;
+
+  .material-symbols-outlined {
+    color: rgb(169, 0, 169);
+    font-weight: 800;
+    line-height: 2.2rem;
+  }
+}
+
+.task-card__edit-actions {
+  display: flex;
+  gap: 0.1rem;
+
+  .material-symbols-outlined{
+    font-weight: 800;
+    font-size: 1.6rem;
+    line-height: 2rem;
+  }
+}
+
+.task-card__btn-save {
+  background-color: transparent;
+  border: none;
+  color: #22c55e;
+  cursor: pointer;
+}
+
+.task-card__btn-cancel {
+  background-color: transparent;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
 }
 
 /* DIVIDER */
 .task-card__divider {
   height: 1px;
   background: rgba(106, 13, 173, 0.18);
-  margin-bottom: 0.9rem;
+  margin: 0.7rem 0 0.9rem;
   border-radius: 1px;
 }
 

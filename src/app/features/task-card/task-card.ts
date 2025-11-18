@@ -24,10 +24,15 @@ export class TaskCard implements OnInit {
   private tasksService = inject(TasksService);
   public task = input.required<Task>();
   public taskUpdated = output<Task>();
-  public taskId!: string;
+  public taskId = signal<string>('');
+  public taskTitle = signal<string>('');
   public taskStatus = signal<TASK_STATUS | null>(null);
   public readonly tasksStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
-  public dropdownOpen: boolean = false;
+  public dropdownOpen = signal<boolean>(false);
+  public isEditing = signal<boolean>(false);
+  public editModel = {
+    title: '',
+  };
 
   public availableStatuses = computed(() => {
     return this.tasksStatuses.filter((el) => el !== this.taskStatus());
@@ -35,44 +40,59 @@ export class TaskCard implements OnInit {
 
   public changeStatus(newStatus: string): void {
     this.taskStatus.set(newStatus as TASK_STATUS);
-    this.updateTask();
-    this.dropdownOpen = false;
+    this.updateStatus();
+    this.dropdownOpen.set(false);
   }
 
   constructor(private eRef: ElementRef) {}
 
   ngOnInit() {
-    this.taskId = this.task().id;
+    this.taskId.set(this.task().id);
+    this.taskTitle.set(this.task().title);
     this.taskStatus.set(this.task().status);
   }
 
-  deleteTask() {
-    this.tasksService.deleteTask(this.taskId);
+  public editTask() {
+    this.editModel.title = this.taskTitle();
+    this.isEditing.set(true);
   }
 
-  markAsDone() {
-    this.taskStatus.set(TASK_STATUS.DONE);
-    this.updateTask();
+  public saveEdit() {}
+  public cancelEdit() {
+    this.isEditing.set(false);
   }
 
-  updateTask() {
+  public updateStatus() {
     const dateField = this.taskStatus() === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
-    const updated = this.tasksService.updateStatus(this.task(), status as TASK_STATUS, dateField);
+    const updated = this.tasksService.updateStatus(
+      this.task(),
+      this.taskStatus() as TASK_STATUS,
+      dateField
+    );
     this.taskUpdated.emit(updated);
   }
 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
+  public deleteTask() {
+    this.tasksService.deleteTask(this.taskId());
+  }
+
+  // markAsDone() {
+  //   this.taskStatus.set(TASK_STATUS.DONE);
+  //   this.updateTask();
+  // }
+
+  public toggleDropdown() {
+    this.dropdownOpen.set(!this.dropdownOpen());
   }
 
   @ViewChild('statusBlock') statusBlock!: ElementRef;
 
   @HostListener('document:click', ['$event'])
-  handleClickOutside(event: MouseEvent) {
+  public handleClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
     const clickedInside = this.statusBlock?.nativeElement.contains(target);
     if (this.dropdownOpen && !clickedInside) {
-      this.dropdownOpen = false;
+      this.dropdownOpen.set(false);
     }
   }
 }
