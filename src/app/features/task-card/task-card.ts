@@ -44,8 +44,6 @@ export class TaskCard implements OnInit {
     this.dropdownOpen.set(false);
   }
 
-  constructor(private eRef: ElementRef) {}
-
   ngOnInit() {
     this.taskId.set(this.task().id);
     this.taskTitle.set(this.task().title);
@@ -57,7 +55,13 @@ export class TaskCard implements OnInit {
     this.isEditing.set(true);
   }
 
-  public saveEdit() {}
+  public saveEdit() {
+    const newTitleTask = { ...this.task(), title: this.editModel.title };
+    this.tasksService.updateTask(newTitleTask);
+    this.taskTitle.set(this.editModel.title);
+    this.isEditing.set(false);
+  }
+
   public cancelEdit() {
     this.isEditing.set(false);
   }

@@ -9,7 +9,7 @@
   <div class="task-card__title-row">
     @if (!isEditing()) {
     <h4 class="task-card__title">{{ task().title }}</h4>
-    <span class="task-card__changes" (click)="editTask()">
+    <span class="task-card__changes-btn" (click)="editTask()">
       <span class="material-symbols-outlined">edit</span>
     </span>
     } @else {

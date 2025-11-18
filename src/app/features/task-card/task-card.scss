@@ -94,43 +94,58 @@
   background-color: #b57ce059;
   outline: none;
   display: block;
-  width: 100%;
+  width: 70%;
   letter-spacing: 0.2px;
 }
 
-.task-card__changes {
+.task-card__changes-btn {
+  width: 36px;
+  height: 36px;
   cursor: pointer;
 
   .material-symbols-outlined {
+    width: 100%;
+    display: flex;
+    justify-content: center;
     color: rgb(169, 0, 169);
-    font-weight: 800;
+    font-weight: 400;
     line-height: 2.2rem;
+    border: 1px solid rgba(96, 48, 94, 0.25);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }
 }
 
 .task-card__edit-actions {
   display: flex;
-  gap: 0.1rem;
+  gap: 0.4rem;
 
-  .material-symbols-outlined{
+  .material-symbols-outlined {
     font-weight: 800;
     font-size: 1.6rem;
     line-height: 2rem;
+    display: inline-block;
   }
 }
 
-.task-card__btn-save {
-  background-color: transparent;
-  border: none;
-  color: #22c55e;
+.task-card__btn-save,
+.task-card__btn-cancel {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgba(96, 48, 94, 0.25);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
+.task-card__btn-save {
+  color: #22c55e;
+}
+
 .task-card__btn-cancel {
-  background-color: transparent;
-  border: none;
   color: #ef4444;
-  cursor: pointer;
 }
 
 /* DIVIDER */

@@ -14,26 +14,30 @@
   }
 
   .add-task-btn-wrapper {
-    display: flex;
-    justify-content: center;
     padding: 1.1rem 0;
 
     .add-task-btn {
       width: 100vw;
-      margin: 0 auto;
       border-radius: 0;
 
       &__text {
-        display: inline-block;
+        line-height: 2rem;
         font-size: 1.2rem;
         font-weight: 800;
       }
 
       &__icon {
-        display: inline-block;
+        position: absolute;
+        top: 50%;
+        transform: translate(-2rem, -50%);
         margin-right: 8px;
         font-size: 1.5rem;
         font-weight: 800;
+
+        .material-symbols-outlined {
+          font-weight: 800;
+          font-size: 2rem;
+        }
       }
     }
   }
@@ -65,7 +69,7 @@
         transition: width 0.3s ease;
 
         &:hover {
-          width: 11.4rem;
+          width: 12rem;
           justify-content: space-between;
         }
 
@@ -81,7 +85,7 @@
         }
 
         &:hover .add-task-btn__text {
-          left: 1.8rem;
+          left: 2.4rem;
           transform: translateX(0) translateY(-50%);
           pointer-events: auto;
         }
@@ -94,7 +98,7 @@
           font-size: 2rem;
           font-weight: 800;
           line-height: 1;
-          right: -0.6rem;
+          right: -0.9rem;
         }
 
         &:hover .add-task-btn__icon {
@@ -108,4 +112,11 @@
       width: 240px;
     }
   }
+}
+
+.mdc-button__label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
 }

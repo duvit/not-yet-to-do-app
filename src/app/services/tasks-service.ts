@@ -33,15 +33,15 @@ export class TasksService {
     this.saveTasks();
   }
 
-  public updateTask(taskId: string) {
+  public updateTask(task: Task) {
     this.tasksList.update((list) =>
-      list.map((task) => {
-        if (task.id === taskId) {
+      list.map((t) => {
+        if (t.id === task.id) {
           return {
             ...task,
           };
         }
-        return task;
+        return t;
       })
     );
     this.saveTasks();
