@@ -4,7 +4,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TitleCasePipe } from '@angular/common';
 import { TaskFormModel } from '../../models/task-form.model';
 import { TasksService } from '../../services/tasks-service';
-import { PRIORITY, Task } from '../../models/task.model';
+import { PRIORITY, Task, TaskSignal } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-form',
@@ -30,7 +30,7 @@ export class TaskForm {
 
     const { title, description, priority } = this.taskForm.getRawValue();
 
-    const task: Task = this.tasksService.taskFromData({
+    const task: TaskSignal = this.tasksService.taskFromData({
       title,
       description: description || '',
       priority,

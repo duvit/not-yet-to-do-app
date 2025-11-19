@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
-import { Task, TASK_STATUS } from '../../models/task.model';
+import { TaskSignal, TASK_STATUS } from '../../models/task.model';
 import { TaskCard } from '../task-card/task-card';
 import { TasksService } from '../../services/tasks-service';
 import { TaskForm } from '../task-form/task-form';
@@ -22,6 +22,7 @@ import { map } from 'rxjs';
   imports: [TaskCard, MatTabsModule, NgTemplateOutlet],
   templateUrl: './tasks-list.html',
   styleUrl: './tasks-list.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksList {
   private tasksService = inject(TasksService);
@@ -33,31 +34,26 @@ export class TasksList {
     }
   );
 
-  constructor() {
-    this.tasksService.reloadTasks();
+  ngOnInit() {
+    console.log(this.tasksService.tasksList());
   }
 
-  public get toDoTasks(): Task[] {
-    return this.tasksService.tasksList().filter((task) => task.status === TASK_STATUS.TODO);
+  public get toDoTasks(): TaskSignal[] {
+    return this.tasksService.tasksList().filter((task) => task.status() === TASK_STATUS.TODO);
   }
 
-  public get inProgressTasks(): Task[] {
-    return this.tasksService.tasksList().filter((task) => task.status === TASK_STATUS.IN_PROGRESS);
+  public get inProgressTasks(): TaskSignal[] {
+    return this.tasksService
+      .tasksList()
+      .filter((task) => task.status() === TASK_STATUS.IN_PROGRESS);
   }
 
-  public get doneTasks(): Task[] {
-    return this.tasksService.tasksList().filter((task) => task.status === TASK_STATUS.DONE);
+  public get doneTasks(): TaskSignal[] {
+    return this.tasksService.tasksList().filter((task) => task.status() === TASK_STATUS.DONE);
   }
 
-  addTask(task: Task) {
+  addTask(task: TaskSignal) {
     this.tasksService.addTask(task);
-  }
-
-  onTaskUpdated(updated: Task) {
-    this.tasksService.tasksList.update((list) =>
-      list.map((task) => (task.id === updated.id ? updated : task))
-    );
-    this.tasksService.saveTasks();
   }
 }
 

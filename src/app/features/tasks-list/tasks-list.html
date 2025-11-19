@@ -33,17 +33,13 @@
     <ng-container *ngTemplateOutlet="taskList; context: { $implicit: doneTasks }"></ng-container>
   </div>
 </section>
-}
+} @for (task of toDoTasks; track task.id) { task.title }
 
 <ng-template #taskList let-list>
   <ul class="tasks-list">
     @for (task of list; track task.id) {
     <li>
-      <app-task-card
-        [task]="task"
-        (taskUpdated)="onTaskUpdated($event)"
-        [class.task-card--done]="task.isDone"
-      />
+      <app-task-card [task]="task" [class.task-card--done]="task.isDone" />
     </li>
     }
   </ul>

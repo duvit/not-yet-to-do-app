@@ -1,14 +1,14 @@
 <article class="task-card task-card--lavender">
   <header class="task-card__header">
-    <span class="task-card__status-badge">{{ taskStatus() }}</span>
-    <span class="priority-badge priority-badge--{{ task().priority }}">
-      {{ task().priority }}
+    <span class="task-card__status-badge">{{ task().status() }}</span>
+    <span class="priority-badge priority-badge--{{ task().priority() }}">
+      {{ task().priority() }}
     </span>
   </header>
 
   <div class="task-card__title-row">
     @if (!isEditing()) {
-    <h4 class="task-card__title">{{ task().title }}</h4>
+    <h4 class="task-card__title">{{ task().title() }}</h4>
     <span class="task-card__changes-btn" (click)="editTask()">
       <span class="material-symbols-outlined">edit</span>
     </span>
@@ -27,7 +27,7 @@
 
   <div class="task-card__divider"></div>
 
-  <p class="task-card__description">{{ task().description }}</p>
+  <p class="task-card__description">{{ task().description() }}</p>
 
   <div class="task-card__status-control" #statusBlock>
     <button class="task-card__status-btn" (click)="toggleDropdown()">

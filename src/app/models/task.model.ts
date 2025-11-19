@@ -1,3 +1,5 @@
+import { Signal, WritableSignal } from '@angular/core';
+
 export enum TASK_STATUS {
   TODO = 'to do',
   IN_PROGRESS = 'in progress',
@@ -15,13 +17,25 @@ export enum PRIORITY {
 export interface Task {
   id: string;
   title: string;
-  description?: string;
+  description: string | null;
   status: TASK_STATUS;
-  tags?: string[];
+  // tags: string[] | null;
   priority: PRIORITY;
-  category?: string;
   createdAt: string;
-  updatedAt?: string;
+  updatedAt?: string | null;
   doneAt?: string | null;
-  isDone?: boolean;
+  isDone: boolean;
+}
+
+export interface TaskSignal {
+  id: string;
+  title: WritableSignal<string>;
+  description: WritableSignal<string | null>;
+  status: WritableSignal<TASK_STATUS>;
+  // tags: Signal<string[]>;
+  priority: WritableSignal<PRIORITY>;
+  createdAt: string;
+  updatedAt?: WritableSignal<string | null>;
+  doneAt?: WritableSignal<string | null>;
+  isDone: WritableSignal<boolean>;
 }

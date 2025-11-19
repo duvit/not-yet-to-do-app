@@ -1,29 +1,32 @@
 import { Injectable, signal } from '@angular/core';
-import { Task, TASK_STATUS } from '../models/task.model';
+import { TaskSignal, TASK_STATUS, Task } from '../models/task.model';
 import { TaskFormModel } from '../models/task-form.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  public tasksList = signal<Task[]>(this.loadTasks());
+  public tasksList = signal<TaskSignal[]>([]);
   private readonly storageKey = 'ny-tasks';
 
-  private loadTasks(): Task[] {
-    const data = localStorage.getItem(this.storageKey);
-    return data ? JSON.parse(data) : [];
+  public loadTasks() {
+    const data: Task[] = JSON.parse(localStorage.getItem(this.storageKey) ?? '[]');
+    this.tasksList.set(data.map((t) => this.createTaskSignal(t)));
   }
 
-  public reloadTasks(): void {
-    this.tasksList.set(this.loadTasks());
+  constructor() {
+    this.loadTasks();
   }
+
+  // public reloadTasks(): void {
+  //   this.tasksList.set(this.loadTasks());
+  // }
 
   public saveTasks(): void {
     localStorage.setItem(this.storageKey, JSON.stringify(this.tasksList()));
-    this.reloadTasks();
   }
 
-  public addTask(task: Task): void {
+  public addTask(task: TaskSignal): void {
     this.tasksList.update((list) => [...list, task]);
     this.saveTasks();
   }
@@ -33,7 +36,33 @@ export class TasksService {
     this.saveTasks();
   }
 
-  public updateTask(task: Task) {
+  private createTaskSignal(task: Task): TaskSignal {
+    return {
+      id: task.id,
+      title: signal(task.title),
+      description: signal(task.description),
+      status: signal(task.status),
+      createdAt: task.createdAt,
+      updatedAt: signal(task.updatedAt ?? ''),
+      doneAt: signal(task.doneAt ?? ''),
+      priority: signal(task.priority),
+      isDone: signal(task.isDone),
+    };
+  }
+
+  public taskFromData(taskData: TaskFormModel): TaskSignal {
+    return {
+      id: crypto.randomUUID(),
+      title: signal(taskData.title),
+      description: signal(taskData.description ?? null),
+      status: signal(TASK_STATUS.TODO),
+      priority: signal(taskData.priority),
+      createdAt: this.formatDate(),
+      isDone: signal(false),
+    };
+  }
+
+  public updateTask(task: TaskSignal) {
     this.tasksList.update((list) =>
       list.map((t) => {
         if (t.id === task.id) {
@@ -45,29 +74,17 @@ export class TasksService {
       })
     );
     this.saveTasks();
-    this.reloadTasks();
+    // this.reloadTasks();
   }
 
-  private getTaskById(taskId: string): Task {
-    return this.tasksList().find((task) => task.id === taskId)!;
-  }
-
-  public taskFromData(taskData: TaskFormModel): Task {
-    return {
-      id: crypto.randomUUID(),
-      title: taskData.title,
-      description: taskData.description,
-      status: TASK_STATUS.TODO,
-      priority: taskData.priority,
-      createdAt: this.formatDate(),
-      isDone: false,
-    };
-  }
-
-  public updateStatus(task: Task, status: TASK_STATUS, dateField: 'updatedAt' | 'doneAt'): Task {
+  public updateStatus(
+    task: TaskSignal,
+    status: TASK_STATUS,
+    dateField: 'updatedAt' | 'doneAt'
+  ): TaskSignal {
     return {
       ...task,
-      status: status,
+      [status]: status,
       [dateField]: this.formatDate(),
     };
   }
