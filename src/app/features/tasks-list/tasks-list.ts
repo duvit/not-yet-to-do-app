@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TaskSignal, TASK_STATUS } from '../../models/task.model';
@@ -26,6 +26,7 @@ import { map } from 'rxjs';
 })
 export class TasksList {
   private tasksService = inject(TasksService);
+  public taskList1 = signal<TaskSignal[]>(this.tasksService.tasksList());
   private breakpointObserver = inject(BreakpointObserver);
   public isMobile = toSignal(
     this.breakpointObserver.observe('(max-width: 768px)').pipe(map((state) => state.matches)),
@@ -34,9 +35,7 @@ export class TasksList {
     }
   );
 
-  ngOnInit() {
-    console.log(this.tasksService.tasksList());
-  }
+  ngOnInit() {}
 
   public get toDoTasks(): TaskSignal[] {
     return this.tasksService.tasksList().filter((task) => task.status() === TASK_STATUS.TODO);

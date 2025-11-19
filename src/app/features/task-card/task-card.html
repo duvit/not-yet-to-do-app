@@ -1,4 +1,4 @@
-<article class="task-card task-card--lavender">
+<article class="task-card task-card--lavender" [class.task-card--done]="task().isDone()">
   <header class="task-card__header">
     <span class="task-card__status-badge">{{ task().status() }}</span>
     <span class="priority-badge priority-badge--{{ task().priority() }}">
@@ -26,8 +26,11 @@
   </div>
 
   <div class="task-card__divider"></div>
-
+  @if (!isEditing()) {
   <p class="task-card__description">{{ task().description() }}</p>
+  } @else {
+  <input class="task-card__edit-input" [(ngModel)]="editModel.description" />
+  }
 
   <div class="task-card__status-control" #statusBlock>
     <button class="task-card__status-btn" (click)="toggleDropdown()">
@@ -48,10 +51,10 @@
 
   <div class="task-card__meta">
     <span class="task-card__meta-item">Created: {{ task().createdAt }}</span>
-    @if (task().updatedAt) {
-    <span class="task-card__meta-item">Updated: {{ task().updatedAt }}</span>
-    } @if (task().doneAt) {
-    <span class="task-card__meta-item">Done: {{ task().doneAt }}</span>
+    @if (task().updatedAt()) {
+    <span class="task-card__meta-item">Updated: {{ task().updatedAt() }}</span>
+    } @if (task().doneAt()) {
+    <span class="task-card__meta-item">Done: {{ task().doneAt() }}</span>
     }
   </div>
 

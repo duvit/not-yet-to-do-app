@@ -5,8 +5,6 @@ import {
   HostListener,
   inject,
   input,
-  OnInit,
-  output,
   signal,
   ViewChild,
 } from '@angular/core';
@@ -20,7 +18,7 @@ import { TasksService } from '../../services/tasks-service';
   templateUrl: './task-card.html',
   styleUrl: './task-card.scss',
 })
-export class TaskCard implements OnInit {
+export class TaskCard {
   private tasksService = inject(TasksService);
   public task = input.required<TaskSignal>();
   public readonly tasksStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
@@ -28,41 +26,42 @@ export class TaskCard implements OnInit {
   public isEditing = signal<boolean>(false);
   public editModel = {
     title: '',
+    description: '',
   };
 
   public availableStatuses = computed(() => {
     return this.tasksStatuses.filter((status) => status !== this.task().status());
   });
 
-  ngOnInit() {
-    console.log(this.task());
-  }
-
   public changeStatus(newStatus: string): void {
+    const dateField = newStatus === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
+    if (dateField === 'doneAt') {
+      this.task().doneAt.set(this.tasksService.formatDate());
+      this.task().isDone.set(true);
+    } else {
+      this.task().updatedAt.set(this.tasksService.formatDate());
+    }
+
     this.task().status.set(newStatus as TASK_STATUS);
+    this.tasksService.saveTasks();
     this.dropdownOpen.set(false);
   }
 
   public editTask() {
     this.editModel.title = this.task().title();
+    this.editModel.description = this.task().description() ?? '';
     this.isEditing.set(true);
   }
 
   public saveEdit() {
     this.task().title.set(this.editModel.title);
+    this.task().description.set(this.editModel.description);
+    this.tasksService.saveTasks();
     this.isEditing.set(false);
   }
 
   public cancelEdit() {
     this.isEditing.set(false);
-  }
-
-  public updateStatus() {
-    const dateField = this.task().status() === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
-    if (dateField === 'doneAt') {
-      this.task().isDone.set(true);
-    }
-    const updated = this.tasksService.updateStatus(this.task(), this.task().status(), dateField);
   }
 
   public deleteTask() {

@@ -22,8 +22,8 @@ export interface Task {
   // tags: string[] | null;
   priority: PRIORITY;
   createdAt: string;
-  updatedAt?: string | null;
-  doneAt?: string | null;
+  updatedAt: string | null;
+  doneAt: string | null;
   isDone: boolean;
 }
 
@@ -35,7 +35,7 @@ export interface TaskSignal {
   // tags: Signal<string[]>;
   priority: WritableSignal<PRIORITY>;
   createdAt: string;
-  updatedAt?: WritableSignal<string | null>;
-  doneAt?: WritableSignal<string | null>;
+  updatedAt: WritableSignal<string | null>;
+  doneAt: WritableSignal<string | null>;
   isDone: WritableSignal<boolean>;
 }

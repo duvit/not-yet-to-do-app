@@ -18,12 +18,9 @@ export class TasksService {
     this.loadTasks();
   }
 
-  // public reloadTasks(): void {
-  //   this.tasksList.set(this.loadTasks());
-  // }
-
   public saveTasks(): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.tasksList()));
+    const tasks = this.tasksList().map((t) => this.taskFromSignal(t));
+    localStorage.setItem(this.storageKey, JSON.stringify(tasks));
   }
 
   public addTask(task: TaskSignal): void {
@@ -39,7 +36,7 @@ export class TasksService {
   private createTaskSignal(task: Task): TaskSignal {
     return {
       id: task.id,
-      title: signal(task.title),
+      title: signal<string>(task.title),
       description: signal(task.description),
       status: signal(task.status),
       createdAt: task.createdAt,
@@ -47,6 +44,20 @@ export class TasksService {
       doneAt: signal(task.doneAt ?? ''),
       priority: signal(task.priority),
       isDone: signal(task.isDone),
+    };
+  }
+
+  public taskFromSignal(task: TaskSignal): Task {
+    return {
+      id: task.id,
+      title: task.title(),
+      description: task.description(),
+      status: task.status(),
+      priority: task.priority(),
+      createdAt: task.createdAt,
+      updatedAt: task.updatedAt() ?? '',
+      doneAt: task.doneAt() ?? '',
+      isDone: task.isDone(),
     };
   }
 
@@ -58,6 +69,8 @@ export class TasksService {
       status: signal(TASK_STATUS.TODO),
       priority: signal(taskData.priority),
       createdAt: this.formatDate(),
+      updatedAt: signal(''),
+      doneAt: signal(''),
       isDone: signal(false),
     };
   }
@@ -89,7 +102,7 @@ export class TasksService {
     };
   }
 
-  private formatDate(): string {
+  public formatDate(): string {
     return new Date().toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'short',
