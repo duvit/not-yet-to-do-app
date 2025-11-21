@@ -9,9 +9,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TaskSignal } from '../../models/task.model';
-import { TasksService } from '../../services/tasks-service';
-import { TasksStore } from '../store/task.store';
+import { TaskSignal } from '../../../../shared/models/task.model';
+import { TasksStore } from '../../store/tasks.store';
+import { TasksConstants } from '../../../../core/utils/task-constants.util';
 
 @Component({
   selector: 'app-task-card',
@@ -22,7 +22,7 @@ import { TasksStore } from '../store/task.store';
 export class TaskCard {
   public task = input.required<TaskSignal>();
   private tasksStore = inject(TasksStore);
-  private taskservice = inject(TasksService);
+  private taskConsts = inject(TasksConstants);
   public statusDropdownOpen = signal(false);
   public priorityDropdownOpen = signal(false);
   public isEditing = signal(false);
@@ -31,10 +31,10 @@ export class TaskCard {
     description: '',
   };
   public availableStatuses = computed(() => {
-    return this.taskservice.getavailableStatuses(this.task().status());
+    return this.taskConsts.getavailableStatuses(this.task().status());
   });
   public availablePriorities = computed(() => {
-    return this.taskservice.getavailablePriorities(this.task().priority());
+    return this.taskConsts.getavailablePriorities(this.task().priority());
   });
 
   public changeStatus(newStatus: string): void {

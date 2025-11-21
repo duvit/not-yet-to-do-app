@@ -1,21 +1,13 @@
-import { Injectable, signal } from '@angular/core';
-import { TaskSignal, TASK_STATUS, Task, PRIORITY } from '../models/task.model';
-import { TaskFormModel } from '../models/task-form.model';
+import { inject, Injectable, signal } from '@angular/core';
+import { Task, TASK_STATUS, TaskSignal } from '../../../shared/models/task.model';
+import { TaskFormModel } from '../../../shared/models/task-form.model';
+import { DateFormat } from '../../../core/utils/date-format.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TasksService {
-  public readonly tasksStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
-  public readonly tasksPriorities: PRIORITY[] = Object.values(PRIORITY);
-
-  public getavailableStatuses(taskStatus: TASK_STATUS) {
-    return this.tasksStatuses.filter((status) => status !== taskStatus);
-  }
-
-  public getavailablePriorities(taskPriority: PRIORITY) {
-    return this.tasksPriorities.filter((priority) => priority !== taskPriority);
-  }
+export class TaskDomainService {
+  private dateFormat = inject(DateFormat);
 
   public createTaskSignal(task: Task): TaskSignal {
     return {
@@ -45,25 +37,30 @@ export class TasksService {
     };
   }
 
-  public taskFromData(taskData: TaskFormModel): TaskSignal {
+  public createTaskFromForm(taskData: TaskFormModel): TaskSignal {
     return {
       id: crypto.randomUUID(),
       title: signal(taskData.title),
       description: signal(taskData.description ?? null),
       status: signal(TASK_STATUS.TODO),
       priority: signal(taskData.priority),
-      createdAt: this.formatDate(),
+      createdAt: this.dateFormat.formatDate(),
       updatedAt: signal(''),
       doneAt: signal(''),
       isDone: signal(false),
     };
   }
 
-  public formatDate(): string {
-    return new Date().toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    });
+  public changeStatus(task: TaskSignal | undefined, newStatus: string): void {
+    const dateField = newStatus === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
+
+    if (dateField === 'doneAt') {
+      task?.doneAt?.set(this.dateFormat.formatDate());
+      task?.isDone?.set(true);
+    } else {
+      task?.updatedAt.set(this.dateFormat.formatDate());
+    }
+
+    task?.status.set(newStatus as TASK_STATUS);
   }
 }

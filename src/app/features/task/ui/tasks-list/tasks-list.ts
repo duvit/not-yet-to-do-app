@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TaskSignal, TASK_STATUS } from '../../models/task.model';
+import { TaskSignal, TASK_STATUS } from '../../../../shared/models/task.model';
 import { TaskCard } from '../task-card/task-card';
-import { TasksService } from '../../services/tasks-service';
 import { TaskForm } from '../task-form/task-form';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -16,7 +15,7 @@ import {
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { TasksStore } from '../store/task.store';
+import { TasksStore } from '../../store/tasks.store';
 
 @Component({
   selector: 'app-tasks-list',

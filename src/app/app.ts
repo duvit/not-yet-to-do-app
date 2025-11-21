@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { TasksList } from './features/tasks-list/tasks-list';
+import { TasksList } from './features/task/ui/tasks-list/tasks-list';
 import { Header } from './core/header/header';
 
 @Component({

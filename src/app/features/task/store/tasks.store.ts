@@ -1,28 +1,30 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { TaskSignal, Task, TASK_STATUS, PRIORITY } from '../../models/task.model';
-import { TasksPersistence } from '../data/task.persistence';
-import { TasksService } from '../../services/tasks-service';
+import { TasksPersistence } from '../data-access/task.storage';
+import { TaskDomainService } from '../data-access/tasks-transform';
+import { Task } from '../../../shared/models/task.model';
+import { TASK_PRIORITY } from '../../../shared/models/task-priority.enum';
+import { TaskSignal } from '../data-access/task-signal.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksStore {
   public tasksList = signal<TaskSignal[]>([]);
-  private tp = inject(TasksPersistence);
-  private tasksService = inject(TasksService);
+  private persistence = inject(TasksPersistence);
+  private transform = inject(TaskDomainService);
 
   constructor() {
     this.loadTasks();
   }
 
   public loadTasks() {
-    const data: Task[] = this.tp.getTasks();
-    this.tasksList.set(data.map((task) => this.tasksService.createTaskSignal(task)));
+    const data: Task[] = this.persistence.getTasks();
+    this.tasksList.set(data.map((task) => this.transform.createTaskSignal(task)));
   }
 
   public saveTasks(): void {
-    const data = this.tasksList().map((t) => this.tasksService.taskFromSignal(t));
-    this.tp.putTasks(data);
+    const data = this.tasksList().map((t) => this.transform.taskFromSignal(t));
+    this.persistence.putTasks(data);
   }
 
   public addTask(task: TaskSignal): void {
@@ -43,22 +45,14 @@ export class TasksStore {
   }
 
   public changeTaskStatus(taskId: string, newStatus: string): void {
-    const dateField = newStatus === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
     const task = this.getTaskByid(taskId);
-    if (dateField === 'doneAt') {
-      task?.doneAt.set(this.tasksService.formatDate());
-      task?.isDone.set(true);
-    } else {
-      task?.updatedAt.set(this.tasksService.formatDate());
-    }
-
-    task?.status.set(newStatus as TASK_STATUS);
+    this.transform.changeStatus(task, newStatus);
     this.saveTasks();
   }
 
-  changeTaskPriority(taskId: string, newPriority: string) {
+  public changeTaskPriority(taskId: string, newPriority: string) {
     const task = this.getTaskByid(taskId);
-    task?.priority.set(newPriority as PRIORITY);
+    task?.priority.set(newPriority as TASK_PRIORITY);
     this.saveTasks();
   }
 
