@@ -9,9 +9,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TaskSignal } from '../../../../shared/models/task.model';
 import { TasksStore } from '../../store/tasks.store';
 import { TasksConstants } from '../../../../core/utils/task-constants.util';
+import { TaskSignal } from '../../data-access/task-signal.model';
 
 @Component({
   selector: 'app-task-card',

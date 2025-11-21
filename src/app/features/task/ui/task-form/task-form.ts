@@ -3,9 +3,10 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { TitleCasePipe } from '@angular/common';
 import { TaskFormModel } from '../../../../shared/models/task-form.model';
-import { TaskDomainService } from '../../../../core/utils/task-domain-service';
-import { TASK_PRIORITY, TaskSignal } from '../../../../shared/models/task.model';
 import { TasksStore } from '../../store/tasks.store';
+import { TasksTransform } from '../../data-access/tasks-transform';
+import { TASK_PRIORITY } from '../../../../shared/models/task-priority.enum';
+import { TaskSignal } from '../../data-access/task-signal.model';
 
 @Component({
   selector: 'app-task-form',
@@ -17,7 +18,7 @@ export class TaskForm {
   private formBuilder = inject(FormBuilder);
   public taskData!: TaskFormModel;
   private tasksStore = inject(TasksStore);
-  private transform = inject(TaskDomainService);
+  private transform = inject(TasksTransform);
   public formSubmit = output<void>();
   public priorities: TASK_PRIORITY[] = Object.values(TASK_PRIORITY);
 
