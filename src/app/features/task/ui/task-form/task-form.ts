@@ -1,10 +1,11 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { TitleCasePipe } from '@angular/common';
-import { TaskFormModel } from '../../models/task-form.model';
-import { TasksService } from '../../services/tasks-service';
-import { PRIORITY, Task, TaskSignal } from '../../models/task.model';
+import { TaskFormModel } from '../../../../shared/models/task-form.model';
+import { TaskDomainService } from '../../../../core/utils/task-domain-service';
+import { TASK_PRIORITY, TaskSignal } from '../../../../shared/models/task.model';
+import { TasksStore } from '../../store/tasks.store';
 
 @Component({
   selector: 'app-task-form',
@@ -15,14 +16,15 @@ import { PRIORITY, Task, TaskSignal } from '../../models/task.model';
 export class TaskForm {
   private formBuilder = inject(FormBuilder);
   public taskData!: TaskFormModel;
-  private tasksService = inject(TasksService);
+  private tasksStore = inject(TasksStore);
+  private transform = inject(TaskDomainService);
   public formSubmit = output<void>();
-  public priorities: PRIORITY[] = Object.values(PRIORITY);
+  public priorities: TASK_PRIORITY[] = Object.values(TASK_PRIORITY);
 
   taskForm = this.formBuilder.nonNullable.group({
     title: ['', Validators.required],
     description: [''],
-    priority: [PRIORITY.MEDIUM, Validators.required],
+    priority: [TASK_PRIORITY.MEDIUM, Validators.required],
   });
 
   onSubmit() {
@@ -30,18 +32,18 @@ export class TaskForm {
 
     const { title, description, priority } = this.taskForm.getRawValue();
 
-    const task: TaskSignal = this.tasksService.taskFromData({
+    const task: TaskSignal = this.transform.createTaskFromForm({
       title,
       description: description || '',
       priority,
     });
 
-    this.tasksService.addTask(task);
+    this.tasksStore.addTask(task);
 
     this.taskForm.reset({
       title: '',
       description: '',
-      priority: PRIORITY.MEDIUM,
+      priority: TASK_PRIORITY.MEDIUM,
     });
 
     this.formSubmit.emit();
