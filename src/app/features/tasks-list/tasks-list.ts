@@ -16,6 +16,7 @@ import {
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { TasksStore } from '../store/task.store';
 
 @Component({
   selector: 'app-tasks-list',
@@ -25,8 +26,7 @@ import { map } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksList {
-  private tasksService = inject(TasksService);
-  public taskList1 = signal<TaskSignal[]>(this.tasksService.tasksList());
+  private tasksStore = inject(TasksStore);
   private breakpointObserver = inject(BreakpointObserver);
   public isMobile = toSignal(
     this.breakpointObserver.observe('(max-width: 768px)').pipe(map((state) => state.matches)),
@@ -38,21 +38,19 @@ export class TasksList {
   ngOnInit() {}
 
   public get toDoTasks(): TaskSignal[] {
-    return this.tasksService.tasksList().filter((task) => task.status() === TASK_STATUS.TODO);
+    return this.tasksStore.tasksList().filter((task) => task.status() === TASK_STATUS.TODO);
   }
 
   public get inProgressTasks(): TaskSignal[] {
-    return this.tasksService
-      .tasksList()
-      .filter((task) => task.status() === TASK_STATUS.IN_PROGRESS);
+    return this.tasksStore.tasksList().filter((task) => task.status() === TASK_STATUS.IN_PROGRESS);
   }
 
   public get doneTasks(): TaskSignal[] {
-    return this.tasksService.tasksList().filter((task) => task.status() === TASK_STATUS.DONE);
+    return this.tasksStore.tasksList().filter((task) => task.status() === TASK_STATUS.DONE);
   }
 
   addTask(task: TaskSignal) {
-    this.tasksService.addTask(task);
+    this.tasksStore.addTask(task);
   }
 }
 

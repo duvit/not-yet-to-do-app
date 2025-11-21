@@ -5,6 +5,7 @@ import { TitleCasePipe } from '@angular/common';
 import { TaskFormModel } from '../../models/task-form.model';
 import { TasksService } from '../../services/tasks-service';
 import { PRIORITY, Task, TaskSignal } from '../../models/task.model';
+import { TasksStore } from '../store/task.store';
 
 @Component({
   selector: 'app-task-form',
@@ -15,6 +16,7 @@ import { PRIORITY, Task, TaskSignal } from '../../models/task.model';
 export class TaskForm {
   private formBuilder = inject(FormBuilder);
   public taskData!: TaskFormModel;
+  private tasksStore = inject(TasksStore);
   private tasksService = inject(TasksService);
   public formSubmit = output<void>();
   public priorities: PRIORITY[] = Object.values(PRIORITY);
@@ -36,7 +38,7 @@ export class TaskForm {
       priority,
     });
 
-    this.tasksService.addTask(task);
+    this.tasksStore.addTask(task);
 
     this.taskForm.reset({
       title: '',

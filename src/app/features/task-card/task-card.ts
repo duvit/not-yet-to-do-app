@@ -9,8 +9,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TaskSignal, TASK_STATUS, PRIORITY } from '../../models/task.model';
+import { TaskSignal } from '../../models/task.model';
 import { TasksService } from '../../services/tasks-service';
+import { TasksStore } from '../store/task.store';
 
 @Component({
   selector: 'app-task-card',
@@ -19,43 +20,30 @@ import { TasksService } from '../../services/tasks-service';
   styleUrl: './task-card.scss',
 })
 export class TaskCard {
-  private tasksService = inject(TasksService);
   public task = input.required<TaskSignal>();
-  public readonly tasksStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
-  public readonly tasksPriorities: PRIORITY[] = Object.values(PRIORITY);
-  public statusDropdownOpen = signal<boolean>(false);
+  private tasksStore = inject(TasksStore);
+  private taskservice = inject(TasksService);
+  public statusDropdownOpen = signal(false);
   public priorityDropdownOpen = signal(false);
-  public isEditing = signal<boolean>(false);
+  public isEditing = signal(false);
   public editModel = {
     title: '',
     description: '',
   };
-
   public availableStatuses = computed(() => {
-    return this.tasksStatuses.filter((status) => status !== this.task().status());
+    return this.taskservice.getavailableStatuses(this.task().status());
   });
-
   public availablePriorities = computed(() => {
-    return this.tasksPriorities.filter((priority) => priority !== this.task().priority());
+    return this.taskservice.getavailablePriorities(this.task().priority());
   });
 
   public changeStatus(newStatus: string): void {
-    const dateField = newStatus === TASK_STATUS.DONE ? 'doneAt' : 'updatedAt';
-    if (dateField === 'doneAt') {
-      this.task().doneAt.set(this.tasksService.formatDate());
-      this.task().isDone.set(true);
-    } else {
-      this.task().updatedAt.set(this.tasksService.formatDate());
-    }
-
-    this.task().status.set(newStatus as TASK_STATUS);
-    this.tasksService.saveTasks();
+    this.tasksStore.changeTaskStatus(this.task().id, newStatus);
     this.statusDropdownOpen.set(false);
   }
 
-  changePriority(priority: string) {
-    this.task().priority.set(priority as PRIORITY);
-    this.tasksService.saveTasks();
+  changePriority(newPriority: string) {
+    this.tasksStore.changeTaskPriority(this.task().id, newPriority);
     this.priorityDropdownOpen.set(false);
   }
 
@@ -66,9 +54,7 @@ export class TaskCard {
   }
 
   public saveEdit() {
-    this.task().title.set(this.editModel.title);
-    this.task().description.set(this.editModel.description);
-    this.tasksService.saveTasks();
+    this.tasksStore.changeTaskText(this.task().id, this.editModel);
     this.isEditing.set(false);
   }
 
@@ -77,7 +63,7 @@ export class TaskCard {
   }
 
   public deleteTask() {
-    this.tasksService.deleteTask(this.task().id);
+    this.tasksStore.deleteTask(this.task().id);
   }
 
   public toggleStatusDropdownOpen() {

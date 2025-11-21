@@ -1,39 +1,23 @@
 import { Injectable, signal } from '@angular/core';
-import { TaskSignal, TASK_STATUS, Task } from '../models/task.model';
+import { TaskSignal, TASK_STATUS, Task, PRIORITY } from '../models/task.model';
 import { TaskFormModel } from '../models/task-form.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  public tasksList = signal<TaskSignal[]>([]);
-  private readonly storageKey = 'ny-tasks';
+  public readonly tasksStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
+  public readonly tasksPriorities: PRIORITY[] = Object.values(PRIORITY);
 
-  public loadTasks() {
-    const data: Task[] = JSON.parse(localStorage.getItem(this.storageKey) ?? '[]');
-    this.tasksList.set(data.map((t) => this.createTaskSignal(t)));
+  public getavailableStatuses(taskStatus: TASK_STATUS) {
+    return this.tasksStatuses.filter((status) => status !== taskStatus);
   }
 
-  constructor() {
-    this.loadTasks();
+  public getavailablePriorities(taskPriority: PRIORITY) {
+    return this.tasksPriorities.filter((priority) => priority !== taskPriority);
   }
 
-  public saveTasks(): void {
-    const tasks = this.tasksList().map((t) => this.taskFromSignal(t));
-    localStorage.setItem(this.storageKey, JSON.stringify(tasks));
-  }
-
-  public addTask(task: TaskSignal): void {
-    this.tasksList.update((list) => [...list, task]);
-    this.saveTasks();
-  }
-
-  public deleteTask(taskId: string): void {
-    this.tasksList.update((list) => list.filter((task) => task.id !== taskId));
-    this.saveTasks();
-  }
-
-  private createTaskSignal(task: Task): TaskSignal {
+  public createTaskSignal(task: Task): TaskSignal {
     return {
       id: task.id,
       title: signal<string>(task.title),
@@ -72,33 +56,6 @@ export class TasksService {
       updatedAt: signal(''),
       doneAt: signal(''),
       isDone: signal(false),
-    };
-  }
-
-  public updateTask(task: TaskSignal) {
-    this.tasksList.update((list) =>
-      list.map((t) => {
-        if (t.id === task.id) {
-          return {
-            ...task,
-          };
-        }
-        return t;
-      })
-    );
-    this.saveTasks();
-    // this.reloadTasks();
-  }
-
-  public updateStatus(
-    task: TaskSignal,
-    status: TASK_STATUS,
-    dateField: 'updatedAt' | 'doneAt'
-  ): TaskSignal {
-    return {
-      ...task,
-      [status]: status,
-      [dateField]: this.formatDate(),
     };
   }
 
