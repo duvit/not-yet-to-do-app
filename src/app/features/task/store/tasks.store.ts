@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { TasksPersistence } from '../data-access/task.storage';
-import { TaskDomainService } from '../data-access/tasks-transform';
+import { TasksTransform } from '../data-access/tasks-transform';
 import { Task } from '../../../shared/models/task.model';
 import { TASK_PRIORITY } from '../../../shared/models/task-priority.enum';
 import { TaskSignal } from '../data-access/task-signal.model';
@@ -11,7 +11,7 @@ import { TaskSignal } from '../data-access/task-signal.model';
 export class TasksStore {
   public tasksList = signal<TaskSignal[]>([]);
   private persistence = inject(TasksPersistence);
-  private transform = inject(TaskDomainService);
+  private transform = inject(TasksTransform);
 
   constructor() {
     this.loadTasks();

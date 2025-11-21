@@ -1,6 +1,6 @@
 import { WritableSignal } from '@angular/core';
-import { TASK_STATUS } from './task-status.enum';
-import { TASK_PRIORITY } from './task-priority.enum';
+import { TASK_STATUS } from '../../../shared/models/task-status.enum';
+import { TASK_PRIORITY } from '../../../shared/models/task-priority.enum';
 
 export interface TaskSignal {
   id: string;

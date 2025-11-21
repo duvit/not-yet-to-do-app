@@ -1,12 +1,14 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Task, TASK_STATUS, TaskSignal } from '../../../shared/models/task.model';
+import { Task } from '../../../shared/models/task.model';
 import { TaskFormModel } from '../../../shared/models/task-form.model';
 import { DateFormat } from '../../../core/utils/date-format.service';
+import { TaskSignal } from './task-signal.model';
+import { TASK_STATUS } from '../../../shared/models/task-status.enum';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TaskDomainService {
+export class TasksTransform {
   private dateFormat = inject(DateFormat);
 
   public createTaskSignal(task: Task): TaskSignal {
