@@ -1,6 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  CdkDropListGroup,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { TaskCard } from '../task-card/task-card';
 import { TaskForm } from '../task-form/task-form';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,7 +28,7 @@ import { TASK_STATUS } from '../../../../shared/models/task-status.enum';
 
 @Component({
   selector: 'app-tasks-list',
-  imports: [TaskCard, MatTabsModule, NgTemplateOutlet],
+  imports: [TaskCard, MatTabsModule, NgTemplateOutlet, CdkDrag, CdkDropList, CdkDropListGroup],
   templateUrl: './tasks-list.html',
   styleUrl: './tasks-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +39,7 @@ export class TasksList {
   public toDoTasks = this.tasksStore.toDoTasks;
   public inProgressTasks = this.tasksStore.inProgressTasks;
   public doneTasks = this.tasksStore.doneTasks;
+  afterDropStatus = '';
   public isMobile = toSignal(
     this.breakpointObserver.observe('(max-width: 768px)').pipe(map((state) => state.matches)),
     {
@@ -38,10 +47,28 @@ export class TasksList {
     }
   );
 
-  ngOnInit() {}
-
   addTask(task: TaskSignal) {
     this.tasksStore.addTask(task);
+  }
+
+  drop(event: CdkDragDrop<TaskSignal[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      this.changeDropeStatus(event.item.data);
+    }
+  }
+
+  changeDropeStatus(taskId: string) {
+    const task = this.tasksStore.getTaskByid(taskId);
+    const newStatus = task.status() === TASK_STATUS.TODO ? TASK_STATUS.IN_PROGRESS : TASK_STATUS.TODO
+    this.tasksStore.changeTaskStatus(taskId, newStatus);
   }
 }
 

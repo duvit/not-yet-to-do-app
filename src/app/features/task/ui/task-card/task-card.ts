@@ -42,7 +42,7 @@ export class TaskCard {
     this.statusDropdownOpen.set(false);
   }
 
-  changePriority(newPriority: string) {
+  public changePriority(newPriority: string) {
     this.tasksStore.changeTaskPriority(this.task().id, newPriority);
     this.priorityDropdownOpen.set(false);
   }

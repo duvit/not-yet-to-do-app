@@ -26,29 +26,55 @@
   </mat-tab>
 </mat-tab-group>
 } @else {
-<section class="tasks-board">
+<section cdkDropListGroup class="tasks-board">
   <div class="tasks-column">
     <h3 class="tasks-column__header">To do: {{ toDoTasks().length }}</h3>
     @if (toDoTasks().length === 0) {
     <div class="empty-state">Start with something small. Start a list.</div>
     }
-    <ng-container *ngTemplateOutlet="taskList; context: { $implicit: toDoTasks() }"></ng-container>
+    <ul
+      cdkDropList
+      [cdkDropListData]="toDoTasks()"
+      class="tasks-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (task of toDoTasks(); track task.id) {
+      <li cdkDrag cdkDragBoundary=".tasks-board" [cdkDragData]="task.id">
+        <app-task-card [task]="task" />
+      </li>
+      }
+    </ul>
   </div>
   <div class="tasks-column">
     <h3 class="tasks-column__header">In progress: {{ inProgressTasks().length }}</h3>
     @if (inProgressTasks().length === 0) {
     <div class="empty-state">No tasks are completed. You can get started.</div>
     }
-    <ng-container
-      *ngTemplateOutlet="taskList; context: { $implicit: inProgressTasks() }"
-    ></ng-container>
+    <ul
+      cdkDropList
+      [cdkDropListData]="inProgressTasks()"
+      class="tasks-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (task of inProgressTasks(); track task.id) {
+      <li cdkDrag cdkDragBoundary=".tasks-board" [cdkDragData]="task.id">
+        <app-task-card [task]="task" />
+      </li>
+      }
+    </ul>
   </div>
   <div class="tasks-column">
     <h3 class="tasks-column__header">Done <span class="material-symbols-outlined">check</span></h3>
     @if (doneTasks().length === 0) {
     <div class="empty-state">Nothing has been finished yet — everything is still ahead.</div>
     }
-    <ng-container *ngTemplateOutlet="taskList; context: { $implicit: doneTasks() }"></ng-container>
+    <ul class="tasks-list">
+      @for (task of doneTasks(); track task.id) {
+      <li>
+        <app-task-card [task]="task" />
+      </li>
+      }
+    </ul>
   </div>
 </section>
 }
