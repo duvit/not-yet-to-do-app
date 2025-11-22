@@ -28,6 +28,9 @@ import { TASK_STATUS } from '../../../../shared/models/task-status.enum';
 export class TasksList {
   private tasksStore = inject(TasksStore);
   private breakpointObserver = inject(BreakpointObserver);
+  public toDoTasks = this.tasksStore.toDoTasks;
+  public inProgressTasks = this.tasksStore.inProgressTasks;
+  public doneTasks = this.tasksStore.doneTasks;
   public isMobile = toSignal(
     this.breakpointObserver.observe('(max-width: 768px)').pipe(map((state) => state.matches)),
     {
@@ -36,18 +39,6 @@ export class TasksList {
   );
 
   ngOnInit() {}
-
-  public get toDoTasks(): TaskSignal[] {
-    return this.tasksStore.tasksList().filter((task) => task.status() === TASK_STATUS.TODO);
-  }
-
-  public get inProgressTasks(): TaskSignal[] {
-    return this.tasksStore.tasksList().filter((task) => task.status() === TASK_STATUS.IN_PROGRESS);
-  }
-
-  public get doneTasks(): TaskSignal[] {
-    return this.tasksStore.tasksList().filter((task) => task.status() === TASK_STATUS.DONE);
-  }
 
   addTask(task: TaskSignal) {
     this.tasksStore.addTask(task);
