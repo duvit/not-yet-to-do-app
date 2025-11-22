@@ -61,14 +61,15 @@ export class TasksList {
         event.previousIndex,
         event.currentIndex
       );
-      this.changeDropeStatus(event.item.data);
+      const listElement = event.container.element.nativeElement;
+      const listName = listElement.getAttribute('list-name');
+      this.changeDropeStatus(event.item.data, listName as string);
     }
   }
 
-  changeDropeStatus(taskId: string) {
-    const task = this.tasksStore.getTaskByid(taskId);
-    const newStatus = task.status() === TASK_STATUS.TODO ? TASK_STATUS.IN_PROGRESS : TASK_STATUS.TODO
-    this.tasksStore.changeTaskStatus(taskId, newStatus);
+  changeDropeStatus(taskId: string, listStatus: string) {
+    const newStatus = listStatus;
+    this.tasksStore.changeTaskStatus(taskId, newStatus as TASK_STATUS);
   }
 }
 

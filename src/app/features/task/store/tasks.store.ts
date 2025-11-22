@@ -58,7 +58,7 @@ export class TasksStore {
     this.saveTasks();
   }
 
-  public changeTaskStatus(taskId: string, newStatus: string): void {
+  public changeTaskStatus(taskId: string, newStatus: TASK_STATUS): void {
     const task = this.getTaskByid(taskId);
     this.transform.changeStatus(task, newStatus);
 

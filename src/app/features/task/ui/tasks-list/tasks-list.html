@@ -29,11 +29,9 @@
 <section cdkDropListGroup class="tasks-board">
   <div class="tasks-column">
     <h3 class="tasks-column__header">To do: {{ toDoTasks().length }}</h3>
-    @if (toDoTasks().length === 0) {
-    <div class="empty-state">Start with something small. Start a list.</div>
-    }
     <ul
       cdkDropList
+      [attr.list-name]="'to do'"
       [cdkDropListData]="toDoTasks()"
       class="tasks-list"
       (cdkDropListDropped)="drop($event)"
@@ -42,16 +40,16 @@
       <li cdkDrag cdkDragBoundary=".tasks-board" [cdkDragData]="task.id">
         <app-task-card [task]="task" />
       </li>
+      } @empty {
+      <div class="empty-state">Start with something small. Start a list.</div>
       }
     </ul>
   </div>
   <div class="tasks-column">
     <h3 class="tasks-column__header">In progress: {{ inProgressTasks().length }}</h3>
-    @if (inProgressTasks().length === 0) {
-    <div class="empty-state">No tasks are completed. You can get started.</div>
-    }
     <ul
       cdkDropList
+      [attr.list-name]="'in progress'"
       [cdkDropListData]="inProgressTasks()"
       class="tasks-list"
       (cdkDropListDropped)="drop($event)"
@@ -60,6 +58,8 @@
       <li cdkDrag cdkDragBoundary=".tasks-board" [cdkDragData]="task.id">
         <app-task-card [task]="task" />
       </li>
+      } @empty {
+      <div class="empty-state">No tasks are completed. You can get started.</div>
       }
     </ul>
   </div>

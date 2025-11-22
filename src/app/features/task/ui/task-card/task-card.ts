@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { TasksStore } from '../../store/tasks.store';
 import { TasksConstants } from '../../../../core/utils/task-constants.util';
 import { TaskSignal } from '../../data-access/task-signal.model';
+import { TASK_STATUS } from '../../../../shared/models/task-status.enum';
 
 @Component({
   selector: 'app-task-card',
@@ -38,7 +39,7 @@ export class TaskCard {
   });
 
   public changeStatus(newStatus: string): void {
-    this.tasksStore.changeTaskStatus(this.task().id, newStatus);
+    this.tasksStore.changeTaskStatus(this.task().id, newStatus as TASK_STATUS);
     this.statusDropdownOpen.set(false);
   }
 
