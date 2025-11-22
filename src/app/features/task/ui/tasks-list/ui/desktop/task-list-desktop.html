@@ -1,0 +1,51 @@
+<section cdkDropListGroup class="tasks-board">
+  <div class="tasks-column">
+    <h3 class="tasks-column__header">To do: {{ tasks().toDoTasks().length }}</h3>
+    <ul
+      cdkDropList
+      [attr.list-name]="'to do'"
+      [cdkDropListData]="tasks().toDoTasks()"
+      class="tasks-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (task of tasks().toDoTasks(); track task.id) {
+      <li cdkDrag cdkDragBoundary=".tasks-board" [cdkDragData]="task.id">
+        <app-task-card [task]="task" />
+      </li>
+      } @empty {
+      <div class="empty-state">Start with something small. Start a list.</div>
+      }
+    </ul>
+  </div>
+  <div class="tasks-column">
+    <h3 class="tasks-column__header">In progress: {{ tasks().inProgressTasks().length }}</h3>
+    <ul
+      cdkDropList
+      [attr.list-name]="'in progress'"
+      [cdkDropListData]="tasks().inProgressTasks()"
+      class="tasks-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (task of tasks().inProgressTasks(); track task.id) {
+      <li cdkDrag cdkDragBoundary=".tasks-board" [cdkDragData]="task.id">
+        <app-task-card [task]="task" />
+      </li>
+      } @empty {
+      <div class="empty-state">No tasks are completed. You can get started.</div>
+      }
+    </ul>
+  </div>
+  <div class="tasks-column">
+    <h3 class="tasks-column__header">Done <span class="material-symbols-outlined">check</span></h3>
+    @if (tasks().doneTasks().length === 0) {
+    <div class="empty-state">Nothing has been finished yet — everything is still ahead.</div>
+    }
+    <ul class="tasks-list">
+      @for (task of tasks().doneTasks(); track task.id) {
+      <li>
+        <app-task-card [task]="task" />
+      </li>
+      }
+    </ul>
+  </div>
+</section>
