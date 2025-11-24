@@ -4,7 +4,7 @@ import { Task } from '../../../shared/models/task.model';
 @Injectable({
   providedIn: 'root',
 })
-export class TasksPersistence {
+export class TasksStorage {
   private readonly storageKey = 'ny-tasks';
 
   public getTasks(): Task[] {

@@ -1,0 +1,15 @@
+<mat-tab-group>
+  @for (column of config(); track $index) {
+  <mat-tab label="{{ column.title }}: {{ column.tasksList().length }}">
+    <ul class="tasks-board">
+      @for (task of column.tasksList(); track task.id) {
+      <li>
+        <app-task-card [task]="task" />
+      </li>
+      } @empty {
+      <div class="empty-state">{{ column.emptyMessage }}</div>
+      }
+    </ul>
+  </mat-tab>
+  }
+</mat-tab-group>

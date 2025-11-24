@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogAnimationsExampleDialog } from '../../features/task/ui/tasks-list/tasks-list';
+import { TaskDialog } from '../../features/task/ui/tasks-board/ui/dialog/task-dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -13,7 +13,7 @@ export class Header {
   readonly dialog = inject(MatDialog);
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DialogAnimationsExampleDialog, {
+    this.dialog.open(TaskDialog, {
       minWidth: '40vw',
       minHeight: '20vh',
       enterAnimationDuration,
