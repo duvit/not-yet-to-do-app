@@ -1,0 +1,7 @@
+<section class="tasks-board">
+  @if (isMobile()) {
+  <app-task-column-mobile [config]="tasksColumnConfig" />
+  } @else {
+  <app-task-column-desktop [config]="tasksColumnConfig" />
+  }
+</section>

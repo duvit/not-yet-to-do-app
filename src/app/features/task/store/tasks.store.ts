@@ -10,6 +10,9 @@ import { TASK_STATUS } from '../../../shared/models/task-status.enum';
   providedIn: 'root',
 })
 export class TasksStore {
+  static changeTaskStatus(taskId: string, arg1: TASK_STATUS) {
+      throw new Error("Method not implemented.");
+  }
   public tasksList = signal<TaskSignal[]>([]);
   private storage = inject(TasksStorage);
   private transform = inject(TasksTransform);

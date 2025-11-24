@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TaskListDesktop } from './task-list-desktop';
+import { TaskColumnMobile } from './task-column-mobile';
 
-describe('TaskListDesktop', () => {
-  let component: TaskListDesktop;
-  let fixture: ComponentFixture<TaskListDesktop>;
+describe('TaskColumnMobile', () => {
+  let component: TaskColumnMobile;
+  let fixture: ComponentFixture<TaskColumnMobile>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TaskListDesktop]
+      imports: [TaskColumnMobile]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TaskListDesktop);
+    fixture = TestBed.createComponent(TaskColumnMobile);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

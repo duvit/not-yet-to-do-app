@@ -1,0 +1,22 @@
+<div class="tasks-container" cdkDropListGroup>
+  @for (column of config(); track $index) {
+  <div class="tasks-column">
+    <h3 class="tasks-column__header">{{ column.title }}: {{ column.tasksList().length }}</h3>
+    <ul
+      cdkDropList
+      [attr.list-name]="column.listName"
+      [cdkDropListData]="column.tasksList()"
+      class="tasks-board"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      @for (task of column.tasksList(); track task.id) {
+      <li cdkDrag cdkDragBoundary=".tasks-container" [cdkDragData]="task.id">
+        <app-task-card [task]="task" />
+      </li>
+      } @empty {
+      <div class="empty-state">{{ column.emptyMessage }}</div>
+      }
+    </ul>
+  </div>
+  }
+</div>

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { TaskDialog } from '../../features/task/ui/tasks-list/ui/dialog/task-dialog';
+import { TaskDialog } from '../../features/task/ui/tasks-board/ui/dialog/task-dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
