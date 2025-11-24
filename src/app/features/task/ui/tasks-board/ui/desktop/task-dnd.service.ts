@@ -12,12 +12,6 @@ export class TaskDndService {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
       const previousContainer =
         event.previousContainer.element.nativeElement.getAttribute('list-name');
       const newContainer = event.container.element.nativeElement.getAttribute('list-name');
@@ -26,6 +20,12 @@ export class TaskDndService {
       } else {
         this.changeDropeStatus(event.item.data, newContainer as string);
       }
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
   }
 
