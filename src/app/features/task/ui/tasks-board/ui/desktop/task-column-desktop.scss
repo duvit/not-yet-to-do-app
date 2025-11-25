@@ -1,25 +1,58 @@
 .tasks-container {
-  height: 87vh;
+  height: 87.5vh;
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
   margin-top: 20px;
   box-sizing: border-box;
 
   .tasks-column {
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    width: 580px;
     min-height: 0;
-    border-right: 1px solid #b100f254;
-    padding: 0 0.6rem 0;
+    padding: 1rem 0.6rem 0;
+    border-radius: 1.8rem;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+      rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    background: #ffffff;
+    background: linear-gradient(
+      55deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(147, 154, 218, 1) 31%,
+      rgba(86, 97, 197, 1) 64%,
+      rgba(141, 133, 255, 1) 100%
+    );
+    /* From https://css.glass */
+    background: rgba(51, 153, 255, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.8px);
+    -webkit-backdrop-filter: blur(8.8px);
+    border: 1px solid rgba(51, 153, 255, 0.5);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #b2d6ff, #6bb0ff, #747dffa4, #4d9fff, #6bb0ff, #b2d6ff);
+      background-size: 200% 100%;
+      animation: flow 6s linear infinite;
+    }
+
+    @keyframes flow {
+      to {
+        background-position: 200% center;
+      }
+    }
 
     &__header {
-      flex-shrink: 0;
-      height: 1.6rem;
-      display: flex;
-      align-items: center;
       align-self: center;
-      gap: 6px;
     }
   }
 

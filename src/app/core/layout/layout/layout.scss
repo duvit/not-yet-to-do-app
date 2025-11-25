@@ -1,0 +1,11 @@
+.container {
+  padding: 1.5rem 2.5rem;
+  background: #192ff7;
+  background: radial-gradient(
+    circle,
+    rgba(25, 47, 247, 1) 0%,
+    rgba(250, 250, 250, 1) 34%,
+    rgba(25, 47, 247, 1) 64%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}

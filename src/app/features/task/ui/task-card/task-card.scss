@@ -1,17 +1,12 @@
-/* ===== TASK CARD ===== */
+@use '../../../../../styles.scss' as *;
+
 .task-card {
-  position: relative;
-  background: radial-gradient(circle at top right, rgba(170, 0, 255, 0.15), transparent 70%),
-    linear-gradient(145deg, #f9f0ff, #fdfbff);
-  border: 1px solid #e1c4ff;
-  border-radius: 14px;
+  @include glass;
   padding: 1.2rem 1.35rem;
-  box-shadow: 0 4px 10px rgba(155, 0, 255, 0.12);
-  transition: all 0.25s ease;
-  color: #3b006a;
   font-family: 'Inter', 'Segoe UI', sans-serif;
   max-width: 430px;
   margin: 1.2rem auto;
+  border-radius: 2rem;
 }
 
 .task-card:hover {
@@ -21,11 +16,24 @@
 
 /* HEADER */
 .task-card__header {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
+  
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10;
+    height: 100%;
+    width: 3px;
+    border-radius: 1rem;
+    background-color: #22c55e;
+  }
 }
 
 .task-card__status-badge {
@@ -138,6 +146,10 @@
   width: 100%;
 }
 
+
+.task-card__title {
+  margin-left: 4px;
+}
 .task-card__title,
 .task-card__edit-input {
   font-size: 1.2rem;
