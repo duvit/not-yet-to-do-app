@@ -77,6 +77,13 @@ export class TaskCard {
     this.priorityDropdownOpen.set(!this.priorityDropdownOpen());
   }
 
+  onContentChange(event: Event): void {
+    const target = event.target as HTMLElement;
+    this.editModel.title = target.innerText;
+  }
+
+  model = 'some text';
+
   @ViewChild('statusBlock') statusBlock!: ElementRef;
   @ViewChild('priorityBlock') priorityBlock!: ElementRef;
 

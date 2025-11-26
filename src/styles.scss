@@ -33,7 +33,7 @@
 app-task-card {
   @include mat.expansion-overrides(
     (
-      header-collapsed-state-height: 70px,
+      header-collapsed-state-height: 60px,
       header-expanded-state-height: 100%,
     )
   );
