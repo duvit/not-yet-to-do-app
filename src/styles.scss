@@ -30,6 +30,15 @@
   --priority-low: #4cd97a;
 }
 
+app-task-card {
+  @include mat.expansion-overrides(
+    (
+      header-collapsed-state-height: 100px,
+      header-expanded-state-height: 100%,
+    )
+  );
+}
+
 body.kanban-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -47,7 +56,7 @@ body.kanban-page {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(13.6px);
   -webkit-backdrop-filter: blur(13.6px);
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  // border: 1px solid rgba(255, 255, 255, 0.45);
 }
 
 @mixin glass-card-alt {

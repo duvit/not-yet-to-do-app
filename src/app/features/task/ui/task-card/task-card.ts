@@ -8,6 +8,7 @@ import {
   signal,
   ViewChild,
 } from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { FormsModule } from '@angular/forms';
 import { TasksStore } from '../../store/tasks.store';
 import { TasksConstants } from '../../../../core/utils/task-constants.util';
@@ -16,7 +17,7 @@ import { TASK_STATUS } from '../../../../shared/models/task-status.enum';
 
 @Component({
   selector: 'app-task-card',
-  imports: [FormsModule],
+  imports: [FormsModule, MatExpansionModule],
   templateUrl: './task-card.html',
   styleUrl: './task-card.scss',
 })
