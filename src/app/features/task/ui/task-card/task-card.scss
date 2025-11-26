@@ -7,8 +7,7 @@
   max-width: 100%;
   width: 95%;
   margin: 1.2rem auto;
-  border-radius: 2rem;
-  border-left: 4px solid red;
+  border-radius: 1.5rem;
 }
 
 .mat-expansion-panel-header {
@@ -20,7 +19,7 @@
 }
 
 .mat-expansion-panel {
-  border-radius: 2rem;
+  border-radius: 1.5rem;
 }
 
 .task-card:hover {
@@ -39,7 +38,13 @@
 }
 
 .mat-header-wrapper {
-  min-width: 500px;
+  min-width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-expansion-panel-header-title {
+  margin: 0;
 }
 
 .task-card__status-badge {
@@ -145,6 +150,23 @@
   align-items: center;
   padding: 1rem 0 1rem;
   width: 100%;
+}
+
+.task-card__title {
+  position: relative;
+  padding-left: 1rem;
+  display: block;
+
+  &::before {
+    content: ' ';
+    width: 4px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: red;
+    border-radius: 0.5rem;
+  }
 }
 
 .task-card__title,
@@ -408,7 +430,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
   }
 

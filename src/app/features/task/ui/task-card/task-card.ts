@@ -14,10 +14,11 @@ import { TasksStore } from '../../store/tasks.store';
 import { TasksConstants } from '../../../../core/utils/task-constants.util';
 import { TaskSignal } from '../../data-access/task-signal.model';
 import { TASK_STATUS } from '../../../../shared/models/task-status.enum';
+import { StopExpansion } from '../../../../shared/stop-epansion/stop-expansion';
 
 @Component({
   selector: 'app-task-card',
-  imports: [FormsModule, MatExpansionModule],
+  imports: [FormsModule, MatExpansionModule, StopExpansion],
   templateUrl: './task-card.html',
   styleUrl: './task-card.scss',
 })
