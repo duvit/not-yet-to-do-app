@@ -54,39 +54,48 @@
 .priority-wrapper {
   position: relative; /* ключове */
   display: inline-block;
+  z-index: 10000;
+  overflow: visible;
 }
 
 .priority-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  border-radius: 999px;
-  padding: 0.25rem 0.6rem;
-  font-size: 0.75rem;
+
+  padding: 4px 10px;
+  border-radius: 50px;
+  border: none;
   font-weight: 600;
-  text-transform: uppercase;
-  color: #000; /* ← чорний текст */
+  font-size: 14px;
+  transition: all 0.2s ease;
   cursor: pointer;
+  text-transform: capitalize;
   position: relative;
 }
 .priority-badge span {
   font-size: 0.65rem;
 }
 
-.priority-badge--critical {
-  background: #ff3b3b;
-}
-.priority-badge--high {
-  background: #ff9f00;
-}
-.priority-badge--medium {
-  background: #ffd400;
+.priority-badge--someday {
+  background: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #90caf9;
 }
 .priority-badge--low {
-  background: #22c55e;
+  background: #e6f4ea;
+  color: #137333;
+  border: 1px solid #a7e4c0;
 }
-.priority-badge--someday {
-  background: #3b82f6;
+.priority-badge--medium {
+  background: #fff8e1;
+  color: #b86f00;
+  border: 1px solid #ffdc8a;
+}
+.priority-badge--high {
+  background: #fde7e9;
+  color: #c7182d;
+  border: 1px solid #f9a7b0;
 }
 
 .priority-dropdown {
@@ -146,13 +155,27 @@
   width: 100%;
 }
 
-.task-card__title {
-  position: relative;
-  padding-left: 1rem;
+/* СПІЛЬНИЙ СТИЛЬ */
+.task-card__title,
+.task-card__edit-wrapper {
   display: block;
+  width: 100%;
+
+  padding-left: 1rem;
+  padding-right: 0;
+  margin: 0;
+
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  line-height: 1.2rem;
+  color: #6a0dad;
+
+  position: relative;
+  min-height: 1.2rem;
 
   &::before {
-    content: ' ';
+    content: '';
     width: 4px;
     height: 100%;
     position: absolute;
@@ -163,40 +186,29 @@
   }
 }
 
-.task-card__title,
+/* textarea обов’язково обнулити */
 .task-card__edit-input {
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-  color: #6a0dad;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  box-shadow: none;
+  font-family: inherit;
 
-  line-height: 1.2rem;
-  height: 1rem;
+  /* прибираємо дефолтні внутрішні відступи */
+  padding: 0;
+
+  /* щоб textarea росла рівно */
+  width: 100%;
+  display: block;
 }
 
-.task-card__edit-input {
-  font-size: 1rem;
-  // padding-left: 0.4rem;
-  border-radius: 0.5rem;
-  border-bottom: 1px solid #b57ce0;
-  background-color: #b57ce059;
-  outline: none;
-  // display: block;
-  // width: 70%;
-  letter-spacing: 0.2px;
-
-  /* 1. Головне правило: DIV розширюється за замовчуванням */
-  min-height: 1.5em; /* Мінімальна висота, щоб не зникав, коли порожній */
-  width: 100%; /* Займає всю доступну ширину */
-
-  /* 2. Візуальні корекції для імітації поля введення */
-  border: 1px solid #ccc; /* Додайте рамку для видимості */
-  padding: 5px; /* Додайте відступи */
-  white-space: pre-wrap; /* Дозволяє переносити рядки і відображати їх */
-  box-sizing: border-box; /* Важливо для правильної ширини */
-
-  /* 3. Приберіть небажані стилі, які можуть з'явитися */
-  outline: none; /* Прибирає стандартну синю рамку при фокусі */
+/* СТИЛЬ режиму редагування — видно що EDIT MODE */
+.task-card__edit-wrapper {
+  background: #f8f0ff; /* легкий фіолетовий фон для видимості */
+  border-radius: 4px;
+  padding-top: 2px; /* щоб текст не прилипав до верху */
+  padding-bottom: 2px;
 }
 
 .task-card__changes-btn {

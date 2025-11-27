@@ -26,17 +26,19 @@ export class TaskForm {
     title: ['', Validators.required],
     description: [''],
     priority: [TASK_PRIORITY.MEDIUM, Validators.required],
+    dueDate: [''],
   });
 
   onSubmit() {
     if (this.taskForm.invalid) return;
 
-    const { title, description, priority } = this.taskForm.getRawValue();
+    const { title, description, priority, dueDate } = this.taskForm.getRawValue();
 
     const task: TaskSignal = this.transform.createTaskFromForm({
       title,
       description: description || '',
       priority,
+      dueDate: dueDate || '',
     });
 
     this.tasksStore.addTask(task);
@@ -45,6 +47,7 @@ export class TaskForm {
       title: '',
       description: '',
       priority: TASK_PRIORITY.MEDIUM,
+      dueDate: '',
     });
 
     this.formSubmit.emit();

@@ -1,24 +1,30 @@
 import {
+  afterNextRender,
   Component,
   computed,
   ElementRef,
   HostListener,
   inject,
+  Injector,
   input,
   signal,
   ViewChild,
+  WritableSignal,
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { TasksStore } from '../../store/tasks.store';
 import { TasksConstants } from '../../../../core/utils/task-constants.util';
 import { TaskSignal } from '../../data-access/task-signal.model';
 import { TASK_STATUS } from '../../../../shared/models/task-status.enum';
 import { StopExpansion } from '../../../../shared/stop-epansion/stop-expansion';
+import { getDueStatus } from '../../../..//core/utils/due-status';
 
 @Component({
   selector: 'app-task-card',
-  imports: [FormsModule, MatExpansionModule, StopExpansion],
+  imports: [FormsModule, MatExpansionModule, StopExpansion, MatFormFieldModule, TextFieldModule],
   templateUrl: './task-card.html',
   styleUrl: './task-card.scss',
 })
@@ -26,6 +32,7 @@ export class TaskCard {
   public task = input.required<TaskSignal>();
   private tasksStore = inject(TasksStore);
   private taskConsts = inject(TasksConstants);
+  public dueStatus = computed(() => getDueStatus(this.task().dueDate as unknown as string));
   public statusDropdownOpen = signal(false);
   public priorityDropdownOpen = signal(false);
   public isEditing = signal(false);

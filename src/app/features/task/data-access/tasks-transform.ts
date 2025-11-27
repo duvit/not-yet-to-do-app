@@ -18,7 +18,7 @@ export class TasksTransform {
       description: signal(task.description),
       status: signal(task.status),
       createdAt: task.createdAt,
-      updatedAt: signal(task.updatedAt ?? ''),
+      dueDate: signal(task.dueDate ?? ''),
       doneAt: signal(task.doneAt ?? ''),
       priority: signal(task.priority),
       isDone: signal(task.isDone),
@@ -33,7 +33,7 @@ export class TasksTransform {
       status: task.status(),
       priority: task.priority(),
       createdAt: task.createdAt,
-      updatedAt: task.updatedAt() ?? '',
+      dueDate: task.dueDate() ?? '',
       doneAt: task.doneAt() ?? '',
       isDone: task.isDone(),
     };
@@ -47,7 +47,7 @@ export class TasksTransform {
       status: signal(TASK_STATUS.TODO),
       priority: signal(taskData.priority),
       createdAt: this.dateFormat.formatDate(),
-      updatedAt: signal(''),
+      dueDate: signal(''),
       doneAt: signal(''),
       isDone: signal(false),
     };
@@ -59,8 +59,6 @@ export class TasksTransform {
     if (dateField === 'doneAt') {
       task?.doneAt?.set(this.dateFormat.formatDate());
       task?.isDone?.set(true);
-    } else {
-      task?.updatedAt.set(this.dateFormat.formatDate());
     }
 
     task?.status.set(newStatus as TASK_STATUS);

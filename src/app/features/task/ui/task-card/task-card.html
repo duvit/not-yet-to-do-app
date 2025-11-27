@@ -6,25 +6,22 @@
           @if (!isEditing()) {
           <h4 class="task-card__title">{{ task().title() }}</h4>
           } @else {
-          <div
-            class="task-card__edit-input"
-            contenteditable="true"
-            [textContent]="editModel.title"
-            (input)="onContentChange($event)"
-            stopExpansion
-          ></div>
-          <div class="task-card__edit-actions" stopExpansion>
-            <button class="task-card__btn-save" (click)="saveEdit()">
-              <span class="material-symbols-outlined">check</span>
-            </button>
-            <button class="task-card__btn-cancel" (click)="cancelEdit()">
-              <span class="material-symbols-outlined">close</span>
-            </button>
+          <div class="task-card__edit-wrapper">
+            <textarea
+              class="task-card__edit-input"
+              [(ngModel)]="editModel.title"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMsxRows="3"
+              stopExpansion
+            ></textarea>
           </div>
           }
         </div>
 
-        <div class="priority-wrapper" #priorityBlock>
+        <div>{{ dueStatus() }}</div>
+
+        <div class="priority-wrapper" #priorityBlock stopExpansion>
           <span
             class="priority-badge priority-badge--{{ task().priority() }}"
             (click)="togglePriorityDropdown()"
@@ -52,7 +49,17 @@
     @if (!isEditing()) {
     <p class="task-card__description">{{ task().description() }}</p>
     } @else {
-    <input class="task-card__edit-input-description" [(ngModel)]="editModel.description" />
+    <div class="task-card__edit-wrapper">
+      <textarea
+        class="task-card__edit-input"
+        [(ngModel)]="editModel.description"
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMsxRows="5"
+        stopExpansion
+      ></textarea>
+    </div>
     }
 
     <div class="task-card__status-control" #statusBlock>
@@ -86,9 +93,17 @@
     </span>
 
     <div class="task-card__actions">
+      @if (isEditing()){
+      <div class="task-card__edit-actions" stopExpansion>
+        <button class="task-card__btn-save" (click)="saveEdit()">
+          <span class="material-symbols-outlined">check</span>
+        </button>
+        <button class="task-card__btn-cancel" (click)="cancelEdit()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      }
       <button class="task-card__btn task-card__btn--delete" (click)="deleteTask()">Delete</button>
     </div>
   </mat-expansion-panel>
 </article>
-
-<div class="editor" contenteditable="true">Пиши тут...</div>
