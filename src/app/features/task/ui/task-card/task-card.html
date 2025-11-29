@@ -4,7 +4,10 @@
       <mat-panel-title class="panel">
         <div class="task-card__title-row">
           @if (!isEditing()) {
-          <h4 class="task-card__title">{{ task().title() }}</h4>
+          <h4 class="task-card__title">
+            <span class="title-line title-line--{{ task().priority() }}"></span>
+            {{ task().title() }}
+          </h4>
           } @else {
           <div class="task-card__edit-wrapper">
             <textarea
@@ -20,10 +23,9 @@
 
           <span class="task-card__due-date">{{ dueStatus() }}</span>
 
-          <div class="priority-wrapper" #priorityBlock stopExpansion>
-            @if (!isEditing()) {<span
-              class="priority-badge priority-badge--{{ task().priority() }}"
-            >
+          <div class="priority-wrapper" #priorityBlock>
+            @if (!isEditing()) {
+            <span class="priority-badge priority-badge--{{ task().priority() }}">
               {{ task().priority() }} </span
             >} @else {
             <span
@@ -93,9 +95,11 @@
       }
     </div>
 
+    @if (!isEditing()){
     <span class="task-card__changes-btn" (click)="editTask()">
       <span class="material-symbols-outlined">edit</span>
     </span>
+    }
 
     <div class="task-card__actions">
       @if (isEditing()){

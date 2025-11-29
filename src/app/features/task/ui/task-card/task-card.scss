@@ -2,12 +2,14 @@
 
 .task-card {
   @include glass;
-  // padding: 1.2rem 1.35rem;
   font-family: 'Inter', 'Segoe UI', sans-serif;
   max-width: 100%;
   width: 95%;
-  margin: 1.2rem auto;
+  margin: 0.25rem auto;
   border-radius: 1.5rem;
+
+  background-color: #ffffff;
+  background: linear-gradient(to right, #ffffff, #ffffff 40%, #e0f7fa88 90%);
 }
 
 .mat-expansion-panel-header {
@@ -24,11 +26,15 @@
 }
 
 .task-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(155, 0, 255, 0.22);
+  transform: translateY(-1px);
+  border-radius: 1rem;
+  border-color: #70badd;
+  border-width: 2px;
+  box-shadow: 0 6px 16px #70badd;
 }
 
 .task-card__due-date {
+  margin-left: 8px;
   white-space: nowrap;
   color: #a1a1a1;
   font-size: 0.9rem;
@@ -59,7 +65,7 @@
 }
 
 .priority-wrapper {
-  position: relative;
+  // position: relative;
   display: flex;
   align-items: center;
   z-index: 10000;
@@ -76,10 +82,10 @@
 
 .priority-badge {
   display: inline-flex;
-  align-items: center;
+  align-items: start;
   gap: 4px;
 
-  padding: 4px 10px;
+  padding: 0 10px;
   border-radius: 50px;
   border: none;
   font-weight: 600;
@@ -166,7 +172,7 @@
 .task-card__title-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 1rem 0 1rem;
   width: 100%;
 }
@@ -189,20 +195,35 @@
 
   position: relative;
   min-height: 1.2rem;
-
-  &::before {
-    content: '';
-    width: 4px;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: red;
-    border-radius: 0.5rem;
-  }
 }
 
-/* textarea обов’язково обнулити */
+.task-card__title {
+  align-items: center;
+  gap: 8px;
+}
+
+.title-line {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 4px;
+  border-radius: 2px;
+}
+
+.title-line--someday {
+  background-color: #42a5f5; /* Чистий синій */
+}
+.title-line--low {
+  background-color: #4caf50; /* Чистий зелений */
+}
+.title-line--medium {
+  background-color: #ff9800; /* Чистий помаранчевий */
+}
+.title-line--high {
+  background-color: #e53935; /* Чистий червоний */
+}
+
 .task-card__edit-input {
   border: none;
   outline: none;
@@ -210,20 +231,15 @@
   background: transparent;
   box-shadow: none;
   font-family: inherit;
-
-  /* прибираємо дефолтні внутрішні відступи */
   padding: 0;
-
-  /* щоб textarea росла рівно */
   width: 100%;
   display: block;
 }
 
-/* СТИЛЬ режиму редагування — видно що EDIT MODE */
 .task-card__edit-wrapper {
-  background: #f8f0ff; /* легкий фіолетовий фон для видимості */
+  background: #f8f0ff;
   border-radius: 4px;
-  padding-top: 2px; /* щоб текст не прилипав до верху */
+  padding-top: 2px;
   padding-bottom: 2px;
 }
 

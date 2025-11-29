@@ -25,6 +25,11 @@
   --glass-blur: 24px;
   --glass-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 
+  --color-light-bg-start: #f5f8fc;
+  --color-light-bg-end: #eaf3f8;
+  --color-dark-bg-start: #1a202c;
+  --color-dark-bg-end: #0d121c;
+
   --priority-high: #ff4c4c;
   --priority-med: #ffa048;
   --priority-low: #4cd97a;
@@ -33,7 +38,7 @@
 app-task-card {
   @include mat.expansion-overrides(
     (
-      header-collapsed-state-height: 60px,
+      header-collapsed-state-height: 54px,
       header-expanded-state-height: 100%,
     )
   );
@@ -57,18 +62,6 @@ body.kanban-page {
   backdrop-filter: blur(13.6px);
   -webkit-backdrop-filter: blur(13.6px);
   border: 1px solid rgba(255, 255, 255, 0.45);
-}
-
-@mixin glass-card-alt {
-  background: var(--glass-bg-alt);
-  @include glass-card;
-}
-
-@mixin glass-task {
-  background: var(--glass-bg-task);
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(12px);
 }
 
 html,
