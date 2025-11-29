@@ -1,18 +1,15 @@
 import {
-  afterNextRender,
   Component,
   computed,
   ElementRef,
   HostListener,
   inject,
-  Injector,
   input,
   signal,
   ViewChild,
-  WritableSignal,
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { TasksStore } from '../../store/tasks.store';
@@ -32,7 +29,7 @@ export class TaskCard {
   public task = input.required<TaskSignal>();
   private tasksStore = inject(TasksStore);
   private taskConsts = inject(TasksConstants);
-  public dueStatus = computed(() => getDueStatus(this.task().dueDate as unknown as string));
+  public dueStatus = computed(() => getDueStatus(this.task().dueDate()));
   public statusDropdownOpen = signal(false);
   public priorityDropdownOpen = signal(false);
   public isEditing = signal(false);

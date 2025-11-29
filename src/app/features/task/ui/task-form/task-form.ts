@@ -38,7 +38,7 @@ export class TaskForm {
       title,
       description: description || '',
       priority,
-      dueDate: dueDate || '',
+      dueDate: dueDate ? new Date(dueDate).toISOString() : null,
     });
 
     this.tasksStore.addTask(task);

@@ -1,10 +1,14 @@
-export function getDueStatus(dueDate: string): string {
-  const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
-  const now = new Date();
+export function getDueStatus(dueDate: string | null): string {
+  if (!dueDate) return 'NoDueDate';
+
   const due = new Date(dueDate);
 
-  const diffMs = due.getTime() - now.getTime();
-  const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+  if (isNaN(due.getTime())) return 'NoDueDate';
 
-  return rtf.format(diffDays, 'day');
+  const now = new Date();
+  const diffDays = Math.round((due.getTime() - now.getTime()) / 86400000);
+
+  if (diffDays > 0) return `${diffDays} days left`;
+  if (diffDays === 0) return 'Due today';
+  return `${Math.abs(diffDays)} days overdue`;
 }

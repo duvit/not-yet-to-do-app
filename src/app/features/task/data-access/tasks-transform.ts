@@ -47,7 +47,7 @@ export class TasksTransform {
       status: signal(TASK_STATUS.TODO),
       priority: signal(taskData.priority),
       createdAt: this.dateFormat.formatDate(),
-      dueDate: signal(''),
+      dueDate: signal(taskData.dueDate ?? ''),
       doneAt: signal(''),
       isDone: signal(false),
     };
