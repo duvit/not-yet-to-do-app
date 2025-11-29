@@ -1,9 +1,9 @@
 export function getDueStatus(dueDate: string | null): string {
-  if (!dueDate) return 'NoDueDate';
+  if (!dueDate) return 'No due date';
 
   const due = new Date(dueDate);
 
-  if (isNaN(due.getTime())) return 'NoDueDate';
+  if (isNaN(due.getTime())) return 'No due date';
 
   const now = new Date();
   const diffDays = Math.round((due.getTime() - now.getTime()) / 86400000);

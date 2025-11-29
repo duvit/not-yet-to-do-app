@@ -12,6 +12,7 @@
 
 .mat-expansion-panel-header {
   margin: 0;
+  padding: 0 1.1rem;
 }
 
 .mat-expanded.mat-expansion-panel-header {
@@ -19,12 +20,18 @@
 }
 
 .mat-expansion-panel {
-  border-radius: 1.5rem;
+  border-radius: 1rem;
 }
 
 .task-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(155, 0, 255, 0.22);
+}
+
+.task-card__due-date {
+  white-space: nowrap;
+  color: #a1a1a1;
+  font-size: 0.9rem;
 }
 
 /* HEADER */
@@ -52,10 +59,19 @@
 }
 
 .priority-wrapper {
-  position: relative; /* ключове */
-  display: inline-block;
+  position: relative;
+  display: flex;
+  align-items: center;
   z-index: 10000;
   overflow: visible;
+  margin-left: 8px;
+
+  &::before {
+    content: '•';
+    margin-right: 8px;
+    color: #a1a1a1;
+    font-weight: bold;
+  }
 }
 
 .priority-badge {
@@ -67,7 +83,7 @@
   border-radius: 50px;
   border: none;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.9rem;
   transition: all 0.2s ease;
   cursor: pointer;
   text-transform: capitalize;
@@ -161,15 +177,15 @@
   display: block;
   width: 100%;
 
-  padding-left: 1rem;
+  padding-left: 0.6rem;
   padding-right: 0;
   margin: 0;
 
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: -0.3px;
   line-height: 1.2rem;
-  color: #6a0dad;
+  color: rgb(15, 23, 42);
 
   position: relative;
   min-height: 1.2rem;

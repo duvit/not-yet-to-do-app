@@ -17,31 +17,36 @@
             ></textarea>
           </div>
           }
-        </div>
 
-        <div>{{ dueStatus() }}</div>
+          <span class="task-card__due-date">{{ dueStatus() }}</span>
 
-        <div class="priority-wrapper" #priorityBlock stopExpansion>
-          <span
-            class="priority-badge priority-badge--{{ task().priority() }}"
-            (click)="togglePriorityDropdown()"
-          >
-            {{ task().priority() }}
-            <span class="task-card__status-arrow">▾</span>
-          </span>
-
-          @if (priorityDropdownOpen()) {
-          <ul class="priority-dropdown-list">
-            @for (priority of availablePriorities(); track $index) {
-            <li
-              class="priority-dropdown-item priority-badge--{{ priority }}"
-              (click)="changePriority(priority)"
+          <div class="priority-wrapper" #priorityBlock stopExpansion>
+            @if (!isEditing()) {<span
+              class="priority-badge priority-badge--{{ task().priority() }}"
             >
-              {{ priority }}
-            </li>
-            }
-          </ul>
-          }
+              {{ task().priority() }} </span
+            >} @else {
+            <span
+              class="priority-badge priority-badge--{{ task().priority() }}"
+              (click)="togglePriorityDropdown()"
+            >
+              {{ task().priority() }}
+              <span class="task-card__status-arrow">▾</span>
+            </span>
+
+            @if (priorityDropdownOpen()) {
+            <ul class="priority-dropdown-list">
+              @for (priority of availablePriorities(); track $index) {
+              <li
+                class="priority-dropdown-item priority-badge--{{ priority }}"
+                (click)="changePriority(priority)"
+              >
+                {{ priority }}
+              </li>
+              }
+            </ul>
+            }}
+          </div>
         </div>
       </mat-panel-title>
     </mat-expansion-panel-header>
