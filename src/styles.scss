@@ -83,6 +83,25 @@ body.kanban-page {
   cursor: pointer;
 }
 
+@mixin status-badge {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid #b3e5fc;
+  background: linear-gradient(to right, #f9f9f9, #e3f2fd);
+  border-radius: 9999px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-1px);
+    border-color: rgba(27, 145, 255, 0.4);
+    box-shadow: 0 6px 16px #70badd;
+  }
+}
+
 html,
 body {
   height: 100%;

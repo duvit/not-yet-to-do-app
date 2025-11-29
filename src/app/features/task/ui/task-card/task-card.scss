@@ -10,7 +10,6 @@
   box-sizing: border-box;
 
   background-color: #ffffff;
-  background: linear-gradient(to right, #ffffff, #ffffff 40%, #e0f7fa88 90%);
 
   transition: all 0.3s ease;
 
@@ -19,6 +18,7 @@
     border-radius: 1rem;
     outline: 2px solid #70badd;
     box-shadow: 0 6px 16px #70badd;
+    background: linear-gradient(to right, #ffffff, #ffffff 40%, #e0f7fa 90%);
   }
 }
 
@@ -27,12 +27,18 @@
   padding: 0 1.1rem;
 }
 
+.mat-expansion-panel:not(.mat-expanded)
+  .mat-expansion-panel-header:not([aria-disabled='true']):hover {
+  background: linear-gradient(to right, #ffffff, #ffffff 40%, #e0f7fa 90%);
+}
+
 .mat-expanded.mat-expansion-panel-header {
   height: 100%;
 }
 
 .mat-expansion-panel {
   border-radius: 1rem;
+  background: linear-gradient(to right, #ffffff, #ffffff 40%, #e0f7fa 90%);
 }
 
 .task-card__due-date {
@@ -54,17 +60,6 @@
 
 .mat-expansion-panel-header-title {
   margin: 0;
-}
-
-.task-card__current-status {
-  @include settings-btn;
-  background-color: #42a5f5;
-  color: blue;
-}
-.task-card__status-badge {
-  @include settings-btn;
-  display: inline;
-  width: 4rem;
 }
 
 .priority-wrapper {
@@ -247,25 +242,14 @@
 }
 
 /* ACTIONS */
+
 .task-card__actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 8px;
 }
 
 .task-card__btn-edit {
-  @include settings-btn;
-  color: #007bff;
-  border: 1px solid #b3e5fc;
-  background: linear-gradient(to right, #f9f9f9, #e3f2fd);
-
-  &:hover {
-    background: linear-gradient(to right, #e3f2fd, #bbdefb);
-    border-color: #90caf9;
-  }
-}
-
-.task-card__btn--change-status {
   @include settings-btn;
   color: #007bff;
   border: 1px solid #b3e5fc;
@@ -356,9 +340,20 @@
 
 /* STATUS CONTROL */
 .task-card__status-control {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 1rem;
+  display: flex;
+  justify-content: start;
+  align-items: end;
+  gap: 4px;
+}
+
+.task-card__status-badge {
+  @include status-badge;
+  color: #007bff;
+}
+
+.task-card__current-status {
+  background: #56b9ff;
+  border-color: #90caf9;
 }
 
 .task-card__status-btn {

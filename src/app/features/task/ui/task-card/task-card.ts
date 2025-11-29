@@ -33,12 +33,14 @@ export class TaskCard {
   public statusDropdownOpen = signal(false);
   public priorityDropdownOpen = signal(false);
   public isEditing = signal(false);
+  public isEditingTitle = signal(false);
+  public isEditingDescription = signal(false);
   public editModel = {
     title: '',
     description: '',
   };
   public availableStatuses = computed(() => {
-    return this.taskConsts.getavailableStatuses(this.task().status());
+    return this.taskConsts.getavailableStatuses();
   });
   public availablePriorities = computed(() => {
     return this.taskConsts.getavailablePriorities(this.task().priority());
@@ -60,13 +62,25 @@ export class TaskCard {
     this.isEditing.set(true);
   }
 
+  public editTitle() {
+    this.editModel.title = this.task().title();
+    this.isEditingTitle.set(true);
+  }
+
+  public editDescription() {
+    this.editModel.description = this.task().description() ?? '';
+    this.isEditingDescription.set(true);
+  }
+
   public saveEdit() {
     this.tasksStore.changeTaskText(this.task().id, this.editModel);
-    this.isEditing.set(false);
+    this.isEditingTitle.set(false);
+    this.isEditingDescription.set(false);
   }
 
   public cancelEdit() {
-    this.isEditing.set(false);
+    this.isEditingTitle.set(false);
+    this.isEditingDescription.set(false);
   }
 
   public deleteTask() {
@@ -88,17 +102,26 @@ export class TaskCard {
 
   model = 'some text';
 
-  @ViewChild('statusBlock') statusBlock!: ElementRef;
+  @ViewChild('title') title!: ElementRef;
+  @ViewChild('description') description!: ElementRef;
   @ViewChild('priorityBlock') priorityBlock!: ElementRef;
 
   @HostListener('document:click', ['$event'])
   public handleClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
 
-    const insideStatus = this.statusBlock?.nativeElement.contains(target);
+    const insideTitle = this.title?.nativeElement.contains(target);
+    const insideDescription = this.description?.nativeElement.contains(target);
     const insidePriority = this.priorityBlock?.nativeElement.contains(target);
 
-    if (!insideStatus) this.statusDropdownOpen.set(false);
-    if (!insidePriority) this.priorityDropdownOpen.set(false);
+    if (this.isEditingTitle() && !insideTitle) {
+      this.isEditingTitle.set(false);
+      this.saveEdit();
+    }
+    if (this.isEditingDescription() && !insideDescription) {
+      this.isEditingDescription.set(false);
+      this.saveEdit();
+    }
+    if (!insidePriority) this.statusDropdownOpen.set(false);
   }
 }
