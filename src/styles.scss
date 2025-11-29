@@ -1,21 +1,37 @@
-@use './app/styles/reset.scss';
 @use '@angular/material' as mat;
+@use './app/styles/reset.scss';
 @use 'sass:map';
 
-// $custom-light-theme: mat.define-theme(
-//   (
-//     color: (
-//       theme-type: light,
-//       primary: mat.$magenta-palette,
-//       tertiary: mat.$violet-palette,
-//       use-system-levels: true,
-//     ),
-//     typography: Roboto,
-//     density: 0,
-//   )
-// );
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
 
-// @include mat.all-component-themes($custom-light-theme);
+app-task-card {
+  @include mat.expansion-overrides(
+    (
+      header-collapsed-state-height: 54px,
+      header-expanded-state-height: 100%,
+      header-hover-state-layer-color: #ffffff,
+    )
+  );
+}
+
+body {
+  color-scheme: light;
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+}
 
 :root {
   --glass-bg: rgba(255, 255, 255, 0.32);
@@ -35,15 +51,6 @@
   --priority-low: #4cd97a;
 }
 
-app-task-card {
-  @include mat.expansion-overrides(
-    (
-      header-collapsed-state-height: 54px,
-      header-expanded-state-height: 100%,
-    )
-  );
-}
-
 body.kanban-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -57,11 +64,23 @@ body.kanban-page {
 }
 
 @mixin glass {
-  background: rgba(255, 255, 255, 0.15);
+  // background: rgba(255, 255, 255, 0.15);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(13.6px);
   -webkit-backdrop-filter: blur(13.6px);
   border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+@mixin settings-btn {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border: 1px solid rgba(96, 48, 94, 0.25);
+  border-radius: 0.9rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 html,
@@ -77,3 +96,12 @@ body {
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

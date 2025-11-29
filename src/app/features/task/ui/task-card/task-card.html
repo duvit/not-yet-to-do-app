@@ -53,9 +53,11 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="task-card__divider"></div>
-    @if (!isEditing()) {
+    @if (!isEditing() && task().description()) {
     <p class="task-card__description">{{ task().description() }}</p>
-    } @else {
+
+    <div class="task-card__divider"></div>
+    } @if (isEditing()) {
     <div class="task-card__edit-wrapper">
       <textarea
         class="task-card__edit-input"
@@ -67,26 +69,8 @@
         stopExpansion
       ></textarea>
     </div>
+
     }
-
-    <div class="task-card__status-control" #statusBlock>
-      <button class="task-card__status-btn" (click)="toggleStatusDropdownOpen()">
-        Change status
-        <span class="task-card__status-arrow">▾</span>
-      </button>
-
-      @if (statusDropdownOpen()) {
-      <ul class="task-card__status-list">
-        @for (status of availableStatuses(); track $index) {
-        <li class="task-card__status-item" (click)="changeStatus(status)">
-          {{ status }}
-        </li>
-        }
-      </ul>
-      }
-    </div>
-
-    <span class="task-card__status-badge">{{ task().status() }}</span>
 
     <div class="task-card__meta">
       <span class="task-card__meta-item">Created: {{ task().createdAt }}</span>
@@ -95,10 +79,21 @@
       }
     </div>
 
-    @if (!isEditing()){
-    <span class="task-card__changes-btn" (click)="editTask()">
-      <span class="material-symbols-outlined">edit</span>
-    </span>
+    <div>
+      <span class="task-card__status-badge task-card__current-status">{{ task().status() }}</span>
+      @if (statusDropdownOpen()) { @for (status of availableStatuses(); track $index) {
+      <span class="task-card__status-badge" (click)="changeStatus(status)">
+        {{ status }}
+      </span>
+      } }
+    </div>
+    @if (!statusDropdownOpen()){
+    <div class="task-card__status-control" #statusBlock>
+      <button class="task-card__btn--change-status" (click)="toggleStatusDropdownOpen()">
+        <span class="material-symbols-outlined"> change_circle </span>
+        Change status
+      </button>
+    </div>
     }
 
     <div class="task-card__actions">
@@ -106,13 +101,23 @@
       <div class="task-card__edit-actions" stopExpansion>
         <button class="task-card__btn-save" (click)="saveEdit()">
           <span class="material-symbols-outlined">check</span>
+          Save
         </button>
         <button class="task-card__btn-cancel" (click)="cancelEdit()">
           <span class="material-symbols-outlined">close</span>
+          Cancel
         </button>
       </div>
+      } @if (!isEditing()){
+      <button class="task-card__btn-edit" (click)="editTask()">
+        <span class="material-symbols-outlined">edit</span>
+        Edit
+      </button>
+
+      <button class="task-card__btn--delete" (click)="deleteTask()">
+        <span class="material-symbols-outlined"> delete </span>Delete
+      </button>
       }
-      <button class="task-card__btn task-card__btn--delete" (click)="deleteTask()">Delete</button>
     </div>
   </mat-expansion-panel>
 </article>
