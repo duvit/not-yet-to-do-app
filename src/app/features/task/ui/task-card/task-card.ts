@@ -110,8 +110,6 @@ export class TaskCard {
     this.editModel.title = target.innerText;
   }
 
-  model = 'some text';
-
   @ViewChild('title') title!: ElementRef;
   @ViewChild('description') description!: ElementRef;
   @ViewChild('priorityBlock') priorityBlock!: ElementRef;
