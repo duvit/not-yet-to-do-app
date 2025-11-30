@@ -4,12 +4,19 @@
       <mat-panel-title class="panel">
         <div class="task-card__title-row">
           @if (!isEditingTitle()) {
-          <h4 class="task-card__title" (dblclick)="editTitle()" #title stopExpansion>
+          <h4
+            class="task-card__title"
+            (dblclick)="editTitle()"
+            #title
+            stopExpansion
+            [class.not-availible]="!isPanelOpen"
+          >
             <span class="title-line title-line--{{ task().priority() }}"></span>
             {{ task().title() }}
           </h4>
           } @else {
           <div class="task-card__edit-wrapper">
+            <span class="title-line title-line--{{ task().priority() }}"></span>
             <textarea
               class="task-card__edit-input"
               [(ngModel)]="editModel.title"
@@ -57,22 +64,22 @@
 
     <div class="task-card__divider"></div>
 
-    <div class="task-card__description" (dblclick)="editDescription()" #description>
+    <div (dblclick)="editDescription()" #description>
       @if (!isEditingDescription()) { @if (task().description()) {
-      <p>{{ task().description() }}</p>
+      <p class="task-card__description">{{ task().description() }}</p>
       } @else {
       <p>Add description…</p>
       } } @else {
       <div class="task-card__edit-wrapper">
         <textarea
-          class="task-card__edit-input"
+          class="task-card__edit-input description-input"
           [(ngModel)]="editModel.description"
           (keydown.enter)="saveEdit()"
           autofocus
           matInput
           cdkTextareaAutosize
-          cdkAutosizeMinRows="1"
-          cdkAutosizeMaxRows="2"
+          cdkAutosizeMinRows="0"
+          cdkAutosizeMaxRows="5"
           stopExpansion
           #descriptionInput
         ></textarea>
