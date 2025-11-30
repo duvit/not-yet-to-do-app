@@ -84,21 +84,20 @@ body.kanban-page {
 }
 
 @mixin status-badge {
-  height: 24px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border: 1px solid #b3e5fc;
-  background: linear-gradient(to right, #f9f9f9, #e3f2fd);
+  gap: 6px;
+  padding: 4px 10px;
   border-radius: 9999px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+  line-height: 1;
   cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 
   &:hover {
-    transform: translateY(-1px);
-    border-color: rgba(27, 145, 255, 0.4);
-    box-shadow: 0 6px 16px #70badd;
+    background: #eef7ff;
+    border-color: #90caf9;
   }
 }
 

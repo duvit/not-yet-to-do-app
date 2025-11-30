@@ -241,6 +241,16 @@
   padding-bottom: 2px;
 }
 
+.task-card__description {
+  padding: 6px 0;
+  cursor: text;
+}
+
+.task-card__placeholder {
+  color: #9aa1a9;
+  font-style: italic;
+}
+
 /* ACTIONS */
 
 .task-card__actions {
@@ -346,66 +356,61 @@
   gap: 4px;
 }
 
-.task-card__status-badge {
-  @include status-badge;
-  color: #007bff;
-}
+// .task-card__status-badge {
+//   @include status-badge;
+//   color: #007bff;
+// }
 
 .task-card__current-status {
-  background: #56b9ff;
-  border-color: #90caf9;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) inset;
 }
 
-.task-card__status-btn {
-  background-color: #f3e6ff;
-  color: #6a0dad;
-  border: 1px solid #d1aaff;
-  border-radius: 8px;
-  padding: 0.45rem 0.75rem;
-  cursor: pointer;
-  font-size: 0.88rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-width: 135px;
-  transition: background 0.2s ease, transform 0.1s ease;
+.task-card__status-badge--to-do {
+  @include status-badge;
+
+  background: #e6eaf2;
+  color: #3b4b63;
+
+  &:hover {
+    background: #dbe2ee;
+  }
+
+  &.task-card__current-status {
+    background: #c6d4ec;
+    font-weight: 600;
+  }
 }
 
-.task-card__status-btn:hover {
-  background-color: #e9d6ff;
-  transform: translateY(-1px);
+.task-card__status-badge--in-progress {
+  @include status-badge;
+
+  background: #fff2df;
+  color: #a8641a;
+
+  &:hover {
+    background: #ffe7c6;
+  }
+
+  &.task-card__current-status {
+    background: #ffdbac;
+    font-weight: 600;
+  }
 }
 
-.task-card__status-arrow {
-  margin-left: 6px;
-  font-size: 0.8em;
-}
+.task-card__status-badge--done {
+  @include status-badge;
 
-.task-card__status-list {
-  // position: absolute;
-  // top: calc(100% + 4px);
-  // left: 0;
-  // width: 100%;
-  // background: #fff;
-  // border: 1px solid #d1aaff;
-  // border-radius: 8px;
-  // box-shadow: 0 4px 14px rgba(155, 0, 255, 0.18);
-  list-style: none;
-  // margin: 0;
-  // padding: 0.3rem 0;
-  // z-index: 1000;
-  animation: fadeIn 0.15s ease-out;
-}
+  background: #e4f4ea;
+  color: #2f6e3a;
 
-.task-card__status-item {
-  padding: 0.45rem 0.75rem;
-  color: #5b007f;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
+  &:hover {
+    background: #d7eddc;
+  }
 
-.task-card__status-item:hover {
-  background: #f3e6ff;
+  &.task-card__current-status {
+    background: #c3e5cc;
+    font-weight: 600;
+  }
 }
 
 /* META */

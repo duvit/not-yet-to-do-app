@@ -54,26 +54,28 @@
     </mat-expansion-panel-header>
 
     <div class="task-card__divider"></div>
-    @if (task().description() && !isEditingDescription()) {
-    <p class="task-card__description" (click)="editDescription()" #description>
-      {{ task().description() }}
-    </p>
 
-    <div class="task-card__divider"></div>
-    } @if (isEditingDescription()) {
-    <div class="task-card__edit-wrapper">
-      <textarea
-        class="task-card__edit-input"
-        [(ngModel)]="editModel.description"
-        matInput
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="5"
-        stopExpansion
-      ></textarea>
+    <div class="task-card__description" (click)="editDescription()">
+      @if (!isEditingDescription()) {
+      <p #description stopExpansion>{{ task().description() }}</p>
+      } @else {
+      <div class="task-card__edit-wrapper">
+        <textarea
+          class="task-card__edit-input"
+          [(ngModel)]="editModel.description"
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="2"
+          stopExpansion
+          placeholder="Add description…"
+        ></textarea>
+      </div>
+      }
     </div>
 
-    }
+    <div class="task-card__divider"></div>
+    @if (isEditingDescription()) { }
 
     <div class="task-card__meta">
       <span class="task-card__meta-item">Created: {{ task().createdAt }}</span>
@@ -86,17 +88,12 @@
       <div class="task-card__status-control">
         @for (status of availableStatuses(); track $index) {
         <span
-          class="task-card__status-badge"
+          class="task-card__status-badge task-card__status-badge--{{ statusClassMap[status] }}"
           [class.task-card__current-status]="task().status() === status"
           (click)="changeStatus(status)"
         >
-          @switch (status) { @case ('to do') {
-          <span class="material-symbols-outlined"> check_box_outline_blank </span>
-          }@case ('in progress') {
-          <span class="material-symbols-outlined"> arrow_upload_progress </span>
-          } @case ('done') {
-          <span class="material-symbols-outlined"> check_circle </span>
-          } }
+          <span class="material-symbols-outlined"> {{ statusIcons[status] }} </span>
+
           {{ status }}
         </span>
         }
