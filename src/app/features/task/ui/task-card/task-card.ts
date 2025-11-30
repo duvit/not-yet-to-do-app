@@ -35,6 +35,7 @@ export class TaskCard {
   public isEditing = signal(false);
   public isEditingTitle = signal(false);
   public isEditingDescription = signal(false);
+  isPanelOpen: boolean = false;
   readonly statusIcons: Record<string, string> = {
     'to do': 'check_box_outline_blank',
     'in progress': 'arrow_upload_progress',
@@ -75,14 +76,37 @@ export class TaskCard {
   public editTitle() {
     this.editModel.title = this.task().title();
     this.isEditingTitle.set(true);
+
+    setTimeout(() => {
+      if (this.titleInput) {
+        const textarea = this.titleInput.nativeElement;
+        textarea.select();
+      }
+    }, 0);
   }
 
   public editDescription() {
     this.editModel.description = this.task().description() ?? '';
     this.isEditingDescription.set(true);
+
+    setTimeout(() => {
+      if (this.descriptionInput) {
+        const textarea = this.descriptionInput.nativeElement;
+        textarea.select();
+      }
+    }, 0);
   }
 
   public saveEdit() {
+    const changes: Partial<{ title: string; description: string }> = {};
+
+    if (this.isEditingTitle()) {
+      changes.title = this.editModel.title;
+    }
+
+    if (this.isEditingDescription()) {
+      changes.description = this.editModel.description;
+    }
     this.tasksStore.changeTaskText(this.task().id, this.editModel);
     this.isEditingTitle.set(false);
     this.isEditingDescription.set(false);
@@ -113,6 +137,8 @@ export class TaskCard {
   @ViewChild('title') title!: ElementRef;
   @ViewChild('description') description!: ElementRef;
   @ViewChild('priorityBlock') priorityBlock!: ElementRef;
+  @ViewChild('descriptionInput') descriptionInput!: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('titleInput') titleInput!: ElementRef<HTMLTextAreaElement>;
 
   @HostListener('document:click', ['$event'])
   public handleClickOutside(event: MouseEvent) {

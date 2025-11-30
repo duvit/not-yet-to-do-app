@@ -11,7 +11,7 @@ import { TASK_STATUS } from '../../../shared/models/task-status.enum';
 })
 export class TasksStore {
   static changeTaskStatus(taskId: string, arg1: TASK_STATUS) {
-      throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   public tasksList = signal<TaskSignal[]>([]);
   private storage = inject(TasksStorage);
@@ -56,8 +56,12 @@ export class TasksStore {
 
   public changeTaskText(taskId: string, newData: { title: any; description: any }) {
     const task = this.getTaskByid(taskId);
-    task.title.set(newData.title);
-    task.description.set(newData.description);
+    if (newData.title) {
+      task.title.set(newData.title);
+    }
+    if (newData.description) {
+      task.description.set(newData.description);
+    }
     this.saveTasks();
   }
 

@@ -1,10 +1,10 @@
 <article class="task-card" [class.task-card--done]="task().isDone()">
-  <mat-expansion-panel hideToggle>
+  <mat-expansion-panel hideToggle (opened)="isPanelOpen = true" (closed)="isPanelOpen = false">
     <mat-expansion-panel-header>
       <mat-panel-title class="panel">
         <div class="task-card__title-row">
           @if (!isEditingTitle()) {
-          <h4 class="task-card__title" (click)="editTitle()" #title stopExpansion>
+          <h4 class="task-card__title" (dblclick)="editTitle()" #title stopExpansion>
             <span class="title-line title-line--{{ task().priority() }}"></span>
             {{ task().title() }}
           </h4>
@@ -13,10 +13,12 @@
             <textarea
               class="task-card__edit-input"
               [(ngModel)]="editModel.title"
+              (keydown.enter)="saveEdit()"
               cdkTextareaAutosize
               cdkAutosizeMinRows="1"
               cdkAutosizeMaxRows="3"
               stopExpansion
+              #titleInput
             ></textarea>
           </div>
           }
@@ -55,20 +57,24 @@
 
     <div class="task-card__divider"></div>
 
-    <div class="task-card__description" (click)="editDescription()">
-      @if (!isEditingDescription()) {
-      <p #description stopExpansion>{{ task().description() }}</p>
+    <div class="task-card__description" (dblclick)="editDescription()" #description>
+      @if (!isEditingDescription()) { @if (task().description()) {
+      <p>{{ task().description() }}</p>
       } @else {
+      <p>Add description…</p>
+      } } @else {
       <div class="task-card__edit-wrapper">
         <textarea
           class="task-card__edit-input"
           [(ngModel)]="editModel.description"
+          (keydown.enter)="saveEdit()"
+          autofocus
           matInput
           cdkTextareaAutosize
           cdkAutosizeMinRows="1"
           cdkAutosizeMaxRows="2"
           stopExpansion
-          placeholder="Add description…"
+          #descriptionInput
         ></textarea>
       </div>
       }
