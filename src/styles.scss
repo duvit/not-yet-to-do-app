@@ -123,3 +123,12 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+
+.drag-indicator {
+  cursor: grab;
+}
+
+.cdk-drop-list-dragging {
+  cursor: grabbing;
+}

@@ -10,7 +10,7 @@
       (cdkDropListDropped)="onDrop($event)"
     >
       @for (task of column.tasksList(); track task.id) {
-      <li cdkDrag cdkDragBoundary=".tasks-container" [cdkDragData]="task.id">
+      <li cdkDrag cdkDragBoundary=".tasks-container" [cdkDragData]="task.id" cdkDragHandle class="is-dragging">
         <app-task-card [task]="task" />
       </li>
       } @empty {

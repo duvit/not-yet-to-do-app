@@ -18,10 +18,11 @@ import { TaskSignal } from '../../data-access/task-signal.model';
 import { TASK_STATUS } from '../../../../shared/models/task-status.enum';
 import { StopExpansion } from '../../../../shared/stop-epansion/stop-expansion';
 import { getDueStatus } from '../../../..//core/utils/due-status';
+import { CdkDragHandle} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-task-card',
-  imports: [FormsModule, MatExpansionModule, StopExpansion, MatFormFieldModule, TextFieldModule],
+  imports: [CdkDragHandle, FormsModule, MatExpansionModule, StopExpansion, MatFormFieldModule, TextFieldModule],
   templateUrl: './task-card.html',
   styleUrl: './task-card.scss',
 })
