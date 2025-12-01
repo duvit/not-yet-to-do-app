@@ -74,6 +74,7 @@ export class TaskCard {
   }
 
   public editTitle() {
+    console.log('12');
     this.editModel.title = this.task().title();
     this.isEditingTitle.set(true);
 
