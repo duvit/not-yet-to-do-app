@@ -156,6 +156,6 @@ export class TaskCard {
       this.isEditingDescription.set(false);
       this.saveEdit();
     }
-    if (!insidePriority) this.statusDropdownOpen.set(false);
+    if (!insidePriority) this.priorityDropdownOpen.set(false);
   }
 }

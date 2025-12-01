@@ -3,64 +3,69 @@
     <mat-expansion-panel-header>
       <mat-panel-title class="panel">
         <div class="task-card__title-row">
-          @if (!isEditingTitle()) {
-          <h4
-            class="task-card__title"
-            (dblclick)="editTitle()"
-            #title
-            stopExpansion
-            [class.not-availible]="!isPanelOpen"
-          >
+          @if (!isPanelOpen) {
+          <h4 class="task-card__title">
             <span class="title-line title-line--{{ task().priority() }}"></span>
             {{ task().title() }}
           </h4>
           } @else {
-          <div class="task-card__edit-wrapper">
-            <span class="title-line title-line--{{ task().priority() }}"></span>
-            <textarea
-              class="task-card__edit-input"
-              [(ngModel)]="editModel.title"
-              (keydown.enter)="saveEdit()"
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="1"
-              cdkAutosizeMaxRows="3"
-              stopExpansion
-              #titleInput
-            ></textarea>
+          <div class="task-header-placeholder">
+            <div class="priority-wrapper" #priorityBlock stopExpansion>
+              <span
+                class="priority-badge priority-badge--{{ task().priority() }}"
+                (click)="togglePriorityDropdown()"
+              >
+                {{ task().priority() }}
+                <span class="task-card__status-arrow">▾</span>
+              </span>
+            </div>
+
+            <div class="task-card__meta">
+              <span class="task-card__meta-item">Created: {{ task().createdAt }}</span>
+              @if (task().doneAt()) {
+              <span class="task-card__meta-item">Done: {{ task().doneAt() }}</span>
+              }
+            </div>
           </div>
           }
-
           <span class="task-card__due-date">{{ dueStatus() }}</span>
-
-          <div class="priority-wrapper" #priorityBlock>
-            @if (!isEditing()) {
-            <span class="priority-badge priority-badge--{{ task().priority() }}">
-              {{ task().priority() }} </span
-            >} @else {
-            <span
-              class="priority-badge priority-badge--{{ task().priority() }}"
-              (click)="togglePriorityDropdown()"
-            >
-              {{ task().priority() }}
-              <span class="task-card__status-arrow">▾</span>
-            </span>
-
-            @if (priorityDropdownOpen()) {
-            <ul class="priority-dropdown-list">
-              @for (priority of availablePriorities(); track $index) {
-              <li
-                class="priority-dropdown-item priority-badge--{{ priority }}"
-                (click)="changePriority(priority)"
-              >
-                {{ priority }}
-              </li>
-              }
-            </ul>
-            }}
-          </div>
         </div>
       </mat-panel-title>
     </mat-expansion-panel-header>
+
+    @if (priorityDropdownOpen()) {
+    <ul class="priority-dropdown-list">
+      @for (priority of availablePriorities(); track $index) {
+      <li
+        class="priority-badge priority-dropdown-item priority-badge--{{ priority }}"
+        (click)="changePriority(priority)"
+      >
+        {{ priority }}
+      </li>
+      }
+    </ul>
+    }
+    <div class="task_header">
+      @if (!isEditingTitle()) {
+      <h4 class="task-card__title" (dblclick)="editTitle()" #title stopExpansion>
+        {{ task().title() }}
+      </h4>
+      } @else {
+      <div class="task-card__edit-wrapper">
+        <textarea
+          class="task-card__edit-input"
+          [(ngModel)]="editModel.title"
+          (keydown.enter)="saveEdit()"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="3"
+          stopExpansion
+          #titleInput
+        ></textarea>
+      </div>
+      }
+    </div>
+    <div class="task__meta"></div>
 
     <div class="task-card__divider"></div>
 
@@ -88,14 +93,6 @@
     </div>
 
     <div class="task-card__divider"></div>
-    @if (isEditingDescription()) { }
-
-    <div class="task-card__meta">
-      <span class="task-card__meta-item">Created: {{ task().createdAt }}</span>
-      @if (task().doneAt()) {
-      <span class="task-card__meta-item">Done: {{ task().doneAt() }}</span>
-      }
-    </div>
 
     <div class="task-card__actions">
       <div class="task-card__status-control">
@@ -123,10 +120,6 @@
         </button>
       </div>
       } @if (!isEditing()){
-      <!-- <button class="task-card__btn-edit" (click)="editTask()">
-        <span class="material-symbols-outlined">edit</span>
-        Edit
-      </button> -->
 
       <button class="task-card__btn--delete" (click)="deleteTask()">
         <span class="material-symbols-outlined"> delete </span>Delete

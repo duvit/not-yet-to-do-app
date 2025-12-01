@@ -63,18 +63,11 @@
 }
 
 .priority-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
   z-index: 10000;
   overflow: visible;
-  margin-left: 8px;
-
-  &::before {
-    content: '•';
-    margin-right: 8px;
-    color: #a1a1a1;
-    font-weight: bold;
-  }
 }
 
 .priority-badge {
@@ -117,48 +110,21 @@
   border: 1px solid #f9a7b0;
 }
 
-.priority-dropdown {
-  position: relative; /* dropdown привʼяжеться сюди */
-  display: inline-block;
-}
-
-.priority-dropdown-btn {
-  background: rgba(255, 255, 255, 0.25);
-  border: none;
-  color: #fff;
-  padding: 0.25rem 0.45rem;
-  font-size: 0.7rem;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.priority-dropdown-btn:hover {
-  background: rgba(255, 255, 255, 0.35);
-}
-
 .priority-dropdown-list {
   position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
+  top: 100%;
+  display: flex;
+  flex-direction: column;
   background: transparent;
   border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 0.3rem 0;
-  width: max-content;
-  min-width: 120px;
   z-index: 1000;
+  overflow: visible;
 }
 
 .priority-dropdown-item {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.75rem;
-  border-radius: 8px;
   cursor: pointer;
-  color: #000;
-  text-transform: uppercase;
+  // text-transform: uppercase;
 }
 
 .priority-dropdown-item:hover {
@@ -172,6 +138,22 @@
   align-items: flex-start;
   padding: 1rem 0 1rem;
   width: 100%;
+  min-height: 54px;
+}
+
+.task-header-placeholder {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+}
+
+.task_header {
+  padding-top: 4px; /* щоб не виглядало зламано */
+  position: relative;
+  z-index: 2; /* поверх фону */
+  background: inherit; /* виглядає частиною панелі */
 }
 
 /* СПІЛЬНИЙ СТИЛЬ */
@@ -396,15 +378,19 @@
 /* META */
 .task-card__meta {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  // flex-direction: column;
   font-size: 0.78rem;
-  color: rgba(74, 0, 114, 0.55);
-  margin-bottom: 1rem;
+  color: rgba(14, 0, 22, 0.55);
+  margin-left: 1rem;
   letter-spacing: -0.2px;
 }
 
 .task-card__meta-item {
-  margin-bottom: 0.2rem;
+  display: inline-block;
+  white-space: nowrap;
+  color: #a1a1a1;
+  font-size: 0.9rem;
 }
 
 /* DELETE BUTTON */
