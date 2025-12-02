@@ -1,9 +1,9 @@
 <article class="task-card" [class.task-card--done]="task().isDone()">
-  <mat-expansion-panel hideToggle (opened)="isPanelOpen = true" (closed)="isPanelOpen = false">
+  <mat-expansion-panel hideToggle [(expanded)]="isPanelOpen">
     <mat-expansion-panel-header>
       <mat-panel-title class="panel drag-indicator" cdkDragHandle>
         <div class="task-card__title-row">
-          @if (!isPanelOpen) {
+          @if (!isPanelOpen()) {
           <h4 class="task-card__title_collapsed">
             <span class="title-line title-line--{{ task().priority() }}"></span>
             {{ task().title() }}

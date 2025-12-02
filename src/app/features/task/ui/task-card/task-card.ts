@@ -48,7 +48,7 @@ export class TaskCard {
   public isEditing = signal(false);
   public isEditingTitle = signal(false);
   public isEditingDescription = signal(false);
-  isPanelOpen: boolean = false;
+  public isPanelOpen = signal(false);
   readonly statusIcons: Record<string, string> = {
     'to do': 'check_box_outline_blank',
     'in progress': 'arrow_upload_progress',
@@ -69,6 +69,10 @@ export class TaskCard {
   public availablePriorities = computed(() => {
     return this.taskConsts.getavailablePriorities(this.task().priority());
   });
+
+  public tooglePanel() {
+    this.isPanelOpen.set(!this.isPanelOpen);
+  }
 
   public changeStatus(newStatus: string): void {
     this.tasksStore.changeTaskStatus(this.task().id, newStatus as TASK_STATUS);
