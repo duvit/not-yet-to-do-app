@@ -1,15 +1,17 @@
 import {
+  afterNextRender,
   Component,
   computed,
   ElementRef,
   HostListener,
   inject,
+  Injector,
   input,
   signal,
   ViewChild,
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { TextFieldModule } from '@angular/cdk/text-field';
+import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { TasksStore } from '../../store/tasks.store';
@@ -18,15 +20,23 @@ import { TaskSignal } from '../../data-access/task-signal.model';
 import { TASK_STATUS } from '../../../../shared/models/task-status.enum';
 import { StopExpansion } from '../../../../shared/stop-epansion/stop-expansion';
 import { getDueStatus } from '../../../..//core/utils/due-status';
-import { CdkDragHandle} from '@angular/cdk/drag-drop';
+import { CdkDragHandle } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-task-card',
-  imports: [CdkDragHandle, FormsModule, MatExpansionModule, StopExpansion, MatFormFieldModule, TextFieldModule],
+  imports: [
+    CdkDragHandle,
+    FormsModule,
+    MatExpansionModule,
+    StopExpansion,
+    MatFormFieldModule,
+    TextFieldModule,
+  ],
   templateUrl: './task-card.html',
   styleUrl: './task-card.scss',
 })
 export class TaskCard {
+  private _injector = inject(Injector);
   public task = input.required<TaskSignal>();
   private tasksStore = inject(TasksStore);
   private taskConsts = inject(TasksConstants);
@@ -159,5 +169,19 @@ export class TaskCard {
       this.saveEdit();
     }
     if (!insidePriority) this.priorityDropdownOpen.set(false);
+  }
+
+  @ViewChild('autosize')
+  autosize!: CdkTextareaAutosize;
+
+  triggerResize() {
+    afterNextRender(
+      () => {
+        this.autosize.resizeToFitContent(true);
+      },
+      {
+        injector: this._injector,
+      }
+    );
   }
 }

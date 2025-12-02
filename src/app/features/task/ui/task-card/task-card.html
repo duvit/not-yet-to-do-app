@@ -52,41 +52,41 @@
         {{ task().title() }}
       </h4>
       } @else {
-      <textarea
-        class="task-card__edit-input"
-        [class.active]="isEditingTitle()"
-        [(ngModel)]="editModel.title"
-        (keydown.enter)="saveEdit()"
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-        stopExpansion
-        #titleInput
-      ></textarea>
+      <mat-form-field>
+        <textarea
+          matInput
+          class="task-card__edit-input"
+          [class.active]="isEditingTitle()"
+          [(ngModel)]="editModel.title"
+          (keydown.enter)="saveEdit()"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="2"
+          stopExpansion
+          #titleInput
+        ></textarea>
+      </mat-form-field>
       }
     </div>
-  
+
     <div class="task-card__divider"></div>
 
-    <div (click)="editDescription()" #description>
+    <div class="task_description" (click)="editDescription()" #description>
       @if (!isEditingDescription()) { @if (task().description()) {
       <p class="task-card__description">{{ task().description() }}</p>
       } @else {
       <p>Add description…</p>
       } } @else {
-      <div class="task-card__edit-wrapper">
-        <textarea
-          class="task-card__edit-input description-input"
-          [(ngModel)]="editModel.description"
-          (keydown.enter)="saveEdit()"
-          autofocus
-          matInput
-          cdkTextareaAutosize
-          cdkAutosizeMinRows="0"
-          cdkAutosizeMaxRows="5"
-          stopExpansion
-          #descriptionInput
-        ></textarea>
-      </div>
+      <textarea
+        class="task-card__edit-input description-input"
+        [(ngModel)]="editModel.description"
+        (keydown.enter)="saveEdit()"
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        stopExpansion
+        #descriptionInput
+      ></textarea>
       }
     </div>
 

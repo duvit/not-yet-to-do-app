@@ -124,6 +124,16 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+.task_header {
+  .mdc-text-field {
+    padding: 0;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding: 0;
+    margin: 0;
+  }
+}
 
 .drag-indicator {
   cursor: grab;
