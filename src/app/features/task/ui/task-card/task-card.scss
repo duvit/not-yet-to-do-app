@@ -240,22 +240,82 @@
   transition: background-color 0.2s, box-shadow 0.2s, outline 0.2s;
 }
 
-.cdk-textarea-autosize {
-  align-self: center;
-  height: 100%;
-  font-weight: 600;
-  padding: auto 0;
-  background-color: #aad2ff;
-}
+.task_header {
+  .cdk-textarea-autosize {
+    align-self: center;
+    height: auto;
+    font-weight: 600;
+    padding: auto 0;
+    padding: 2px 0 0 4px;
+    background-color: #aad2ff;
+    display: flex !important;
+    align-items: center !important;
+  }
 
-.mat-mdc-form-field-input-control.mat-mdc-form-field-input-control {
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  line-height: 1.2rem;
+  .mat-mdc-form-field-input-control.mat-mdc-form-field-input-control {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1.2rem;
+  }
 }
 
 .mat-mdc-form-field {
   width: 100%;
+}
+
+.description-wrapper {
+  box-sizing: border-box;
+  padding: 4px 8px;
+  background-color: #90caf97a;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.description-wrapper.active {
+  background-color: #aad2ff;
+  color: #111;
+  box-shadow: 0 0 0 1px #3ab9f5, 0 0 8px rgba(58, 185, 245, 0.6);
+}
+
+.task_description {
+  display: flex;
+  min-height: 2rem;
+  align-items: center;
+
+  .cdk-textarea-autosize {
+    line-height: 1.2rem;
+    padding-left: 4px;
+    background-color: #aad2ff;
+  }
+}
+
+.task_description textarea.active {
+  background-color: #aad2ff;
+}
+
+.task-card__description {
+  width: 100%;
+  line-height: 1.2rem;
+  letter-spacing: 0.5px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0;
+  padding-left: 4px;
+}
+
+.task-card__description.placeholder {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.description-wrapper .mat-mdc-form-field {
+  width: 100%;
+}
+
+.description-wrapper textarea.mat-mdc-form-field-input-control {
+  // font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .title-line--someday {
@@ -346,21 +406,6 @@
   background: #a9d2ff;
   margin: 0.7rem 0 0.9rem;
   border-radius: 1px;
-}
-
-/* DESCRIPTION */
-.task-card__description,
-.description-input {
-  display: block;
-  color: rgba(15, 23, 42, 0.8);
-  font-size: 0.9rem;
-  font-weight: 400;
-  line-height: 1;
-  margin-bottom: 1.2rem;
-  padding: 6px 0;
-  cursor: text;
-  opacity: 0.95;
-  transition: opacity 0.2s ease;
 }
 
 /* STATUS CONTROL */
@@ -508,10 +553,6 @@
     -webkit-line-clamp: none;
     height: 100%;
   }
-
-  // .task-card__description {
-  //   font-size: 1rem;
-  // }
 }
 
 .editor {

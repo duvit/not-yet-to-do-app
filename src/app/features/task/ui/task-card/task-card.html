@@ -59,6 +59,7 @@
             [class.active]="isEditingTitle()"
             [(ngModel)]="editModel.title"
             (keydown.enter)="saveEdit()"
+            (blur)="saveEdit()"
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
@@ -73,23 +74,32 @@
 
     <div class="task-card__divider"></div>
 
-    <div class="task_description" (click)="editDescription()" #description>
-      @if (!isEditingDescription()) { @if (task().description()) {
-      <p class="task-card__description">{{ task().description() }}</p>
-      } @else {
-      <p>Add description…</p>
-      } } @else {
-      <textarea
-        class="task-card__edit-input description-input"
-        [(ngModel)]="editModel.description"
-        (keydown.enter)="saveEdit()"
-        matInput
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-        stopExpansion
-        #descriptionInput
-      ></textarea>
-      }
+    <div class="description_wrapper" [class.active]="isEditingDescription()">
+      <div class="task_description" (click)="editDescription()" #description>
+        @if (!isEditingDescription()) { @if (task().description()) {
+        <p class="task-card__description" (click)="editDescription()">{{ task().description() }}</p>
+        } @else {
+        <p class="task-card__description placeholder" (click)="editDescription()" s>
+          Add description…
+        </p>
+        } } @else {
+        <mat-form-field>
+          <textarea
+            matInput
+            [class.active]="isEditingDescription()"
+            [(ngModel)]="editModel.description"
+            (keydown.enter)="saveEdit()"
+            (blur)="saveEdit()"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+            stopExpansion
+            #descriptionInput
+          ></textarea>
+        </mat-form-field>
+        }
+      </div>
     </div>
 
     <div class="task-card__divider"></div>

@@ -54,13 +54,13 @@ export class TasksStore {
     this.saveTasks();
   }
 
-  public changeTaskText(taskId: string, newData: { title: any; description: any }) {
+  public changeTaskText(taskId: string, newData: Partial<{ title: string; description: string }>) {
     const task = this.getTaskByid(taskId);
     if (newData.title) {
       task.title.set(newData.title);
     }
-    if (newData.description) {
-      task.description.set(newData.description);
+    if ('description' in newData) {
+      task.description.set(newData.description?.trim() ?? '');
     }
     this.saveTasks();
   }

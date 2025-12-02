@@ -118,9 +118,9 @@ export class TaskCard {
     }
 
     if (this.isEditingDescription()) {
-      changes.description = this.editModel.description;
+      changes.description = this.editModel.description ?? '';
     }
-    this.tasksStore.changeTaskText(this.task().id, this.editModel);
+    this.tasksStore.changeTaskText(this.task().id, changes);
     this.isEditingTitle.set(false);
     this.isEditingDescription.set(false);
   }
@@ -161,14 +161,8 @@ export class TaskCard {
     const insideDescription = this.description?.nativeElement.contains(target);
     const insidePriority = this.priorityBlock?.nativeElement.contains(target);
 
-    if (this.isEditingTitle() && !insideTitle) {
-      this.isEditingTitle.set(false);
-      this.saveEdit();
-    }
-    if (this.isEditingDescription() && !insideDescription) {
-      this.isEditingDescription.set(false);
-      this.saveEdit();
-    }
+    if (this.isEditingTitle() && !insideTitle) this.isEditingTitle.set(false);
+    if (this.isEditingDescription() && !insideDescription) this.isEditingDescription.set(false);
     if (!insidePriority) this.priorityDropdownOpen.set(false);
   }
 

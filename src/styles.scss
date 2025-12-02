@@ -124,7 +124,8 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-.task_header {
+.task_header,
+.task_description {
   .mdc-text-field {
     padding: 0;
   }
