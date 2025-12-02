@@ -45,7 +45,6 @@ export class TaskCard {
   public dueStatus = computed(() => getDueStatus(this.task().dueDate()));
   public statusDropdownOpen = signal(false);
   public priorityDropdownOpen = signal(false);
-  public isEditing = signal(false);
   public isEditingTitle = signal(false);
   public isEditingDescription = signal(false);
   public isPanelOpen = signal(false);
@@ -87,7 +86,6 @@ export class TaskCard {
   public editTask() {
     this.editModel.title = this.task().title();
     this.editModel.description = this.task().description() ?? '';
-    this.isEditing.set(true);
   }
 
   public editTitle() {

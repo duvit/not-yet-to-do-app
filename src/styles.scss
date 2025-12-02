@@ -124,8 +124,8 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-.task_header,
-.task_description {
+.task-card__title-area,
+.task-card__description-area {
   .mdc-text-field {
     padding: 0;
   }
@@ -145,7 +145,7 @@ body {
   }
 }
 
-.drag-indicator {
+.task-card__drag-handle {
   cursor: grab;
 }
 

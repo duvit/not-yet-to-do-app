@@ -1,18 +1,20 @@
 <article class="task-card" [class.task-card--done]="task().isDone()">
   <mat-expansion-panel hideToggle [(expanded)]="isPanelOpen">
     <mat-expansion-panel-header>
-      <mat-panel-title class="panel drag-indicator" cdkDragHandle>
+      <mat-panel-title class="task-card__drag-handle" cdkDragHandle>
         <div class="task-card__title-row">
           @if (!isPanelOpen()) {
           <h4 class="task-card__title_collapsed">
-            <span class="title-line title-line--{{ task().priority() }}"></span>
+            <span
+              class="task-card__priority-line task-card__priority-line--{{ task().priority() }}"
+            ></span>
             {{ task().title() }}
           </h4>
           } @else {
-          <div class="task-header-placeholder">
-            <div class="priority-wrapper" #priorityBlock stopExpansion>
+          <div class="task-card__opened-header">
+            <div class="task-card__priority-wrapper" #priorityBlock stopExpansion>
               <span
-                class="priority-badge priority-badge--{{ task().priority() }}"
+                class="task-card__priority-badge task-card__priority-badge--{{ task().priority() }}"
                 (click)="togglePriorityDropdown()"
               >
                 {{ task().priority() }}
@@ -33,11 +35,13 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <div class="priority-dropdown-wrapper" [class.open]="priorityDropdownOpen()">
-      <ul class="priority-dropdown-list">
+    <div class="task-card__priority-dropdown" [class.open]="priorityDropdownOpen()">
+      <ul class="task-card__priority-dropdown-list">
         @for (priority of availablePriorities(); track $index) {
         <li
-          class="priority-badge priority-dropdown-item priority-badge--{{ priority }}"
+          class="task-card__priority-badge task-card__priority-dropdown-item task-card__priority-badge--{{
+            priority
+          }}"
           (click)="changePriority(priority)"
         >
           {{ priority }}
@@ -46,8 +50,8 @@
       </ul>
     </div>
 
-    <div class="header-title_wrapper" [class.active]="isEditingTitle()">
-      <div class="task_header">
+    <div class="task-card__title-editor" [class.active]="isEditingTitle()">
+      <div class="task-card__title-area">
         @if (!isEditingTitle()) {
         <h4 class="task-card__title" (click)="editTitle()" #title stopExpansion>
           {{ task().title() }}
@@ -74,12 +78,18 @@
 
     <div class="task-card__divider"></div>
 
-    <div class="description_wrapper" [class.active]="isEditingDescription()">
-      <div class="task_description" (click)="editDescription()" #description>
+    <div class="task-card__description-wrapper" [class.active]="isEditingDescription()">
+      <div class="task-card__description-area" (click)="editDescription()" #description>
         @if (!isEditingDescription()) { @if (task().description()) {
-        <p class="task-card__description" (click)="editDescription()">{{ task().description() }}</p>
+        <p class="task-card__description-area" (click)="editDescription()">
+          {{ task().description() }}
+        </p>
         } @else {
-        <p class="task-card__description placeholder" (click)="editDescription()" s>
+        <p
+          class="task-card__description-area task-card__description-area--placeholder"
+          (click)="editDescription()"
+          s
+        >
           Add description…
         </p>
         } } @else {
@@ -118,23 +128,10 @@
         </span>
         }
       </div>
-      @if (isEditing()){
-      <div class="task-card__edit-actions" stopExpansion>
-        <button class="task-card__btn-save" (click)="saveEdit()">
-          <span class="material-symbols-outlined">check</span>
-          Save
-        </button>
-        <button class="task-card__btn-cancel" (click)="cancelEdit()">
-          <span class="material-symbols-outlined">close</span>
-          Cancel
-        </button>
-      </div>
-      } @if (!isEditing()){
 
       <button class="task-card__btn--delete" (click)="deleteTask()">
         <span class="material-symbols-outlined"> delete </span>Delete
       </button>
-      }
     </div>
   </mat-expansion-panel>
 </article>
