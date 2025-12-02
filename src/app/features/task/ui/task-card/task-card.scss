@@ -167,19 +167,15 @@
 .task-card__title_collapsed {
   display: block;
   width: 100%;
-
   padding-left: 0.8rem;
   margin: 0;
-
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: -0.3px;
   line-height: 1.2rem;
   color: rgb(15, 23, 42);
-
   position: relative;
   min-height: 1.2rem;
-
   align-items: center;
   gap: 8px;
   line-height: 1.5rem;
@@ -202,79 +198,65 @@
   border-radius: 4px;
 }
 
-.task_header {
-  display: flex;
-  align-items: center;
-  height: auto;
-  min-height: 2rem;
+.header-title_wrapper {
+  box-sizing: border-box;
+  padding: 4px 8px;
   background-color: #90caf97a;
   border: 1px solid gray;
   border-radius: 1rem;
 }
 
-.task-card__edit-input {
-  border: none;
-  background-color: transparent;
-  box-shadow: none;
-  resize: none;
-  padding: 0;
-  margin: 0;
-  outline: none;
-  min-height: 0;
+.header-title_wrapper.active {
+  background-color: #aad2ff;
+  border-radius: 1rem;
+  color: #111;
+  box-shadow: 0 0 0 1px #3ab9f5, 0 0 8px 0 rgba(58, 185, 245, 0.6);
 }
 
-.task-card__title,
-.task-card__edit-input {
+.task_header {
+  display: flex;
+  align-items: center;
+  height: auto;
+  min-height: 2rem;
+  overflow: hidden;
+}
+
+.task_header.active {
+  border-radius: 0;
+}
+
+.task-card__title {
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.2rem;
-  padding: 4px 8px;
   color: #333;
   width: 100%;
   display: block;
   box-sizing: border-box;
   letter-spacing: 0.5px;
   word-wrap: break-word;
+  white-space: pre-wrap;
+  cursor: pointer;
   transition: background-color 0.2s, box-shadow 0.2s, outline 0.2s;
 }
 
-.task-card__title {
-  cursor: pointer;
+.cdk-textarea-autosize {
+  align-self: center;
+  height: 100%;
+  font-weight: 600;
+  padding: auto 0;
+  background-color: #aad2ff;
 }
 
-.cdk-textarea-autosize {
-  background-color: #aad2ff;
-  border-radius: 1rem;
-  color: #111;
-  box-shadow: 0 0 0 1px #3ab9f5, 0 0 8px 0 rgba(58, 185, 245, 0.6);
-  outline: none;
-  // min-height: 0 !important;
-  // height: inherit !important;
+.mat-mdc-form-field-input-control.mat-mdc-form-field-input-control {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 1.2rem;
 }
 
 .mat-mdc-form-field {
   width: 100%;
 }
-
-// .mat-mdc-form-field-infix {
-//   min-height: 0 !important;
-//   height: inherit !important;
-// }
-
-// .mat-mdc-text-field-wrapper {
-//   min-height: 0 !important;
-//   height: inherit !important;
-// }
-
-// .task-card__edit-input.active {
-//   background-color: #aad2ff;
-//   border-radius: 1rem;
-//   color: #111;
-//   box-shadow: 0 0 0 1px #3ab9f5, 0 0 8px 0 rgba(58, 185, 245, 0.6);
-//   outline: none;
-//   min-height: 0 !important;
-//   height: inherit !important;
-// }
 
 .title-line--someday {
   background-color: #42a5f5;

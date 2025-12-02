@@ -46,27 +46,29 @@
       </ul>
     </div>
 
-    <div class="task_header">
-      @if (!isEditingTitle()) {
-      <h4 class="task-card__title" (click)="editTitle()" #title stopExpansion>
-        {{ task().title() }}
-      </h4>
-      } @else {
-      <mat-form-field>
-        <textarea
-          matInput
-          class="task-card__edit-input"
-          [class.active]="isEditingTitle()"
-          [(ngModel)]="editModel.title"
-          (keydown.enter)="saveEdit()"
-          cdkTextareaAutosize
-          #autosize="cdkTextareaAutosize"
-          cdkAutosizeMinRows="2"
-          stopExpansion
-          #titleInput
-        ></textarea>
-      </mat-form-field>
-      }
+    <div class="header-title_wrapper" [class.active]="isEditingTitle()">
+      <div class="task_header">
+        @if (!isEditingTitle()) {
+        <h4 class="task-card__title" (click)="editTitle()" #title stopExpansion>
+          {{ task().title() }}
+        </h4>
+        } @else {
+        <mat-form-field>
+          <textarea
+            matInput
+            [class.active]="isEditingTitle()"
+            [(ngModel)]="editModel.title"
+            (keydown.enter)="saveEdit()"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="3"
+            stopExpansion
+            #titleInput
+          ></textarea>
+        </mat-form-field>
+        }
+      </div>
     </div>
 
     <div class="task-card__divider"></div>

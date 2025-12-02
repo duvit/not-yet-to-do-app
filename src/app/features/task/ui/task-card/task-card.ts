@@ -13,6 +13,7 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { TasksStore } from '../../store/tasks.store';
 import { TasksConstants } from '../../../../core/utils/task-constants.util';
@@ -31,6 +32,7 @@ import { CdkDragHandle } from '@angular/cdk/drag-drop';
     StopExpansion,
     MatFormFieldModule,
     TextFieldModule,
+    MatInputModule,
   ],
   templateUrl: './task-card.html',
   styleUrl: './task-card.scss',
@@ -85,7 +87,6 @@ export class TaskCard {
   }
 
   public editTitle() {
-    console.log('12');
     this.editModel.title = this.task().title();
     this.isEditingTitle.set(true);
 
