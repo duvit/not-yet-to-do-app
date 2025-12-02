@@ -1,52 +1,13 @@
-
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-@use './app/styles/reset.scss';
 @use '@angular/material' as mat;
-
-html {
-  @include mat.theme((
-    color: (
-      primary: mat.$magenta-palette,
-      tertiary: mat.$violet-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
-}
-
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-}
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-
+@use './app/styles/reset.scss';
+@use 'sass:map';
 
 html {
   @include mat.theme(
     (
       color: (
-        primary: mat.$magenta-palette,
-        tertiary: mat.$violet-palette,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
       ),
       typography: Roboto,
       density: 0,
@@ -54,22 +15,105 @@ html {
   );
 }
 
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
+app-task-card {
+  @include mat.expansion-overrides(
+    (
+      header-collapsed-state-height: 54px,
+      header-expanded-state-height: 100%,
+      header-hover-state-layer-color: #ffffff,
+    )
+  );
+}
 
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
+body {
+  color-scheme: light;
   background-color: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
   margin: 0;
 }
+
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.32);
+  --glass-bg-alt: rgba(255, 255, 255, 0.15);
+  --glass-bg-task: rgba(255, 255, 255, 0.92);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --glass-blur: 24px;
+  --glass-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+
+  --color-light-bg-start: #f5f8fc;
+  --color-light-bg-end: #eaf3f8;
+  --color-dark-bg-start: #1a202c;
+  --color-dark-bg-end: #0d121c;
+
+  --priority-high: #ff4c4c;
+  --priority-med: #ffa048;
+  --priority-low: #4cd97a;
+}
+
+body.kanban-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+
+  --mat-sys-surface: transparent;
+  --mat-sys-surface-container: transparent;
+  --mat-sys-surface-container-low: transparent;
+  --mat-sys-surface-container-high: transparent;
+  --mat-sys-surface-container-highest: transparent;
+}
+
+@mixin glass {
+  // background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(13.6px);
+  -webkit-backdrop-filter: blur(13.6px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+@mixin settings-btn {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border: 1px solid rgba(96, 48, 94, 0.25);
+  border-radius: 0.9rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+@mixin status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: #eef7ff;
+    border-color: #90caf9;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Roboto, 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 html,
 body {
@@ -80,5 +124,31 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.task-card__title-area,
+.task-card__description-area {
+  .mdc-text-field {
+    padding: 0;
+  }
+
+  .mdc-text-field--no-label {
+    padding: 0 !important;
+  }
+  .mat-mdc-form-field-infix {
+    padding: 0 !important;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper,
+  .mdc-line-ripple {
+    display: none;
+  }
+}
+
+.task-card__drag-handle {
+  cursor: grab;
+}
+
+.cdk-drop-list-dragging {
+  cursor: grabbing;
+}

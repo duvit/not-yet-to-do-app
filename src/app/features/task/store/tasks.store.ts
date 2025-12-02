@@ -11,7 +11,7 @@ import { TASK_STATUS } from '../../../shared/models/task-status.enum';
 })
 export class TasksStore {
   static changeTaskStatus(taskId: string, arg1: TASK_STATUS) {
-      throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   public tasksList = signal<TaskSignal[]>([]);
   private storage = inject(TasksStorage);
@@ -54,10 +54,14 @@ export class TasksStore {
     this.saveTasks();
   }
 
-  public changeTaskText(taskId: string, newData: { title: any; description: any }) {
+  public changeTaskText(taskId: string, newData: Partial<{ title: string; description: string }>) {
     const task = this.getTaskByid(taskId);
-    task.title.set(newData.title);
-    task.description.set(newData.description);
+    if (newData.title) {
+      task.title.set(newData.title);
+    }
+    if ('description' in newData) {
+      task.description.set(newData.description?.trim() ?? '');
+    }
     this.saveTasks();
   }
 

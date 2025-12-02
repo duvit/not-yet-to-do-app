@@ -9,7 +9,7 @@ export interface TaskSignal {
   status: WritableSignal<TASK_STATUS>;
   priority: WritableSignal<TASK_PRIORITY>;
   createdAt: string;
-  updatedAt: WritableSignal<string | null>;
+  dueDate: WritableSignal<string | null>;
   doneAt: WritableSignal<string | null>;
   isDone: WritableSignal<boolean>;
 }

@@ -1,83 +1,137 @@
-<article class="task-card task-card--lavender" [class.task-card--done]="task().isDone()">
-  <header class="task-card__header">
-    <span class="task-card__status-badge">{{ task().status() }}</span>
-    <div class="priority-wrapper" #priorityBlock>
-      <span
-        class="priority-badge priority-badge--{{ task().priority() }}"
-        (click)="togglePriorityDropdown()"
-      >
-        {{ task().priority() }}
-        <span class="task-card__status-arrow">▾</span>
-      </span>
+<article class="task-card" [class.task-card--done]="task().isDone()">
+  <mat-expansion-panel hideToggle [(expanded)]="isPanelOpen">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="task-card__drag-handle" cdkDragHandle>
+        <div class="task-card__title-row">
+          @if (!isPanelOpen()) {
+          <h4 class="task-card__title_collapsed">
+            <span
+              class="task-card__priority-line task-card__priority-line--{{ task().priority() }}"
+            ></span>
+            {{ task().title() }}
+          </h4>
+          } @else {
+          <div class="task-card__opened-header">
+            <div class="task-card__priority-wrapper" #priorityBlock stopExpansion>
+              <span
+                class="task-card__priority-badge task-card__priority-badge--{{ task().priority() }}"
+                (click)="togglePriorityDropdown()"
+              >
+                {{ task().priority() }}
+                <span class="task-card__status-arrow">▾</span>
+              </span>
+            </div>
 
-      @if (priorityDropdownOpen()) {
-      <ul class="priority-dropdown-list">
+            <div class="task-card__meta">
+              <span class="task-card__meta-item">Created: {{ task().createdAt }}</span>
+              @if (task().doneAt()) {
+              <span class="task-card__meta-item">Done: {{ task().doneAt() }}</span>
+              }
+            </div>
+          </div>
+          }
+          <span class="task-card__due-date">{{ dueStatus() }}</span>
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="task-card__priority-dropdown" [class.open]="priorityDropdownOpen()">
+      <ul class="task-card__priority-dropdown-list">
         @for (priority of availablePriorities(); track $index) {
         <li
-          class="priority-dropdown-item priority-badge--{{ priority }}"
+          class="task-card__priority-badge task-card__priority-dropdown-item task-card__priority-badge--{{
+            priority
+          }}"
           (click)="changePriority(priority)"
         >
           {{ priority }}
         </li>
         }
       </ul>
-      }
     </div>
-  </header>
 
-  <div class="task-card__title-row">
-    @if (!isEditing()) {
-    <h4 class="task-card__title">{{ task().title() }}</h4>
-    <span class="task-card__changes-btn" (click)="editTask()">
-      <span class="material-symbols-outlined">edit</span>
-    </span>
-    } @else {
-    <input class="task-card__edit-input" [(ngModel)]="editModel.title" />
-    <div class="task-card__edit-actions">
-      <button class="task-card__btn-save" (click)="saveEdit()">
-        <span class="material-symbols-outlined">check</span>
-      </button>
-      <button class="task-card__btn-cancel" (click)="cancelEdit()">
-        <span class="material-symbols-outlined">close</span>
+    <div class="task-card__title-editor" [class.active]="isEditingTitle()">
+      <div class="task-card__title-area">
+        @if (!isEditingTitle()) {
+        <h4 class="task-card__title" (click)="editTitle()" #title stopExpansion>
+          {{ task().title() }}
+        </h4>
+        } @else {
+        <mat-form-field>
+          <textarea
+            matInput
+            [class.active]="isEditingTitle()"
+            [(ngModel)]="editModel.title"
+            (keydown.enter)="saveEdit()"
+            (blur)="saveEdit()"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="3"
+            stopExpansion
+            #titleInput
+          ></textarea>
+        </mat-form-field>
+        }
+      </div>
+    </div>
+
+    <div class="task-card__divider"></div>
+
+    <div class="task-card__description-wrapper" [class.active]="isEditingDescription()">
+      <div class="task-card__description-area" (click)="editDescription()" #description>
+        @if (!isEditingDescription()) { @if (task().description()) {
+        <p class="task-card__description-area" (click)="editDescription()">
+          {{ task().description() }}
+        </p>
+        } @else {
+        <p
+          class="task-card__description-area task-card__description-area--placeholder"
+          (click)="editDescription()"
+          s
+        >
+          Add description…
+        </p>
+        } } @else {
+        <mat-form-field>
+          <textarea
+            matInput
+            [class.active]="isEditingDescription()"
+            [(ngModel)]="editModel.description"
+            (keydown.enter)="saveEdit()"
+            (blur)="saveEdit()"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+            stopExpansion
+            #descriptionInput
+          ></textarea>
+        </mat-form-field>
+        }
+      </div>
+    </div>
+
+    <div class="task-card__divider"></div>
+
+    <div class="task-card__actions">
+      <div class="task-card__status-control">
+        @for (status of availableStatuses(); track $index) {
+        <span
+          class="task-card__status-badge task-card__status-badge--{{ statusClassMap[status] }}"
+          [class.task-card__current-status]="task().status() === status"
+          (click)="changeStatus(status)"
+        >
+          <span class="material-symbols-outlined"> {{ statusIcons[status] }} </span>
+
+          {{ status }}
+        </span>
+        }
+      </div>
+
+      <button class="task-card__btn--delete" (click)="deleteTask()">
+        <span class="material-symbols-outlined"> delete </span>Delete
       </button>
     </div>
-    }
-  </div>
-
-  <div class="task-card__divider"></div>
-  @if (!isEditing()) {
-  <p class="task-card__description">{{ task().description() }}</p>
-  } @else {
-  <input class="task-card__edit-input-description" [(ngModel)]="editModel.description" />
-  }
-
-  <div class="task-card__status-control" #statusBlock>
-    <button class="task-card__status-btn" (click)="toggleStatusDropdownOpen()">
-      Change status
-      <span class="task-card__status-arrow">▾</span>
-    </button>
-
-    @if (statusDropdownOpen()) {
-    <ul class="task-card__status-list">
-      @for (status of availableStatuses(); track $index) {
-      <li class="task-card__status-item" (click)="changeStatus(status)">
-        {{ status }}
-      </li>
-      }
-    </ul>
-    }
-  </div>
-
-  <div class="task-card__meta">
-    <span class="task-card__meta-item">Created: {{ task().createdAt }}</span>
-    @if (task().updatedAt()) {
-    <span class="task-card__meta-item">Updated: {{ task().updatedAt() }}</span>
-    } @if (task().doneAt()) {
-    <span class="task-card__meta-item">Done: {{ task().doneAt() }}</span>
-    }
-  </div>
-
-  <div class="task-card__actions">
-    <button class="task-card__btn task-card__btn--delete" (click)="deleteTask()">Delete</button>
-  </div>
+  </mat-expansion-panel>
 </article>

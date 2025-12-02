@@ -8,7 +8,7 @@ export interface Task {
   status: TASK_STATUS;
   priority: TASK_PRIORITY;
   createdAt: string;
-  updatedAt: string | null;
+  dueDate: string | null;
   doneAt: string | null;
   isDone: boolean;
 }

@@ -1,10 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { TasksBoard } from './features/task/ui/tasks-board/tasks-board';
-import { Header } from './core/header/header';
+import { Layout } from './core/layout/layout/layout';
 
 @Component({
   selector: 'app-root',
-  imports: [Header, TasksBoard],
+  imports: [Layout],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

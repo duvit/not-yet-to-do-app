@@ -34,5 +34,15 @@
     </mat-form-field>
   </div>
 
+  <div class="task-form__group">
+    <label class="task-form__label" for="dueDate">Due date</label>
+    <input
+      class="task-form__input"
+      id="dueDate"
+      type="date"
+      formControlName="dueDate"
+    />
+  </div>
+
   <button class="task-form__btn" type="submit" [disabled]="!taskForm.valid">Add Task</button>
 </form>
