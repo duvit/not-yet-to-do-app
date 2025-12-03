@@ -311,6 +311,7 @@
 
   &__actions {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     gap: 8px;
   }
@@ -328,11 +329,9 @@
     cursor: pointer;
     transition: all 0.2s ease;
 
-    &-save,
-    &-cancel,
-    &-edit,
     &--delete {
       @include settings-btn;
+      align-self: flex-end;
     }
 
     &-save {
@@ -369,7 +368,7 @@
 
   &__status-control {
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: end;
     gap: 4px;
   }
@@ -470,4 +469,17 @@
 }
 
 @media (min-width: 768px) {
+  .task-card {
+    &__actions {
+      flex-direction: row;
+    }
+
+    &__status-control {
+      justify-content: start;
+    }
+
+    &__btn--delete {
+      align-self: flex-end;
+    }
+  }
 }
