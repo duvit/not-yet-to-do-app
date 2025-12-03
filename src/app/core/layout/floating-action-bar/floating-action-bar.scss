@@ -1,0 +1,14 @@
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20px;
+  //   background-color: aquamarine;
+
+  &__statistic {
+    display: none;
+  }
+
+  &__filters-chips {
+    width: 100%;
+  }
+}
