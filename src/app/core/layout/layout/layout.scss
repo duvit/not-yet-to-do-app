@@ -1,3 +1,11 @@
+.container {
+  overflow: hidden;
+
+  .app-header {
+    padding: 0 0.5rem;
+  }
+}
+
 @media (min-width: 768px) {
   .container {
     padding: 1.5rem 2.5rem;
