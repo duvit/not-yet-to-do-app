@@ -1,18 +1,38 @@
+@use '../../../styles.scss' as *;
+
 .filters-menu {
-  position: static;
-  bottom: 0;
-  width: 100%;
+  @include glass;
+  position: fixed;
+  bottom: 0.5rem;
+  left: 1rem;
+  right: 1rem;
   max-height: 60vh;
   background: white;
-  border-radius: 16px 16px 0 0;
+  border-radius: 1rem;
   padding: 16px;
   box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.2);
-
-  display: flex;
+  z-index: 10000;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
   flex-direction: column;
   animation-duration: 0.25s;
-}
 
-.mdc-dialog__content {
-  padding: 0;
+  &__sort {
+    margin: 0 auto;
+  }
+
+  &__filter {
+    margin: 0 auto;
+  }
+
+  &__chips {
+    grid-column: 1 / -1;
+    margin: 0 auto;
+  }
+
+  &__statistic {
+    grid-column: 1 / -1;
+    margin: 0 auto;
+  }
 }

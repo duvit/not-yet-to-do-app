@@ -28,14 +28,7 @@ export class Header {
     });
   }
 
-  openFiltersMenu(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(FiltersMenu, {
-      minWidth: '40vw',
-      minHeight: '20vh',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
-  }
+  openFiltersMenu(): void {}
 
   @ViewChild('searchBar') searchBar!: ElementRef<HTMLTextAreaElement>;
 

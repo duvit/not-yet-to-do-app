@@ -9,5 +9,9 @@
 @media (min-width: 768px) {
   .container {
     padding: 1.5rem 2.5rem;
+
+    .app-header {
+      padding: 0;
+    }
   }
 }
