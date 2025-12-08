@@ -1,8 +1,17 @@
-  <div class="filters-menu">
-    <div class="filters-menu__sort">
-      <button>Sort By</button>
-    </div>
-    <div class="filters-menu__filters">filter</div>
-    <div class="filters-menu__chips">chips</div>
-    <div class="filters-menu__statistic">statistic</div>
+<div class="filters-menu">
+  <div class="filters-menu__sort">
+    <button class="filters-menu__sort-btn" (click)="openSort()">
+      <span class="material-symbols-outlined"> sort </span> Sort By
+    </button>
+    @if (isSortOpen()) {
+    <ul>
+      @for (option of sortOptions; track $index) {
+      <li>{{ option.label }}</li>
+      }
+    </ul>
+    }
   </div>
+  <div class="filters-menu__filters">filter</div>
+  <div class="filters-menu__chips">chips</div>
+  <div class="filters-menu__statistic">statistic</div>
+</div>
