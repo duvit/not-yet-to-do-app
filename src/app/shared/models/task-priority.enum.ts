@@ -1,6 +1,6 @@
 export enum TASK_PRIORITY {
-  SOMEDAY = 'someday',
-  LOW = 'low',
-  MEDIUM = 'medium',
   HIGH = 'high',
+  MEDIUM = 'medium',
+  LOW = 'low',
+  SOMEDAY = 'someday',
 }

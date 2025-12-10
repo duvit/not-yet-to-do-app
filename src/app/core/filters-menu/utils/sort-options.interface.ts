@@ -1,7 +1,7 @@
-import { SortBy, SortDirection } from './sort-enums';
+import { SortBy, SortDirection } from './sort-enums.const';
 
 export interface SortOption {
   label: string;
-  value: SortBy | null;
-  direction: SortDirection | null;
+  value: SortBy;
+  direction: SortDirection;
 }

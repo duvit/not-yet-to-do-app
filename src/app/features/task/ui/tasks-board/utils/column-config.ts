@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { TASK_STATUS_DEFINITIONS } from '../../../../../shared/models/task-cloumn-config';
 import { TASK_STATUS } from '../../../../../shared/models/task-status.enum';
-import { TasksStore } from '../../../store/tasks.store';
+import { TasksFilters } from '../../../../../core/filters-menu/utils/tasks-filters.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ColumnConfigurator {
-  private tasksStore = inject(TasksStore);
+  private tasksStore = inject(TasksFilters);
 
   public columnConfigs() {
     return TASK_STATUS_DEFINITIONS.map((def) => ({

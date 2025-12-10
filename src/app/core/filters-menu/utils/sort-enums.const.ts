@@ -1,5 +1,5 @@
 export enum SortBy {
-  DATE = 'date',
+  DATE = 'createdAt',
   PRIORITY = 'priority',
 }
 

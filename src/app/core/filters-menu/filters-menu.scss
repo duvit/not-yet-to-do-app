@@ -26,6 +26,10 @@
       align-items: center;
       cursor: pointer;
     }
+
+    &-option {
+      cursor: pointer;
+    }
   }
 
   &__filter {

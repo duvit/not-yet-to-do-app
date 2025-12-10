@@ -6,7 +6,7 @@
     @if (isSortOpen()) {
     <ul>
       @for (option of sortOptions; track $index) {
-      <li>{{ option.label }}</li>
+      <li class="filters-menu__sort-option" (click)="onSort(option.value, option.direction)">{{ option.label }}</li>
       }
     </ul>
     }

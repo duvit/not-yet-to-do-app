@@ -1,4 +1,4 @@
-import { SortBy, SortDirection } from './sort-enums';
+import { SortBy, SortDirection } from './sort-enums.const';
 import { SortOption } from './sort-options.interface';
 
 export const SORT_OPTIONS: SortOption[] = [

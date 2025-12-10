@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { TasksStorage } from '../data-access/task.storage';
 import { TasksTransform } from '../data-access/tasks-transform';
 import { Task } from '../../../shared/models/task.model';
@@ -14,25 +14,13 @@ export class TasksStore {
   private storage = inject(TasksStorage);
   private transform = inject(TasksTransform);
 
-  public toDoTasks = computed(() =>
-    this.tasksList().filter((task) => task.status() === TASK_STATUS.TODO)
-  );
-
-  public inProgressTasks = computed(() =>
-    this.tasksList().filter((task) => task.status() === TASK_STATUS.IN_PROGRESS)
-  );
-
-  public doneTasks = computed(() =>
-    this.tasksList().filter((task) => task.status() === TASK_STATUS.DONE)
-  );
-
   constructor() {
     this.loadTasks();
   }
 
   public loadTasks() {
     const data: Task[] = this.storage.getTasks();
-    this.tasksList.set(data.map((task) => this.transform.createTaskSignal(task)));
+    this.tasksList.update(() => data.map((task) => this.transform.createTaskSignal(task)));
   }
 
   public saveTasks(): void {
@@ -42,7 +30,6 @@ export class TasksStore {
 
   public addTask(task: TaskSignal): void {
     this.tasksList.update((list) => [...list, task]);
-
     this.saveTasks();
   }
 
@@ -65,7 +52,6 @@ export class TasksStore {
   public changeTaskStatus(taskId: string, newStatus: TASK_STATUS): void {
     const task = this.getTaskByid(taskId);
     this.transform.changeStatus(task, newStatus);
-
     this.saveTasks();
   }
 
