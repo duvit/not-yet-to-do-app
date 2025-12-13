@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { TASK_STATUS_DEFINITIONS } from '../../../../../shared/models/task-cloumn-config';
 import { TASK_STATUS } from '../../../../../shared/models/task-status.enum';
-import { TasksFilters } from '../../../../../core/filters-menu/utils/tasks-filters.service';
+import { TasksFilters } from '../../../filters-menu/utils/tasks-filters.service';
 
 @Injectable({
   providedIn: 'root',

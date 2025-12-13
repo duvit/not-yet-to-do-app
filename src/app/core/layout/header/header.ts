@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, inject, signal, ViewChild } from '
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDialog } from '../../../features/task/ui/tasks-board/ui/dialog/task-dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { FiltersMenu } from '../../filters-menu/filters-menu';
+import { FiltersMenu } from '../../../features/task/filters-menu/filters-menu';
 
 @Component({
   selector: 'app-header',

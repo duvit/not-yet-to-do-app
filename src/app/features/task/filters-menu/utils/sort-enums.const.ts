@@ -1,5 +1,6 @@
 export enum SortBy {
-  DATE = 'createdAt',
+  CREATE_DATE = 'createdAt',
+  DUE_DATE = 'dueDate',
   PRIORITY = 'priority',
 }
 

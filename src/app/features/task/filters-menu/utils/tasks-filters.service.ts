@@ -1,9 +1,9 @@
 import { computed, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { SortOption } from './sort-options.interface';
-import { TasksStore } from '../../../features/task/store/tasks.store';
+import { TasksStore } from '../../store/tasks.store';
 import { SortBy, SortDirection } from './sort-enums.const';
-import { TASK_STATUS } from '../../../shared/models/task-status.enum';
-import { TaskSignal } from '../../../features/task/data-access/task-signal.model';
+import { TASK_STATUS } from '../../../../shared/models/task-status.enum';
+import { TaskSignal } from '../../data-access/task-signal.model';
 import { PRIORITY_ORDER } from './priority-order.const';
 
 @Injectable({
@@ -22,33 +22,43 @@ export class TasksFilters {
 
   public filteredAndSortedTasks = computed(() => {
     let tasks = [...this.tasks()];
-    const sort = this.sortValue();
+    const field = this.sortValue();
     const direction = this.sortDirectionValue();
 
-    if (!sort || !direction) return tasks;
+    if (!field || !direction) return tasks;
 
     const factor = direction === SortDirection.ASC ? 1 : -1;
 
-    tasks.sort((a, b) => {
-      const A = a.priority();
-      const B = b.priority();
-
-      if (sort === 'priority') {
-        const orderA = PRIORITY_ORDER[A];
-        const orderB = PRIORITY_ORDER[B];
-
-        if (orderA > orderB) return -1 * factor;
-        if (orderA < orderB) return 1 * factor;
-        return 0;
-      }
+    return tasks.sort((a, b) => {
+      const A = this.getSortableValue(a, field) ?? 0;
+      const B = this.getSortableValue(b, field) ?? 0;
 
       if (A < B) return -1 * factor;
       if (A > B) return 1 * factor;
       return 0;
     });
-
-    return tasks;
   });
+
+  public getSortableValue(task: TaskSignal, taskField: keyof TaskSignal) {
+    let field = task[taskField];
+    let fieldValue: string | boolean | null;
+
+    if (typeof field === 'function') {
+      fieldValue = field();
+    } else {
+      fieldValue = field;
+    }
+
+    if (fieldValue === 'priority') {
+      return PRIORITY_ORDER[fieldValue];
+    }
+
+    if (fieldValue === 'createdAt') {
+      return fieldValue ? Date.parse(fieldValue) : 0;
+    }
+
+    return fieldValue;
+  }
 
   public toDoTasks = computed(() =>
     this.filteredAndSortedTasks().filter((task) => task.status() === TASK_STATUS.TODO)
