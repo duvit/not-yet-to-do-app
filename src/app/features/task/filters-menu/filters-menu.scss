@@ -32,17 +32,12 @@
     }
   }
 
-  &__filter {
-    margin: 0 auto;
-  }
-
   &__chips {
     grid-column: 1 / -1;
     margin: 0 auto;
   }
 
   &__statistic {
-    grid-column: 1 / -1;
     margin: 0 auto;
   }
 }
