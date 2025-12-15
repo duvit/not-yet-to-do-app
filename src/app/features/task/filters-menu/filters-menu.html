@@ -6,7 +6,12 @@
     @if (isSortOpen()) {
     <ul>
       @for (option of sortOptions; track $index) {
-      <li class="filters-menu__sort-option" (click)="onSort(option.value, option.direction)">{{ option.label }}</li>
+      <li class="filters-menu__sort-option" (click)="onSort(option.value, option.direction)">
+        {{ option.label }}
+        <span class="material-symbols-outlined">
+          {{ option.direction === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+        </span>
+      </li>
       }
     </ul>
     }

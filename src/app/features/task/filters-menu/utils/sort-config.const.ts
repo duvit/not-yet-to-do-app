@@ -3,32 +3,32 @@ import { SortOption } from './sort-options.interface';
 
 export const SORT_OPTIONS: SortOption[] = [
   {
-    label: 'Date: Oldest First',
+    label: 'Created',
     value: SortBy.CREATE_DATE,
     direction: SortDirection.ASC,
   },
   {
-    label: 'Date: Newest First',
+    label: 'Created',
     value: SortBy.CREATE_DATE,
     direction: SortDirection.DESC,
   },
   {
-    label: 'Date: Coming Soon',
+    label: 'Due',
     value: SortBy.DUE_DATE,
     direction: SortDirection.ASC,
   },
   {
-    label: 'Date: Coming Late',
+    label: 'Due',
     value: SortBy.DUE_DATE,
     direction: SortDirection.DESC,
   },
   {
-    label: 'Priority: Lowest First',
+    label: 'Priority',
     value: SortBy.PRIORITY,
     direction: SortDirection.ASC,
   },
   {
-    label: 'Priority: Highest First',
+    label: 'Priority',
     value: SortBy.PRIORITY,
     direction: SortDirection.DESC,
   },
