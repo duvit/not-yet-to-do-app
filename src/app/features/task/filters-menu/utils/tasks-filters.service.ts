@@ -5,6 +5,7 @@ import { SortBy, SortDirection } from './sort-enums.const';
 import { TASK_STATUS } from '../../../../shared/models/task-status.enum';
 import { TaskSignal } from '../../data-access/task-signal.model';
 import { PRIORITY_ORDER } from './priority-order.const';
+import { TASK_PRIORITY } from '../../../../shared/models/task-priority.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -39,25 +40,26 @@ export class TasksFilters {
     });
   });
 
-  public getSortableValue(task: TaskSignal, taskField: keyof TaskSignal) {
-    let field = task[taskField];
-    let fieldValue: string | boolean | null;
+  public getSortableValue(
+    task: TaskSignal,
+    field: keyof TaskSignal
+  ): number | string | boolean | null {
+    const raw = task[field];
 
-    if (typeof field === 'function') {
-      fieldValue = field();
-    } else {
-      fieldValue = field;
+    const value = typeof raw === 'function' ? raw() : raw;
+
+    if (value == null) return null;
+
+    if (field === 'priority') {
+      return PRIORITY_ORDER[value as TASK_PRIORITY];
     }
 
-    if (fieldValue === 'priority') {
-      return PRIORITY_ORDER[fieldValue];
+    if (field === 'createdAt' || field === 'dueDate' || field === 'doneAt') {
+      if (!value) return Number.MAX_SAFE_INTEGER;
+      return Date.parse(value as string);
     }
 
-    if (fieldValue === 'createdAt') {
-      return fieldValue ? Date.parse(fieldValue) : 0;
-    }
-
-    return fieldValue;
+    return value;
   }
 
   public toDoTasks = computed(() =>
